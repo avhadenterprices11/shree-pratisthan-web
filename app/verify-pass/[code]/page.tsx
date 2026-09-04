@@ -91,7 +91,7 @@ export default function VerifyPassPage({ params }: { params: Promise<{ code: str
       setTickets(t);
 
       // Auto-select all currently unchecked passes
-      const pendingIds = t.filter(ticket => !ticket.is_checked_in).map(ticket => ticket.id);
+      const pendingIds = t.filter(ticket => !ticket.is_checked_in).map(ticket => Number(ticket.id));
       setSelectedTicketIds(pendingIds);
 
       // Fetch Event Details if available
@@ -113,14 +113,15 @@ export default function VerifyPassPage({ params }: { params: Promise<{ code: str
     }
   }
 
-  function handleToggleTicket(id: number) {
+  function handleToggleTicket(id: number | string) {
+    const numId = Number(id);
     setSelectedTicketIds(prev => 
-      prev.includes(id) ? prev.filter(item => item !== id) : [...prev, id]
+      prev.includes(numId) ? prev.filter(item => item !== numId) : [...prev, numId]
     );
   }
 
   function handleSelectAllPending() {
-    const pendingIds = tickets.filter(t => !t.is_checked_in).map(t => t.id);
+    const pendingIds = tickets.filter(t => !t.is_checked_in).map(t => Number(t.id));
     setSelectedTicketIds(pendingIds);
   }
 
@@ -151,7 +152,7 @@ export default function VerifyPassPage({ params }: { params: Promise<{ code: str
       setTickets(updatedTickets);
 
       // Re-populate selection with remaining unchecked tickets
-      const remainingIds = updatedTickets.filter(t => !t.is_checked_in).map(t => t.id);
+      const remainingIds = updatedTickets.filter(t => !t.is_checked_in).map(t => Number(t.id));
       setSelectedTicketIds(remainingIds);
 
       setFeedbackMessage(result.message || `Successfully checked in ${selectedTicketIds.length} passes!`);
@@ -377,13 +378,14 @@ export default function VerifyPassPage({ params }: { params: Promise<{ code: str
 
               <div className="space-y-2.5">
                 {tickets.map((t, idx) => {
-                  const isChecked = selectedTicketIds.includes(t.id);
+                  const numId = Number(t.id);
+                  const isChecked = selectedTicketIds.includes(numId);
                   const isUsed = t.is_checked_in;
 
                   return (
                     <div 
                       key={t.id}
-                      onClick={() => !isUsed && handleToggleTicket(t.id)}
+                      onClick={() => !isUsed && handleToggleTicket(numId)}
                       className={`p-3.5 rounded-xl border flex items-center justify-between text-xs transition-all cursor-pointer ${
                         isUsed
                           ? 'bg-neutral-950/60 border-neutral-800 opacity-60 cursor-not-allowed'
