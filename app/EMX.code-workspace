@@ -1,0 +1,18 @@
+{
+	"folders": [
+		{
+			"path": ".."
+		},
+		{
+			"path": "../../../EMS Panel Emergent/ems_panel/new backend/ems-backend-working"
+		},
+		{
+			"path": "../../../EMS Panel Emergent/ems_panel/frontend"
+		}
+	],
+	"settings": {
+		"files.associations": {
+			"*.css": "tailwindcss"
+		}
+	}
+}
