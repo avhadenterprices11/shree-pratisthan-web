@@ -15,14 +15,28 @@ export function ScrollProvider({ children }: { children: React.ReactNode }) {
   useEffect(() => {
     setMounted(true);
 
-    // Instantiate Lenis engine
+    // Gracefully buffer CPU/GPU micro-hitches so dropped frames never cause violent scroll jumps
+    gsap.ticker.lagSmoothing(500, 33);
+
+    // Only bypass Lenis on actual mobile phone viewports
+    const isMobilePhone =
+      window.matchMedia("(pointer: coarse) and (max-width: 768px)").matches;
+
+    if (isMobilePhone) {
+      // Mobile phones use native 120Hz touch physics
+      return;
+    }
+
+    // Instantiate Lenis engine for desktop
     const lenis = new Lenis({
+      autoRaf: false,
       lerp: 0.12,
       orientation: "vertical",
       gestureOrientation: "vertical",
       smoothWheel: true,
-      wheelMultiplier: 1.1,
-      touchMultiplier: 1.5,
+      wheelMultiplier: 1.0,
+      touchMultiplier: 0,
+      syncTouch: false,
     });
 
     lenisRef.current = lenis;
@@ -38,12 +52,12 @@ export function ScrollProvider({ children }: { children: React.ReactNode }) {
       lenis.raf(time * 1000); // GSAP uses seconds; Lenis expects milliseconds
     };
     gsap.ticker.add(updatePhysics);
-    gsap.ticker.lagSmoothing(0);
 
     return () => {
       lenis.off("scroll", handleScroll);
       lenis.destroy();
       gsap.ticker.remove(updatePhysics);
+      lenisRef.current = null;
     };
   }, []);
 

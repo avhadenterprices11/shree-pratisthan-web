@@ -3,7 +3,7 @@ import Link from "next/link";
 
 export default function NotFound() {
   return (
-    <main className="min-h-screen flex flex-col items-center justify-center px-6 py-24 bg-[#FBFBFA] relative overflow-hidden">
+    <main className="min-h-screen flex flex-col items-center justify-center px-6 py-24 bg-[#FBFBFA] dark:bg-[#0c0c0e] relative overflow-hidden">
       {/* Ambient glow backgrounds */}
       <div className="absolute inset-0 pointer-events-none">
         <div
@@ -29,14 +29,14 @@ export default function NotFound() {
 
         {/* Heading */}
         <div className="space-y-3">
-          <h1 className="text-3xl sm:text-4xl font-black text-slate-800 tracking-tight font-heading leading-tight uppercase">
+          <h1 className="text-[32px] sm:text-4xl font-black text-slate-800 dark:text-neutral-100 tracking-tight font-heading leading-tight uppercase">
             Lost in the Festival?
           </h1>
           <div className="w-12 h-1 bg-saffron mx-auto rounded-full" />
         </div>
 
         {/* Description */}
-        <p className="text-slate-500 text-sm leading-relaxed max-w-sm mx-auto">
+        <p className="text-slate-500 dark:text-neutral-400 text-base leading-relaxed max-w-sm mx-auto">
           The page you are looking for may have moved, been renamed, or does not exist. Let us guide you back to the celebration.
         </p>
 
@@ -51,7 +51,7 @@ export default function NotFound() {
             <Link
               key={link.href}
               href={link.href}
-              className="uppercase font-extrabold tracking-widest text-slate-500 hover:text-saffron transition-colors duration-300 border border-slate-200 hover:border-saffron/30 rounded-xl py-3 px-4 text-center"
+              className="uppercase font-extrabold tracking-widest text-slate-500 dark:text-neutral-300 hover:text-saffron transition-colors duration-300 border border-slate-200 dark:border-white/10 dark:bg-white/5 hover:border-saffron/30 rounded-xl py-3 px-4 text-center"
             >
               {link.label}
             </Link>

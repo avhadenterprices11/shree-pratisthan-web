@@ -3,15 +3,17 @@
 import React, { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import gsap from "gsap";
+import { useLanguage } from "@/context/LanguageContext";
 
 const IMAGES = [
-  "/gallery_ganeshotsav_aarthi.png",
-  "/gallery_dahi_handi_pyramids.png",
-  "/gallery_navratri_garba.png",
-  "/gallery_shiv_jayanti_rally.png",
+  "/ganeshotsav_2017_jaipur.jpg",
+  "/events_rajmudra_51ft.jpg",
+  "/events_ganeshotsav_2023.jpg",
+  "/dahihandi_2018.jpg",
 ];
 
 export default function GalleryHero() {
+  const { t } = useLanguage();
   const containerRef = useRef<HTMLDivElement>(null);
   
   // Staggered curtain slide states
@@ -61,7 +63,7 @@ export default function GalleryHero() {
   return (
     <section 
       ref={containerRef}
-      className="relative min-h-[88vh] flex items-center py-28 md:py-36 px-6 md:px-12 overflow-hidden bg-black"
+      className="relative min-h-[80vh] sm:min-h-[88vh] flex items-center py-20 sm:py-28 md:py-36 px-4 sm:px-6 md:px-12 overflow-hidden bg-black"
     >
       {/* Base Background Image (Ken Burns Zoom) */}
       <div className="absolute inset-0 z-0 bg-neutral-900 overflow-hidden">
@@ -105,22 +107,22 @@ export default function GalleryHero() {
       </div>
 
       {/* Cinematic dark overlay gradient mask for high contrast text */}
-      <div className="absolute inset-0 bg-gradient-to-r from-black/90 via-black/55 to-black/25 z-15 pointer-events-none" />
+      <div className="absolute inset-0 bg-gradient-to-r from-black/95 via-black/60 sm:via-black/55 to-black/30 z-15 pointer-events-none" />
       
       <div className="max-w-[1600px] w-full mx-auto relative z-20">
         {/* Left-aligned Text Overlay */}
-        <div className="max-w-3xl space-y-6 text-left">
-          <h1 className="text-4xl sm:text-6xl lg:text-7xl font-extrabold text-white leading-[1.05] tracking-tight font-heading">
-            <div className="overflow-hidden">
-              <span className="block reveal-line">Immersive</span>
+        <div className="max-w-3xl space-y-4 sm:space-y-6 text-left">
+          <h1 className="text-[32px] sm:text-5xl md:text-6xl lg:text-7xl font-normal text-white leading-[1.3] sm:leading-[1.32] tracking-tight font-heading uppercase">
+            <div className="overflow-hidden px-2 sm:px-4 -mx-2 sm:-mx-4 py-3 sm:py-4 -my-2 sm:-my-3">
+              <span className="block reveal-line py-1">{t("galleryPage.hero.titleLine1")}</span>
             </div>
-            <div className="overflow-hidden">
-              <span className="block reveal-line text-saffron text-outline-festive">Media Gallery.</span>
+            <div className="overflow-hidden px-2 sm:px-4 -mx-2 sm:-mx-4 py-3 sm:py-4 -my-2 sm:-my-3">
+              <span className="block reveal-line py-1 text-saffron text-outline-festive font-heading">{t("galleryPage.hero.titleLine2")}</span>
             </div>
           </h1>
 
-          <p className="hero-subtitle text-base sm:text-lg text-white/85 max-w-xl leading-relaxed">
-            Explore photographic records and video reels of our 19+ years legacy: cultural festivals, Gudipadwa Swagat Yatra, 50+ blood donation camps, and youth sports in Indira Nagar, Nashik.
+          <p className="hero-subtitle text-base sm:text-base md:text-lg text-white/85 max-w-xl leading-[1.7] sm:leading-[1.75] font-sans font-normal [text-shadow:_0_2px_4px_rgba(0,0,0,0.8)]">
+            {t("galleryPage.hero.subtitle")}
           </p>
         </div>
       </div>

@@ -2,15 +2,16 @@
 @import "tw-animate-css";
 @import "shadcn/tailwind.css";
 
-@custom-variant dark (&:is(.dark *));
+@custom-variant dark (&:where(.dark, .dark *));
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   
-  --font-sans: var(--font-sans);
-  --font-heading: var(--font-heading);
-  --font-mono: var(--font-mono);
+  --font-sans: var(--font-sans), 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-heading: var(--font-heading), 'Outfit', sans-serif;
+  --font-eyebrow: var(--font-eyebrow), 'Outfit', sans-serif;
+  --font-mono: monospace;
 
   --color-saffron: var(--saffron);
   --color-gold: var(--gold);
@@ -66,8 +67,9 @@
   --input: oklch(0.88 0.01 70);
   --ring: var(--saffron);
   
-  --font-sans: 'General Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-  --font-heading: 'Clash Display', sans-serif;
+  --font-sans: var(--font-sans), 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-heading: var(--font-heading), 'Outfit', sans-serif;
+  --font-eyebrow: var(--font-eyebrow), 'Outfit', sans-serif;
   --font-mono: monospace;
 
   /* Design System Specific Core Colors */
@@ -85,12 +87,48 @@
   --coal: hsl(240, 4%, 30%);              /* #4C4C50 - Borders / Placeholders */
 }
 
+.dark {
+  /* Obsidian Festival Dark Theme Tokens */
+  --background: oklch(0.14 0.01 240);         /* Deep Obsidian Canvas (#0B0B0C) */
+  --foreground: oklch(0.96 0.005 60);         /* Bright Alabaster (#F4F4F4) */
+  
+  --saffron: oklch(0.65 0.22 35);             /* Glowing Festive Saffron */
+  --gold: oklch(0.78 0.16 80);                /* Shimmering Metallic Gold */
+  --marigold: oklch(0.84 0.18 85);
+  --charcoal: oklch(0.20 0.01 240);           /* Deep Charcoal for rich contrast */
+  --slate-grey: oklch(0.74 0.01 240);         /* High-contrast readable gray (#B0B4BC) */
+  
+  --card: oklch(0.18 0.01 240);               /* Level 1 Surface (#121214) */
+  --card-foreground: oklch(0.96 0.005 60);
+  --popover: oklch(0.18 0.01 240);
+  --popover-foreground: oklch(0.96 0.005 60);
+  --primary: var(--saffron);
+  --primary-foreground: oklch(0.99 0.002 60);
+  --secondary: oklch(0.24 0.01 240);
+  --secondary-foreground: oklch(0.96 0.005 60);
+  --muted: oklch(0.22 0.01 240);
+  --muted-foreground: oklch(0.72 0.01 240);
+  --accent: oklch(0.24 0.01 240);
+  --accent-foreground: oklch(0.96 0.005 60);
+  --destructive: oklch(0.55 0.22 25);
+  --border: oklch(0.28 0.01 240);
+  --input: oklch(0.24 0.01 240);
+  --ring: var(--saffron);
+}
+
 /* Premium Light Theme Glassmorphism */
 .glass-panel {
   background: rgba(255, 255, 255, 0.75);
   backdrop-filter: blur(12px) saturate(110%);
   border: 1px solid rgba(226, 88, 34, 0.08); /* Saffron edge tint */
   box-shadow: 0 8px 30px 0 rgba(226, 88, 34, 0.04);
+}
+
+.dark .glass-panel {
+  background: rgba(18, 18, 20, 0.85);
+  backdrop-filter: blur(16px) saturate(120%);
+  border: 1px solid rgba(226, 88, 34, 0.18);
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.45);
 }
 
 .glass-panel-hover {
@@ -116,6 +154,9 @@
 .text-outline-festive {
   -webkit-text-stroke: 1.5px var(--saffron);
   color: transparent;
+  display: inline-block;
+  padding-top: 0.08em;
+  padding-bottom: 0.08em;
   transition: -webkit-text-stroke 0.3s ease;
 }
 
@@ -126,20 +167,55 @@
 /* Infinite Scrolling Marquee */
 @keyframes marquee-scroll {
   0% { transform: translateX(0); }
-  100% { transform: translateX(-100%); }
+  100% { transform: translateX(-50%); }
 }
 
 .animate-marquee {
   display: flex;
   width: max-content;
-  animation: marquee-scroll 25s linear infinite;
+  animation: marquee-scroll 30s linear infinite;
 }
 
-.animate-marquee:hover {
-  animation-play-state: paused;
+@media (hover: hover) and (pointer: fine) {
+  .animate-marquee:hover {
+    animation-play-state: paused;
+  }
 }
 
 /* Custom Cursor Styles */
+.font-eyebrow {
+  font-family: var(--font-eyebrow);
+}
+
+.font-heading {
+  font-family: var(--font-heading);
+}
+
+.font-sans {
+  font-family: var(--font-sans);
+}
+
+/* ── Standardized Typography Scale (Mobile-First) ── */
+.type-h1 {
+  @apply text-[32px] sm:text-5xl md:text-6xl lg:text-7xl font-heading leading-tight tracking-tight uppercase;
+}
+
+.type-h2 {
+  @apply text-2xl sm:text-4xl md:text-5xl font-heading leading-tight tracking-tight uppercase;
+}
+
+.type-h3 {
+  @apply text-lg sm:text-2xl font-heading leading-snug uppercase;
+}
+
+.type-body {
+  @apply text-base font-sans font-normal leading-relaxed;
+}
+
+.type-caption {
+  @apply text-xs font-sans font-bold uppercase tracking-widest;
+}
+
 .custom-cursor-dot {
   pointer-events: none;
   position: fixed;
@@ -238,6 +314,12 @@ html.lenis, html.lenis body {
 
 .animate-footer-marquee {
   animation: footer-marquee 25s linear infinite;
+  transition: animation-duration 0.8s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+footer:hover .animate-footer-marquee,
+.footer-marquee-wrap:hover .animate-footer-marquee {
+  animation-duration: 80s;
 }
 
 .text-outline {
@@ -282,4 +364,47 @@ html.lenis, html.lenis body {
     transition-duration: 0.01ms !important;
     scroll-behavior: auto !important;
   }
+}
+
+/* ── Seamless Google Translate Custom Styling & Complete Stealth ────────── */
+.goog-te-banner-frame,
+.goog-te-banner-frame.skiptranslate,
+iframe.goog-te-banner-frame,
+#goog-gt-tt,
+.goog-tooltip,
+.goog-tooltip:hover,
+.goog-te-balloon-frame,
+.VIpgJd-ZVi9od-aZ2wEe,
+.VIpgJd-ZVi9od-ORHb-OJyqT,
+.VIpgJd-ZVi9od-SmfZ-OJyqT,
+.VIpgJd-ZVi9od-xl07Ob-OJyqT,
+.VIpgJd-ZVi9od-vH1Gmf,
+.goog-logo-link,
+.goog-te-gadget span,
+#google_translate_element {
+  display: none !important;
+  visibility: hidden !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
+}
+
+body {
+  top: 0px !important;
+  position: static !important;
+}
+
+.goog-text-highlight {
+  background-color: transparent !important;
+  box-shadow: none !important;
+  border: none !important;
+}
+
+.skiptranslate:not(.allowed-translate) {
+  display: none !important;
+}
+
+/* Guard protected terms from font shift */
+[translate="no"],
+.notranslate {
+  font-feature-settings: normal;
 }

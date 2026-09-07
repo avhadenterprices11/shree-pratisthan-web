@@ -1,18 +1,21 @@
 "use client";
 
 import VolunteerCTA from "@/components/ui/volunteer-cta";
+import { useLanguage } from "@/context/LanguageContext";
 
 export default function AboutJoinCTA() {
+  const { t } = useLanguage();
+
   return (
     <VolunteerCTA
       title={
         <>
-          Help Us Write the<br />
-          <span className="text-saffron">Next Chapter</span>
+          {t("aboutPage.joinCTA.titlePart1")}<br />
+          <span className="text-saffron">{t("aboutPage.joinCTA.titlePart2")}</span>
         </>
       }
-      description="Join our 100+ active members and volunteer network in Indira Nagar, Nashik to celebrate culture, empower youth, and drive social progress."
-      buttonText="Sign Up As Volunteer"
+      description={t("aboutPage.joinCTA.description")}
+      buttonText={t("aboutPage.joinCTA.button")}
       buttonLink="/volunteer"
     />
   );

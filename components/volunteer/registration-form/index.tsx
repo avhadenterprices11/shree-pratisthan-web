@@ -4,6 +4,7 @@ import React, { useState, useEffect, useRef } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { Loader2, AlertCircle, CheckCircle2 } from "lucide-react";
+import { useLanguage } from "@/context/LanguageContext";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -59,17 +60,18 @@ function FieldError({ message }: { message?: string }) {
 
 function inputClass(hasError?: boolean) {
   return [
-    "w-full bg-slate-50/50 border rounded-xl px-4 py-3 text-sm text-foreground",
-    "focus:outline-none focus:bg-white transition-all",
+    "w-full bg-slate-50/50 dark:bg-[#18181b] border rounded-xl px-3.5 sm:px-4 py-2.5 sm:py-3 text-base sm:text-sm text-neutral-900 dark:text-neutral-100 font-sans",
+    "focus:outline-none focus:bg-white dark:focus:bg-[#1f1f23] transition-all",
     hasError
       ? "border-red-400 focus:border-red-500 focus:ring-2 focus:ring-red-100"
-      : "border-slate-200 focus:border-saffron",
+      : "border-slate-200 dark:border-white/10 focus:border-saffron",
   ].join(" ");
 }
 
 // ─── Component ────────────────────────────────────────────────────────────────
 
 export default function VolunteerRegistrationForm() {
+  const { t } = useLanguage();
   const [formData, setFormData] = useState<FormData>(INITIAL_FORM);
   const [fieldErrors, setFieldErrors] = useState<FieldErrors>({});
   const [status, setStatus] = useState<FormStatus>("idle");
@@ -178,66 +180,63 @@ export default function VolunteerRegistrationForm() {
     <section
       id="registration-form"
       ref={containerRef}
-      className="py-24 px-6 md:px-12 relative overflow-hidden bg-background scroll-mt-20"
+      className="py-12 sm:py-16 md:py-24 px-4 sm:px-6 md:px-12 relative overflow-hidden bg-background scroll-mt-20"
     >
       <div className="absolute inset-0 ambient-saffron-glow pointer-events-none opacity-40 animate-pulse" />
       <div className="max-w-6xl mx-auto relative z-10 form-reveal">
-        <div className="glass-panel p-8 sm:p-12 rounded-block bg-white border border-saffron/10 shadow-2xl">
+        <div className="glass-panel p-5 sm:p-8 md:p-12 rounded-2xl sm:rounded-block bg-white dark:bg-[#121214] border border-saffron/10 dark:border-white/10 shadow-2xl">
 
-          <div className="text-center max-w-xl mx-auto mb-10">
-            <h2 className="text-3xl sm:text-4xl font-extrabold text-foreground tracking-tight font-heading">
-              Volunteer Registration Form
+          <div className="text-center max-w-xl mx-auto mb-8 sm:mb-10">
+            <h2 className="text-2xl sm:text-4xl md:text-5xl font-normal text-neutral-900 dark:text-neutral-100 tracking-tight font-heading leading-tight uppercase">
+              {t("volunteerPage.form.heading")}
             </h2>
-            <p className="text-slate-grey mt-3 text-sm sm:text-base">
-              Submit your interest below. Our Indira Nagar, Nashik team leads will review your application and connect with you shortly.
+            <p className="text-slate-grey dark:text-neutral-300 mt-2.5 sm:mt-3 text-base font-sans leading-[1.7] sm:leading-relaxed font-normal">
+              {t("volunteerPage.form.subtitle")}
             </p>
-            <div className="w-12 h-1 bg-saffron mx-auto mt-4 rounded-full" />
+            <div className="w-12 sm:w-16 h-1 bg-saffron mx-auto mt-3 sm:mt-4 rounded-full" />
           </div>
 
           {/* ── Success State ─────────────────────────────────────────────── */}
           {status === "success" ? (
-            <div className="text-center py-12 space-y-4">
-              <div className="w-16 h-16 rounded-full bg-saffron/10 text-saffron flex items-center justify-center mx-auto border border-saffron/20">
-                <CheckCircle2 className="w-8 h-8 stroke-[1.5]" />
+            <div className="text-center py-8 sm:py-12 space-y-4">
+              <div className="w-14 h-14 sm:w-16 sm:h-16 rounded-full bg-saffron/10 text-saffron flex items-center justify-center mx-auto border border-saffron/20">
+                <CheckCircle2 className="w-7 h-7 sm:w-8 sm:h-8 stroke-[1.5]" />
               </div>
-              <h3 className="text-2xl font-extrabold text-foreground font-heading">
-                Application Received!
+              <h3 className="text-xl sm:text-2xl font-normal text-neutral-900 dark:text-neutral-100 font-heading uppercase">
+                {t("volunteerPage.form.successTitle")}
               </h3>
-              <p className="text-slate-grey max-w-md mx-auto text-sm">
-                Thank you for applying, <strong>{formData.name}</strong>. We have logged your
-                email (<strong>{formData.email}</strong>) and phone number (
-                <strong>{formData.phone}</strong>). An Indira Nagar, Nashik team coordinator will contact you to explain
-                upcoming festival, health camp, and sports initiative schedules.
+              <p className="text-slate-grey dark:text-neutral-300 max-w-md mx-auto text-base font-sans leading-relaxed">
+                {t("volunteerPage.form.successMsg")}
               </p>
               <button
                 onClick={handleReset}
-                className="text-xs uppercase font-extrabold tracking-widest text-saffron hover:underline mt-4 cursor-pointer"
+                className="text-[10px] sm:text-xs uppercase font-bold tracking-[0.2em] text-saffron hover:underline mt-3 sm:mt-4 cursor-pointer font-sans"
               >
-                Submit another application
+                {t("volunteerPage.form.registerAnother")}
               </button>
             </div>
           ) : (
             /* ── Form ────────────────────────────────────────────────────── */
-            <form onSubmit={handleSubmit} className="space-y-6" noValidate>
+            <form onSubmit={handleSubmit} className="space-y-4 sm:space-y-6" noValidate>
 
               {/* Global error banner */}
               {status === "error" && errorMessage && (
-                <div className="flex items-start gap-3 bg-red-50 border border-red-200 rounded-xl px-4 py-3 text-sm text-red-700">
+                <div className="flex items-start gap-3 bg-red-50 border border-red-200 rounded-xl px-4 py-3 text-xs sm:text-sm text-red-700 font-sans">
                   <AlertCircle className="w-4 h-4 shrink-0 mt-0.5" />
                   <span>{errorMessage}</span>
                 </div>
               )}
 
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-                <div className="space-y-2">
-                  <label htmlFor="vf-name" className="text-xs uppercase font-extrabold tracking-wider text-foreground block">
-                    Full Name <span className="text-red-400">*</span>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
+                <div className="space-y-1.5 sm:space-y-2">
+                  <label htmlFor="vf-name" className="text-[10px] sm:text-xs uppercase font-bold tracking-[0.18em] text-neutral-900 dark:text-neutral-200 block font-sans">
+                    {t("volunteerPage.form.nameLabel")} <span className="text-red-400">*</span>
                   </label>
                   <input
                     type="text"
                     id="vf-name"
                     required
-                    placeholder="Enter your full name"
+                    placeholder={t("volunteerPage.form.namePlaceholder")}
                     value={formData.name}
                     onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                     disabled={status === "loading"}
@@ -246,15 +245,15 @@ export default function VolunteerRegistrationForm() {
                   <FieldError message={fieldErrors.name} />
                 </div>
 
-                <div className="space-y-2">
-                  <label htmlFor="vf-email" className="text-xs uppercase font-extrabold tracking-wider text-foreground block">
-                    Email Address <span className="text-red-400">*</span>
+                <div className="space-y-1.5 sm:space-y-2">
+                  <label htmlFor="vf-email" className="text-[10px] sm:text-xs uppercase font-bold tracking-[0.18em] text-neutral-900 dark:text-neutral-200 block font-sans">
+                    {t("volunteerPage.form.emailLabel")} <span className="text-red-400">*</span>
                   </label>
                   <input
                     type="email"
                     id="vf-email"
                     required
-                    placeholder="Enter your email address"
+                    placeholder={t("volunteerPage.form.emailPlaceholder")}
                     value={formData.email}
                     onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                     disabled={status === "loading"}
@@ -264,16 +263,16 @@ export default function VolunteerRegistrationForm() {
                 </div>
               </div>
 
-              <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
-                <div className="space-y-2">
-                  <label htmlFor="vf-phone" className="text-xs uppercase font-extrabold tracking-wider text-foreground block">
-                    Phone Number <span className="text-red-400">*</span>
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-6">
+                <div className="space-y-1.5 sm:space-y-2">
+                  <label htmlFor="vf-phone" className="text-[10px] sm:text-xs uppercase font-bold tracking-[0.18em] text-neutral-900 dark:text-neutral-200 block font-sans">
+                    {t("volunteerPage.form.phoneLabel")} <span className="text-red-400">*</span>
                   </label>
                   <input
                     type="tel"
                     id="vf-phone"
                     required
-                    placeholder="Enter phone number"
+                    placeholder={t("volunteerPage.form.phonePlaceholder")}
                     value={formData.phone}
                     onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
                     disabled={status === "loading"}
@@ -282,15 +281,15 @@ export default function VolunteerRegistrationForm() {
                   <FieldError message={fieldErrors.phone} />
                 </div>
 
-                <div className="space-y-2">
-                  <label htmlFor="vf-location" className="text-xs uppercase font-extrabold tracking-wider text-foreground block">
-                    Area / Location <span className="text-red-400">*</span>
+                <div className="space-y-1.5 sm:space-y-2">
+                  <label htmlFor="vf-location" className="text-[10px] sm:text-xs uppercase font-bold tracking-[0.18em] text-neutral-900 dark:text-neutral-200 block font-sans">
+                    {t("volunteerPage.form.locationLabel")} <span className="text-red-400">*</span>
                   </label>
                   <input
                     type="text"
                     id="vf-location"
                     required
-                    placeholder="e.g. Indira Nagar, Nashik"
+                    placeholder={t("volunteerPage.form.locationPlaceholder")}
                     value={formData.location}
                     onChange={(e) => setFormData({ ...formData, location: e.target.value })}
                     disabled={status === "loading"}
@@ -299,9 +298,9 @@ export default function VolunteerRegistrationForm() {
                   <FieldError message={fieldErrors.location} />
                 </div>
 
-                <div className="space-y-2">
-                  <label htmlFor="vf-age" className="text-xs uppercase font-extrabold tracking-wider text-foreground block">
-                    Age <span className="text-red-400">*</span>
+                <div className="space-y-1.5 sm:space-y-2">
+                  <label htmlFor="vf-age" className="text-[10px] sm:text-xs uppercase font-bold tracking-[0.18em] text-neutral-900 dark:text-neutral-200 block font-sans">
+                    {t("volunteerPage.form.ageLabel")} <span className="text-red-400">*</span>
                   </label>
                   <input
                     type="number"
@@ -309,7 +308,7 @@ export default function VolunteerRegistrationForm() {
                     required
                     min="16"
                     max="100"
-                    placeholder="Min age: 16"
+                    placeholder={t("volunteerPage.form.agePlaceholder")}
                     value={formData.age}
                     onChange={(e) => setFormData({ ...formData, age: e.target.value })}
                     disabled={status === "loading"}
@@ -319,10 +318,10 @@ export default function VolunteerRegistrationForm() {
                 </div>
               </div>
 
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-                <div className="space-y-2">
-                  <label htmlFor="vf-track" className="text-xs uppercase font-extrabold tracking-wider text-foreground block">
-                    Preferred Volunteer Track
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
+                <div className="space-y-1.5 sm:space-y-2">
+                  <label htmlFor="vf-track" className="text-[10px] sm:text-xs uppercase font-bold tracking-[0.18em] text-neutral-900 dark:text-neutral-200 block font-sans">
+                    {t("volunteerPage.form.trackLabel")}
                   </label>
                   <select
                     id="vf-track"
@@ -331,16 +330,16 @@ export default function VolunteerRegistrationForm() {
                     disabled={status === "loading"}
                     className={inputClass(false) + " cursor-pointer"}
                   >
-                    <option value="event-logistics">Cultural Festivals (Swagat Yatra / Ganeshotsav / Shiv Jayanti)</option>
-                    <option value="medical-camps">Blood Donation &amp; Health Camps (Arogya)</option>
-                    <option value="tree-plantation">Sports &amp; Cricket Tournaments</option>
-                    <option value="relief-work">Student Aid &amp; Community Welfare (Seva)</option>
+                    <option value="event-logistics">{t("volunteerPage.form.trackOpt1")}</option>
+                    <option value="medical-camps">{t("volunteerPage.form.trackOpt2")}</option>
+                    <option value="tree-plantation">{t("volunteerPage.form.trackOpt3")}</option>
+                    <option value="relief-work">{t("volunteerPage.form.trackOpt4")}</option>
                   </select>
                 </div>
 
-                <div className="space-y-2">
-                  <label htmlFor="vf-availability" className="text-xs uppercase font-extrabold tracking-wider text-foreground block">
-                    Time Availability
+                <div className="space-y-1.5 sm:space-y-2">
+                  <label htmlFor="vf-availability" className="text-[10px] sm:text-xs uppercase font-bold tracking-[0.18em] text-neutral-900 dark:text-neutral-200 block font-sans">
+                    {t("volunteerPage.form.availLabel")}
                   </label>
                   <select
                     id="vf-availability"
@@ -349,21 +348,21 @@ export default function VolunteerRegistrationForm() {
                     disabled={status === "loading"}
                     className={inputClass(false) + " cursor-pointer"}
                   >
-                    <option value="weekends">Weekends Only</option>
-                    <option value="weekdays">Weekdays Only</option>
-                    <option value="both">Both Weekdays &amp; Weekends</option>
+                    <option value="weekends">{t("volunteerPage.form.availOpt1")}</option>
+                    <option value="weekdays">{t("volunteerPage.form.availOpt2")}</option>
+                    <option value="both">{t("volunteerPage.form.availOpt3")}</option>
                   </select>
                 </div>
               </div>
 
-              <div className="space-y-2">
-                <label htmlFor="vf-message" className="text-xs uppercase font-extrabold tracking-wider text-foreground block">
-                  Relevant Skills / Message <span className="text-slate-400 normal-case font-normal">(Optional)</span>
+              <div className="space-y-1.5 sm:space-y-2">
+                <label htmlFor="vf-message" className="text-[10px] sm:text-xs uppercase font-bold tracking-[0.18em] text-neutral-900 dark:text-neutral-200 block font-sans">
+                  {t("volunteerPage.form.notesLabel")}
                 </label>
                 <textarea
                   id="vf-message"
                   rows={4}
-                  placeholder="Share any past NGO skills, medical experience, or specific questions..."
+                  placeholder={t("volunteerPage.form.notesPlaceholder")}
                   value={formData.message}
                   onChange={(e) => setFormData({ ...formData, message: e.target.value })}
                   disabled={status === "loading"}
@@ -371,19 +370,19 @@ export default function VolunteerRegistrationForm() {
                 />
               </div>
 
-              <div className="text-center pt-4">
+              <div className="text-center pt-2 sm:pt-4">
                 <button
                   type="submit"
                   disabled={status === "loading"}
-                  className="w-full sm:w-auto bg-saffron hover:bg-saffron/90 hover:shadow-lg hover:shadow-saffron/20 text-white font-extrabold text-xs uppercase tracking-widest px-10 py-4 rounded-full transition-all duration-300 active:scale-95 cursor-pointer inline-flex items-center justify-center gap-2 disabled:opacity-60 disabled:cursor-not-allowed disabled:active:scale-100"
+                  className="w-full sm:w-auto bg-saffron hover:bg-saffron/90 hover:shadow-lg hover:shadow-saffron/20 text-white font-bold text-xs uppercase tracking-[0.2em] px-8 sm:px-10 py-3.5 sm:py-4 rounded-full transition-all duration-300 active:scale-95 cursor-pointer inline-flex items-center justify-center gap-2 disabled:opacity-60 disabled:cursor-not-allowed disabled:active:scale-100 font-sans"
                 >
                   {status === "loading" ? (
                     <>
                       <Loader2 className="w-4 h-4 animate-spin" />
-                      Submitting…
+                      {t("volunteerPage.form.submittingBtn")}
                     </>
                   ) : (
-                    "Submit Volunteer Application"
+                    t("volunteerPage.form.submitBtn")
                   )}
                 </button>
               </div>
