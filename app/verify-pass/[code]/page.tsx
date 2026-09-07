@@ -280,7 +280,7 @@ export default function VerifyPassPage({ params }: { params: Promise<{ code: str
                     <span className="text-neutral-500 block text-[10px] font-semibold">DATE</span>
                     <span className="font-bold text-neutral-200">
                       {eventDetails?.start_date 
-                        ? new Date(eventDetails.start_date).toLocaleDateString('en-IN', { day: '2-digit', month: 'short', year: 'numeric' })
+                        ? new Date(eventDetails.start_date).toLocaleDateString('en-IN', { day: '2-digit', month: 'short', year: 'numeric', timeZone: (eventDetails as any)?.timezone || 'Asia/Kolkata' })
                         : '24 AUG 2026'}
                     </span>
                   </div>
@@ -294,7 +294,7 @@ export default function VerifyPassPage({ params }: { params: Promise<{ code: str
                     <span className="text-neutral-500 block text-[10px] font-semibold">TIME</span>
                     <span className="font-bold text-neutral-200">
                       {eventDetails?.start_date 
-                        ? new Date(eventDetails.start_date).toLocaleTimeString('en-IN', { hour: '2-digit', minute: '2-digit' })
+                        ? new Date(eventDetails.start_date).toLocaleTimeString('en-IN', { hour: '2-digit', minute: '2-digit', hour12: true, timeZone: (eventDetails as any)?.timezone || 'Asia/Kolkata' })
                         : '07:00 PM'}
                     </span>
                   </div>

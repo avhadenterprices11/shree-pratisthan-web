@@ -153,24 +153,25 @@ export function computeEventStatus(startDateStr: string, endDateStr: string, bac
 }
 
 // Format ISO date strings into readable human format (e.g. "Aug 27 – Sep 06, 2026")
-export function formatEventDateRange(startDateStr: string, endDateStr: string): string {
+export function formatEventDateRange(startDateStr: string, endDateStr: string, timezone?: string): string {
   try {
     const startDate = new Date(startDateStr);
     const endDate = new Date(endDateStr);
 
     if (isNaN(startDate.getTime())) return "Upcoming Date";
+    const tz = timezone || "Asia/Kolkata";
 
-    const startMonth = startDate.toLocaleDateString("en-US", { month: "short" });
-    const startDay = startDate.getDate().toString().padStart(2, "0");
-    const startYear = startDate.getFullYear();
+    const startMonth = startDate.toLocaleDateString("en-US", { month: "short", timeZone: tz });
+    const startDay = startDate.toLocaleDateString("en-US", { day: "2-digit", timeZone: tz });
+    const startYear = startDate.toLocaleDateString("en-US", { year: "numeric", timeZone: tz });
 
     if (isNaN(endDate.getTime()) || startDateStr === endDateStr) {
       return `${startMonth} ${startDay}, ${startYear}`;
     }
 
-    const endMonth = endDate.toLocaleDateString("en-US", { month: "short" });
-    const endDay = endDate.getDate().toString().padStart(2, "0");
-    const endYear = endDate.getFullYear();
+    const endMonth = endDate.toLocaleDateString("en-US", { month: "short", timeZone: tz });
+    const endDay = endDate.toLocaleDateString("en-US", { day: "2-digit", timeZone: tz });
+    const endYear = endDate.toLocaleDateString("en-US", { year: "numeric", timeZone: tz });
 
     if (startYear === endYear) {
       if (startMonth === endMonth) {
@@ -186,16 +187,17 @@ export function formatEventDateRange(startDateStr: string, endDateStr: string): 
 }
 
 // Format time range
-export function formatEventTime(startDateStr: string, endDateStr: string, allDay?: boolean): string {
+export function formatEventTime(startDateStr: string, endDateStr: string, allDay?: boolean, timezone?: string): string {
   if (allDay) return "All Day Event";
   try {
     const start = new Date(startDateStr);
     const end = new Date(endDateStr);
 
     if (isNaN(start.getTime())) return "06:00 AM – 10:00 PM";
+    const tz = timezone || "Asia/Kolkata";
 
     const formatTime = (d: Date) =>
-      d.toLocaleTimeString("en-US", { hour: "2-digit", minute: "2-digit", hour12: true });
+      d.toLocaleTimeString("en-US", { hour: "2-digit", minute: "2-digit", hour12: true, timeZone: tz });
 
     if (isNaN(end.getTime())) return formatTime(start);
     return `${formatTime(start)} – ${formatTime(end)}`;
@@ -299,8 +301,8 @@ export function transformBackendEventToEventItem(backend: BackendEvent): EventIt
     category,
     categoryLabel: getCategoryLabel(backend.category),
     status,
-    date: formatEventDateRange(backend.start_date, backend.end_date),
-    time: formatEventTime(backend.start_date, backend.end_date, backend.all_day),
+    date: formatEventDateRange(backend.start_date, backend.end_date, backend.timezone),
+    time: formatEventTime(backend.start_date, backend.end_date, backend.all_day, backend.timezone),
     location,
     mapUrl: `https://maps.google.com/?q=${encodeURIComponent(fullAddress || location)}`,
     mainImage,
