@@ -3,18 +3,20 @@
 import React, { useEffect, useRef } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { useLanguage } from "@/context/LanguageContext";
 
 gsap.registerPlugin(ScrollTrigger);
 
-const SPECIES = [
-  { name: "Neem (Azadirachta indica)", type: "Air Purifying & Medicinal", count: "1,500+" },
-  { name: "Banyan (Ficus benghalensis)", type: "Shade & Canopy Growth", count: "800+" },
-  { name: "Mango (Mangifera indica)", type: "Fruiting & Local Ecology", count: "1,200+" },
-  { name: "Peepal (Ficus religiosa)", type: "Oxygen Rich & Soil Stability", count: "900+" },
-];
-
 export default function TreePlantation() {
+  const { t } = useLanguage();
   const containerRef = useRef<HTMLDivElement>(null);
+
+  const SPECIES = [
+    { name: t("communityPage.treePlantation.s1Name"), type: t("communityPage.treePlantation.s1Type"), count: t("communityPage.treePlantation.s1Count") },
+    { name: t("communityPage.treePlantation.s2Name"), type: t("communityPage.treePlantation.s2Type"), count: t("communityPage.treePlantation.s2Count") },
+    { name: t("communityPage.treePlantation.s3Name"), type: t("communityPage.treePlantation.s3Type"), count: t("communityPage.treePlantation.s3Count") },
+    { name: t("communityPage.treePlantation.s4Name"), type: t("communityPage.treePlantation.s4Type"), count: t("communityPage.treePlantation.s4Count") },
+  ];
 
   useEffect(() => {
     // Register ScrollTrigger plugin
@@ -72,69 +74,66 @@ export default function TreePlantation() {
     <section
       id="tree-plantation"
       ref={containerRef}
-      className="py-24 px-6 md:px-12 relative overflow-hidden bg-background scroll-mt-20 border-t border-black/5"
+      className="py-12 sm:py-16 md:py-24 px-4 sm:px-6 md:px-12 relative overflow-hidden bg-background scroll-mt-20 border-t border-black/5 dark:border-white/10"
     >
       <div className="absolute inset-0 bg-gradient-to-br from-emerald-500/5 to-transparent pointer-events-none" />
       <div className="max-w-7xl mx-auto relative z-10">
         <div 
-          className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center"
+          className="grid grid-cols-1 lg:grid-cols-2 gap-8 sm:gap-16 items-center"
           style={{ perspective: 1200, transformStyle: "preserve-3d" }}
         >
           
           {/* Left Column: Visual Species Selection */}
-          <div className="tree-animate-left order-2 lg:order-1 glass-panel p-8 rounded-block bg-white relative">
-            <div className="absolute top-4 right-6 text-xs uppercase font-extrabold tracking-widest text-emerald-600 bg-emerald-50 px-3 py-1 rounded-full border border-emerald-100">
-              Ecology
+          <div className="tree-animate-left order-2 lg:order-1 glass-panel p-5 sm:p-8 rounded-2xl sm:rounded-block bg-white dark:bg-[#121214] border border-emerald-500/10 dark:border-emerald-500/20 shadow-xl relative">
+            <div className="flex items-start justify-between gap-3 mb-4 sm:mb-6">
+              <h3 className="text-lg sm:text-2xl font-normal text-neutral-900 dark:text-neutral-100 font-heading uppercase leading-snug">
+                {t("communityPage.treePlantation.speciesTitle")}
+              </h3>
+              <span className="shrink-0 text-xs uppercase font-bold tracking-[0.18em] text-emerald-600 bg-emerald-50 dark:bg-emerald-950/40 px-2.5 sm:px-3 py-1 rounded-full border border-emerald-100 dark:border-emerald-800/40 font-sans">
+                {t("communityPage.treePlantation.ecologyTag")}
+              </span>
             </div>
-            <h3 className="text-2xl font-extrabold text-foreground mb-6 font-heading">
-              Sown & Nurtured Saplings
-            </h3>
             
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
               {SPECIES.map((spec, index) => (
                 <div
                   key={index}
-                  className="p-4 rounded-xl border border-slate-100 bg-slate-50/50 hover:border-emerald-200 hover:bg-emerald-50/10 transition-all duration-300"
+                  className="p-3.5 sm:p-4 rounded-xl border border-slate-100 dark:border-white/10 bg-slate-50/50 dark:bg-[#18181b] hover:border-emerald-200 dark:hover:border-emerald-800/50 hover:bg-emerald-50/10 dark:hover:bg-emerald-950/20 transition-all duration-300"
                 >
-                  <span className="text-xl sm:text-2xl font-extrabold text-emerald-600 block font-heading">
+                  <span className="text-lg sm:text-2xl font-normal text-emerald-600 block font-heading">
                     {spec.count}
                   </span>
-                  <h4 className="text-sm font-bold text-foreground mt-1 font-sans">
+                  <h4 className="text-sm font-normal text-neutral-900 dark:text-neutral-100 mt-1 font-heading uppercase">
                     {spec.name}
                   </h4>
-                  <p className="text-[10px] uppercase tracking-widest text-slate-grey font-semibold mt-1">
+                  <p className="text-xs uppercase tracking-[0.16em] text-slate-grey dark:text-neutral-400 font-medium mt-0.5 sm:mt-1 font-sans">
                     {spec.type}
                   </p>
                 </div>
               ))}
             </div>
 
-            <div className="mt-8 text-center text-xs text-slate-grey font-medium">
-              Saplings are monitored and watered under our Sunday Care initiatives.
+            <div className="mt-6 sm:mt-8 text-center text-xs text-slate-grey dark:text-neutral-400 font-normal font-sans">
+              {t("communityPage.treePlantation.careNote")}
             </div>
           </div>
 
           {/* Right Column: Info & Stats */}
-          <div className="tree-animate-right order-1 lg:order-2 space-y-6">
-            <h2 className="text-3xl sm:text-5xl font-extrabold text-foreground tracking-tight font-heading leading-tight">
-              Restoring Green Cover & <br />
-              <span className="text-emerald-600 text-outline-festive hover:text-emerald-600">Ecological Balance</span>
+          <div className="tree-animate-right order-1 lg:order-2 space-y-4 sm:space-y-6">
+            <span className="text-emerald-600 font-bold text-xs uppercase tracking-[0.25em] block mb-1 font-sans">
+              {t("communityPage.treePlantation.badge")}
+            </span>
+            <h2 className="text-2xl sm:text-4xl md:text-5xl font-normal text-neutral-900 dark:text-neutral-100 tracking-tight font-heading leading-tight uppercase">
+              {t("communityPage.treePlantation.heading")}
             </h2>
-            <p className="text-base sm:text-lg text-slate-grey leading-relaxed">
-              Preserving our environment is a sacred civic duty. Through our green initiatives, Shree Pratishtan mobilizes youth and families in Indira Nagar and Nashik on weekends to conduct mass plantation, nurture saplings, and promote cleanliness.
+            <p className="text-base md:text-lg text-slate-grey dark:text-neutral-300 leading-[1.7] sm:leading-[1.75] font-sans font-normal">
+              {t("communityPage.treePlantation.description")}
             </p>
-            <div className="flex flex-wrap gap-6 pt-4">
-              <div className="flex items-center gap-3">
-                <span className="text-3xl font-extrabold text-emerald-600 font-heading">5,000+</span>
-                <span className="text-xs uppercase font-bold tracking-widest text-slate-grey">
-                  Saplings Planted
-                </span>
-              </div>
-              <div className="w-px h-10 bg-slate-200 hidden sm:block" />
-              <div className="flex items-center gap-3">
-                <span className="text-3xl font-extrabold text-emerald-600 font-heading">100%</span>
-                <span className="text-xs uppercase font-bold tracking-widest text-slate-grey">
-                  Sunday Volunteer Care
+            <div className="flex flex-wrap gap-4 sm:gap-6 pt-2 sm:pt-4">
+              <div className="flex items-center gap-2.5 sm:gap-3">
+                <span className="text-2xl sm:text-3xl font-normal text-emerald-600 font-heading">5,000+</span>
+                <span className="text-xs uppercase font-bold tracking-[0.18em] text-slate-grey dark:text-neutral-400 font-sans">
+                  {t("communityPage.impact.s2Label")}
                 </span>
               </div>
             </div>

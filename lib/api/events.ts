@@ -102,35 +102,185 @@ export interface BackendEventsListResponse {
   };
 }
 
-// Map category key to UI-friendly display label
-export function getCategoryLabel(category?: string): string {
-  if (!category) return "Cultural Festival";
-  const cat = category.toLowerCase().trim();
-  switch (cat) {
-    case "cultural":
-      return "Cultural Festival";
-    case "sports":
-      return "Sports League";
-    case "health":
-      return "Health & Medical Camp";
-    case "eco":
-      return "Eco & Environment";
-    case "charity":
-      return "Community & Relief";
-    default:
-      return cat.charAt(0).toUpperCase() + cat.slice(1);
+// Map category key or infer from event data to UI-friendly display label
+export function getCategoryLabel(category?: string, title?: string, type?: string, tags?: string[]): string {
+  if (category && category.trim() !== "") {
+    const cat = category.toLowerCase().trim();
+    switch (cat) {
+      case "cultural":
+        return "Cultural Festival";
+      case "sports":
+        return "Sports League";
+      case "health":
+        return "Health & Medical Camp";
+      case "eco":
+        return "Eco & Environment";
+      case "charity":
+        return "Community & Relief";
+      case "conference":
+        return "Conference & Summit";
+      case "exhibition":
+        return "Exhibition";
+      case "workshop":
+        return "Workshop";
+      case "awards":
+        return "Award Ceremony";
+      case "seminar":
+        return "Seminar";
+      case "entertainment":
+      case "cinema":
+      case "movie":
+      case "premiere":
+        return "Cinema & Premiere";
+      default:
+        return category.charAt(0).toUpperCase() + category.slice(1);
+    }
   }
+
+  // If category is null/omitted, infer intelligently from title, type, and tags
+  const combined = `${title || ""} ${type || ""} ${(tags || []).join(" ")}`.toLowerCase();
+  if (
+    combined.includes("movie") ||
+    combined.includes("premiere") ||
+    combined.includes("cinema") ||
+    combined.includes("film") ||
+    combined.includes("screening") ||
+    combined.includes("theatre") ||
+    combined.includes("theater")
+  ) {
+    return "Cinema & Premiere";
+  }
+  if (
+    combined.includes("cricket") ||
+    combined.includes("sport") ||
+    combined.includes("tournament") ||
+    combined.includes("league") ||
+    combined.includes("marathon") ||
+    combined.includes("football")
+  ) {
+    return "Sports League";
+  }
+  if (
+    combined.includes("health") ||
+    combined.includes("medical") ||
+    combined.includes("blood") ||
+    combined.includes("camp") ||
+    combined.includes("doctor") ||
+    combined.includes("checkup")
+  ) {
+    return "Health & Medical Camp";
+  }
+  if (
+    combined.includes("tree") ||
+    combined.includes("plant") ||
+    combined.includes("eco") ||
+    combined.includes("green") ||
+    combined.includes("environment") ||
+    combined.includes("cleanliness")
+  ) {
+    return "Eco & Environment";
+  }
+  if (
+    combined.includes("ganesh") ||
+    combined.includes("utsav") ||
+    combined.includes("dahi handi") ||
+    combined.includes("aarti") ||
+    combined.includes("pooja") ||
+    combined.includes("navratri") ||
+    combined.includes("diwali") ||
+    combined.includes("cultural") ||
+    combined.includes("shivaji")
+  ) {
+    return "Cultural Festival";
+  }
+  if (
+    combined.includes("welfare") ||
+    combined.includes("relief") ||
+    combined.includes("seva") ||
+    combined.includes("donation") ||
+    combined.includes("charity") ||
+    combined.includes("school") ||
+    combined.includes("kit")
+  ) {
+    return "Community Welfare";
+  }
+  if (combined.includes("conference") || combined.includes("summit") || combined.includes("tech")) {
+    return "Conference & Summit";
+  }
+  if (combined.includes("workshop") || combined.includes("training") || combined.includes("bootcamp")) {
+    return "Workshop";
+  }
+  if (combined.includes("award") || combined.includes("felicitation") || combined.includes("ceremony")) {
+    return "Award Ceremony";
+  }
+
+  if (type && type.toLowerCase() !== "public" && type.toLowerCase() !== "private") {
+    return type.charAt(0).toUpperCase() + type.slice(1);
+  }
+
+  return "Special Event";
 }
 
 // Normalize category into allowed type
-export function normalizeCategory(category?: string): "cultural" | "sports" | "health" | "eco" | "charity" {
-  if (!category) return "cultural";
-  const cat = category.toLowerCase().trim();
-  if (cat.includes("sport")) return "sports";
-  if (cat.includes("health") || cat.includes("medical") || cat.includes("blood")) return "health";
-  if (cat.includes("eco") || cat.includes("tree") || cat.includes("green")) return "eco";
-  if (cat.includes("charity") || cat.includes("relief") || cat.includes("seva")) return "charity";
+export function normalizeCategory(category?: string, title?: string): "cultural" | "sports" | "health" | "eco" | "charity" {
+  const combined = `${category || ""} ${title || ""}`.toLowerCase().trim();
+  if (combined.includes("sport") || combined.includes("cricket") || combined.includes("league")) return "sports";
+  if (combined.includes("health") || combined.includes("medical") || combined.includes("blood")) return "health";
+  if (combined.includes("eco") || combined.includes("tree") || combined.includes("green")) return "eco";
+  if (combined.includes("charity") || combined.includes("relief") || combined.includes("seva") || combined.includes("welfare")) return "charity";
   return "cultural";
+}
+
+// Format Event Mode Label
+export function getEventModeLabel(mode?: string, language?: string): string {
+  const m = (mode || "in-person").toLowerCase().trim();
+  if (m === "virtual" || m === "online") {
+    return language === "mr" ? "ऑनलाइन" : language === "hi" ? "ऑनलाइन" : "Virtual";
+  }
+  if (m === "hybrid") {
+    return language === "mr" ? "हायब्रिड" : language === "hi" ? "हाइब्रिड" : "Hybrid";
+  }
+  return language === "mr" ? "प्रत्यक्ष" : language === "hi" ? "स्थान पर" : "In-Person";
+}
+
+// Format Check-In Mode Label
+export function getCheckInModeLabel(checkInMode?: string, language?: string): string {
+  const c = (checkInMode || "qr").toLowerCase().trim();
+  if (c === "manual" || c === "gate" || c === "badge") {
+    return language === "mr" ? "गेट पास" : language === "hi" ? "गेट पास" : "Gate Pass";
+  }
+  if (c === "rfid" || c === "wristband") {
+    return "RFID Pass";
+  }
+  if (c === "open" || c === "free") {
+    return language === "mr" ? "मुक्त प्रवेश" : language === "hi" ? "खुला प्रवेश" : "Open Entry";
+  }
+  return language === "mr" ? "क्यूआर डिजिटल पास" : language === "hi" ? "क्यूआर डिजिटल पास" : "QR Digital Pass";
+}
+
+// Compute dynamic registration status
+export function computeRegistrationStatus(backend: BackendEvent): "open" | "closing_soon" | "free_entry" | "closed" {
+  if (backend.is_registration_open === false || backend.status === "Cancelled" || backend.status === "Archived" || backend.status === "Draft") {
+    return "closed";
+  }
+
+  const now = Date.now();
+
+  if (backend.reg_end_at) {
+    const end = new Date(backend.reg_end_at).getTime();
+    if (!isNaN(end) && now > end) {
+      return "closed";
+    }
+    if (!isNaN(end) && end - now <= 48 * 60 * 60 * 1000 && end > now) {
+      return "closing_soon";
+    }
+  }
+
+  if (backend.capacity && backend.total_registrations && backend.total_registrations >= backend.capacity && !backend.waitlist_enabled) {
+    return "closed";
+  }
+
+  return "open";
 }
 
 // Compute dynamic event status based on dates
@@ -229,7 +379,7 @@ export function resolveImageUrl(url?: string): string {
 
 // Transform backend database record to UI EventItem
 export function transformBackendEventToEventItem(backend: BackendEvent): EventItem {
-  const category = normalizeCategory(backend.category);
+  const category = normalizeCategory(backend.category, backend.name);
   const status = computeEventStatus(backend.start_date, backend.end_date, backend.status);
   const location =
     backend.location ||
@@ -294,12 +444,18 @@ export function transformBackendEventToEventItem(backend: BackendEvent): EventIt
   ].filter(Boolean);
   const fullAddress = addressParts.length > 0 ? addressParts.join(", ") : location;
 
+  const registrationStatus = computeRegistrationStatus(backend);
+  const isRegistrationOpen = backend.is_registration_open !== false && registrationStatus !== "closed";
+  const eventMode = getEventModeLabel(backend.mode);
+  const checkInMode = getCheckInModeLabel(backend.check_in_mode);
+  const registrationCloseDate = backend.reg_end_at ? formatEventDateRange(backend.reg_end_at, backend.reg_end_at, backend.timezone) : undefined;
+
   return {
     id: backend.url_slug || backend.id.toString(),
     title: backend.name,
     tagline: backend.meta_description || backend.description?.slice(0, 100) || "Devotion, Culture & Social Welfare",
     category,
-    categoryLabel: getCategoryLabel(backend.category),
+    categoryLabel: getCategoryLabel(backend.category, backend.name, backend.type, backend.tags),
     status,
     date: formatEventDateRange(backend.start_date, backend.end_date, backend.timezone),
     time: formatEventTime(backend.start_date, backend.end_date, backend.all_day, backend.timezone),
@@ -335,6 +491,7 @@ export function transformBackendEventToEventItem(backend: BackendEvent): EventIt
     regStartAt: backend.reg_start_at,
     regEndAt: backend.reg_end_at,
     mode: backend.mode || "in-person",
+    eventMode,
     venueName: backend.venue_name,
     address: fullAddress,
     addressLine1: backend.address_line1,
@@ -352,12 +509,14 @@ export function transformBackendEventToEventItem(backend: BackendEvent): EventIt
     capacityNumber: backend.capacity,
     waitlistEnabled: backend.waitlist_enabled,
     visibility: backend.visibility || "public",
-    checkInMode: backend.check_in_mode,
+    checkInMode,
     coHosts: backend.co_hosts,
     tags: backend.tags,
     sponsors,
     partners,
-    isRegistrationOpen: backend.is_registration_open,
+    isRegistrationOpen,
+    registrationStatus,
+    registrationCloseDate,
   };
 }
 

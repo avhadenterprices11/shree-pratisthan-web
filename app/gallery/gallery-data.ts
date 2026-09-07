@@ -16,7 +16,7 @@ export const FEATURED_MEMORIES: GalleryItem[] = [
     title: "Shree Ganeshotsav — Jejuri Gad Dekhava",
     category: "Festival",
     date: "September 2024",
-    src: "/images/ganesh-utsav.jpg",
+    src: "/events_ganeshotsav_2024_jejuri.jpg",
     metric: "10-Day Festival",
     description: "Our grand Ganeshotsav celebration in Indira Nagar, Nashik featuring historic theme replicas like Jejuri Gad.",
     details: "The annual Ganeshotsav celebration is one of Shree Pratishtan's signature cultural events in Indira Nagar, Nashik. The event features magnificent theme replicas such as Shri Khandoba Maharaj Jejuri Gad, daily spiritual Maha Aartis, traditional Dhol Tasha drummers playing in synchronization, and eco-friendly Shadu Mati clay idols.",
@@ -27,7 +27,7 @@ export const FEATURED_MEMORIES: GalleryItem[] = [
     title: "Gudipadwa Bhavya Swagat Yatra",
     category: "Festival",
     date: "March 2024",
-    src: "/images/swagat-yatra.jpg",
+    src: "/events_swagat_yatra_2022.jpg",
     metric: "Grand Yatra",
     description: "Grand Marathi New Year procession with traditional Lezim, Dhol Tasha, and cultural rallies across Indira Nagar.",
     details: "Commencing the Marathi New Year, the Gudipadwa Swagat Yatra unites thousands of families across Indira Nagar, Nashik in traditional attire. Featuring majestic saffron flags, live Lezim performances, synchronised Dhol Tasha percussion, and decorated floats, this yatra showcases Maharashtra's rich cultural heritage and brotherhood.",
@@ -49,7 +49,7 @@ export const FEATURED_MEMORIES: GalleryItem[] = [
     title: "Bhavya Dahi Handi Utsav & Govinda Pathaks",
     category: "Festival",
     date: "August 2024",
-    src: "/images/dahihandi-utsav.jpg",
+    src: "/dahihandi_2018.jpg",
     metric: "Multi-Tier Pyramids",
     description: "Thrilling Dahi Handi celebration with top Govinda pathaks competing in towering multi-tier pyramids in Indira Nagar.",
     details: "Our annual Dahi Handi Utsav in Indira Nagar attracts thousands of spectators and premier Govinda pathaks from across Maharashtra. The high-energy festival promotes youth fitness, discipline, and unity with cultural music and celebratory rewards.",
@@ -60,7 +60,7 @@ export const FEATURED_MEMORIES: GalleryItem[] = [
     title: "Navratri Garba & Dandiya Utsav",
     category: "Festival",
     date: "October 2024",
-    src: "/gallery_navratri_garba.png",
+    src: "/gallery_navratri_2022.jpg",
     metric: "9 Nights Garba",
     description: "A lively, colorful 9-night celebration of traditional Raas Garba, community bonding, and cultural devotion in Indira Nagar.",
     details: "The Navratri Garba Utsav organized by Shree Pratishtan in Indira Nagar, Nashik brings together thousands of families for an evening of dance, worship, and vibrant traditional attire. Devotees dance to authentic traditional folk rhythms, reinforcing cultural preservation and harmony. The event concludes each night with a sacred Maha Aarti dedicated to community welfare and peace.",
@@ -71,7 +71,7 @@ export const FEATURED_MEMORIES: GalleryItem[] = [
     title: "Shiv Jayanti Grand Rallies & Mardani Khel",
     category: "Festival",
     date: "February 2024",
-    src: "/gallery_shiv_jayanti_rally.png",
+    src: "/gallery_shiv_jayanti_2024.jpg",
     metric: "Youth Rallies",
     description: "Inspiring youth rallies, historical exhibitions, and traditional martial arts demonstrations in Indira Nagar.",
     details: "Honoring Chhatrapati Shivaji Maharaj, our annual Shiv Jayanti festival features youth processions, historical lectures, and live demonstrations of traditional Marathi Mardani Khel martial arts. The event inspires local youth with Swarajya values, good governance, discipline, and community service.",
@@ -82,7 +82,7 @@ export const FEATURED_MEMORIES: GalleryItem[] = [
     title: "Dr. Ambedkar Jayanti Student Welfare",
     category: "Education",
     date: "April 2024",
-    src: "/volunteer_coordinator.png",
+    src: "/gallery_ambedkar_jayanti.jpg",
     metric: "2,500+ Kits",
     description: "Social equality seminars, academic merit honors, and free educational study kit distribution for students in Nashik.",
     details: "Celebrating the birth anniversary of Bharat Ratna Dr. Babasaheb Ambedkar, Shree Pratishtan organizes educational aid drives. We distribute comprehensive study kits, school bags, and notebooks to underprivileged students while felicitating top academic achievers from Indira Nagar and municipal schools.",
@@ -107,7 +107,7 @@ export const PHOTO_ITEMS: GalleryItem[] = [
     title: "Ganeshotsav Jejuri Gad Theme Dekhava",
     category: "festival",
     date: "September 2024",
-    src: "/images/ganesh-utsav.jpg",
+    src: "/events_ganeshotsav_2024_jejuri.jpg",
     description: "Grand Jejuri Gad Khandoba Maharaj replica during Ganeshotsav festival in Indira Nagar, Nashik.",
     details: "Every evening during the 10-day Ganeshotsav festival, community members gather for the twilight prayers (Maha Aarti) in Indira Nagar, Nashik. The event is characterized by historic architectural replicas, traditional hymns, and musical accompaniment.",
     type: "photo"
@@ -117,7 +117,7 @@ export const PHOTO_ITEMS: GalleryItem[] = [
     title: "Gudipadwa Swagat Yatra & Lezim Troupe",
     category: "festival",
     date: "March 2024",
-    src: "/images/swagat-yatra.jpg",
+    src: "/events_swagat_yatra_2022.jpg",
     description: "Traditional drum ensembles, saffron flags, and cultural floats during Swagat Yatra in Indira Nagar.",
     details: "The rhythmic beats of the Dhol Tasha ensemble and saffron flag pageantry are the heartbeat of Maharashtra's cultural festivals. Our youth lead cultural floats honoring national icons across Indira Nagar.",
     type: "photo"
@@ -137,7 +137,7 @@ export const PHOTO_ITEMS: GalleryItem[] = [
     title: "Dahi Handi Govinda Human Pyramids",
     category: "festival",
     date: "August 2024",
-    src: "/images/dahihandi-utsav.jpg",
+    src: "/dahihandi_2018.jpg",
     description: "Electrifying crowd and multi-tier human pyramids during Dahi Handi in Indira Nagar.",
     details: "Over 10,000 citizens gather to cheer youth Govinda pathaks forming high pyramids in devotion and sportsmanship.",
     type: "photo"
@@ -147,7 +147,7 @@ export const PHOTO_ITEMS: GalleryItem[] = [
     title: "Student Study Kits & Notebooks Distribution",
     category: "education",
     date: "June 2024",
-    src: "/volunteer_coordinator.png",
+    src: "/gallery_ambedkar_jayanti.jpg",
     description: "Supplying notebooks, stationery, and backpacks to local primary school children across Nashik.",
     details: "Ahead of the academic year, Shree Pratishtan organizes annual school supply drives to support primary school children across Nashik. We distribute quality backpacks, notebooks, stationery sets, and mathematical kits. This initiative supports families who struggle with educational costs and motivates young students to attend school regularly.",
     type: "photo"
@@ -157,7 +157,7 @@ export const PHOTO_ITEMS: GalleryItem[] = [
     title: "Navratri Garba & Raas Dandiya Nights",
     category: "festival",
     date: "October 2024",
-    src: "/gallery_navratri_garba.png",
+    src: "/gallery_navratri_2022.jpg",
     description: "Nine nights of devotional folk dances, live music, and family community integration in Indira Nagar.",
     details: "Navratri is celebrated with vibrant energy and cultural devotion in Indira Nagar, Nashik. Our community grounds host public Garba and Dandiya nights that emphasize safe, family-friendly celebrations where neighbors connect and celebrate Marathi and Gujarati folk heritage together.",
     type: "photo"
@@ -187,7 +187,7 @@ export const PHOTO_ITEMS: GalleryItem[] = [
     title: "Shiv Jayanti Grand Historical Procession",
     category: "festival",
     date: "February 2024",
-    src: "/gallery_shiv_jayanti_rally.png",
+    src: "/gallery_shiv_jayanti_2024.jpg",
     description: "Grand historical procession honoring Chhatrapati Shivaji Maharaj in Indira Nagar, Nashik.",
     details: "The birth anniversary of Chhatrapati Shivaji Maharaj is marked by a majestic historical procession in Indira Nagar, Nashik. Featuring traditional costumes, Mardani Khel martial arts demonstrations, and history recitals, the rally inspires youth with the ideals of Swarajya, courage, and social harmony.",
     type: "photo"
@@ -229,3 +229,68 @@ export function getGalleryItem(id: string): GalleryItem | undefined {
   const allItems = [...FEATURED_MEMORIES, ...PHOTO_ITEMS];
   return allItems.find(item => item.id === id);
 }
+
+export interface VideoItem {
+  title: string;
+  category: string;
+  duration: string;
+  src: string;
+  thumbnail: string;
+  poster?: string;
+  location?: string;
+}
+
+export const VIDEO_ITEMS: VideoItem[] = [
+  {
+    title: "Ganeshotsav Maha Aarti & Live Visarjan Miravnuk",
+    category: "Festivals",
+    duration: "4:30",
+    src: "https://www.youtube.com/embed/dQw4w9WgXcQ",
+    thumbnail: "/events_ganeshotsav_2024_jejuri.jpg",
+    poster: "/events_ganeshotsav_2024_jejuri.jpg",
+    location: "Nashik Ground",
+  },
+  {
+    title: "Gudipadwa Bhavya Swagat Yatra & Lezim Troupes",
+    category: "Swagat Yatra",
+    duration: "3:45",
+    src: "https://www.youtube.com/embed/dQw4w9WgXcQ",
+    thumbnail: "/events_swagat_yatra_2022.jpg",
+    poster: "/events_swagat_yatra_2022.jpg",
+    location: "Indira Nagar",
+  },
+  {
+    title: "50+ Blood Donation Drive & Civil Hospital Lifeline",
+    category: "Social Seva",
+    duration: "2:50",
+    src: "https://www.youtube.com/embed/dQw4w9WgXcQ",
+    thumbnail: "/volunteer_hero.jpg",
+    poster: "/volunteer_hero.jpg",
+    location: "Nashik Civil Hospital",
+  },
+  {
+    title: "Mahashivratri 108-ft Mahamrutyunjay Mandir Darshan",
+    category: "Festivals",
+    duration: "5:15",
+    src: "https://www.youtube.com/embed/dQw4w9WgXcQ",
+    thumbnail: "/images/mahashivratri.jpg",
+    poster: "/images/mahashivratri.jpg",
+    location: "Nashik",
+  },
+];
+
+export function getLocalizedGalleryItem(rawItem: GalleryItem, language?: string): GalleryItem {
+  if (!rawItem) return rawItem;
+  return {
+    ...rawItem,
+    title: rawItem.title,
+    description: rawItem.description,
+    details: rawItem.details,
+    category: rawItem.category,
+  };
+}
+
+export function getLocalizedVideos(language?: string): VideoItem[] {
+  return VIDEO_ITEMS;
+}
+

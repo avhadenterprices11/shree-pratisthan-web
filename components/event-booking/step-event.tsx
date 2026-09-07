@@ -119,14 +119,13 @@ export default function StepEvent({
               const endYMD = endObj.toISOString().split("T")[0];
               const isSingle = startYMD === endYMD;
 
-              const tz = e.timezone || "Asia/Kolkata";
-              const formattedStart = startObj.toLocaleDateString("en-IN", { day: "2-digit", month: "short", year: "numeric", timeZone: tz });
-              const formattedEnd = endObj.toLocaleDateString("en-IN", { day: "2-digit", month: "short", year: "numeric", timeZone: tz });
+              const formattedStart = startObj.toLocaleDateString("en-IN", { day: "2-digit", month: "short", year: "numeric" });
+              const formattedEnd = endObj.toLocaleDateString("en-IN", { day: "2-digit", month: "short", year: "numeric" });
               const dateDisplay = isSingle ? formattedStart : `${formattedStart} - ${formattedEnd}`;
 
               const timeDisplay = e.all_day 
                 ? "Full Day Event" 
-                : `${startObj.toLocaleTimeString("en-US", { hour: "numeric", minute: "2-digit", hour12: true, timeZone: tz })} - ${endObj.toLocaleTimeString("en-US", { hour: "numeric", minute: "2-digit", hour12: true, timeZone: tz })}`;
+                : `${startObj.toLocaleTimeString("en-IN", { hour: "2-digit", minute: "2-digit" })} - ${endObj.toLocaleTimeString("en-IN", { hour: "2-digit", minute: "2-digit" })}`;
 
               const venue = e.venue_name || e.address_line1 || e.city || "Nashik, Maharashtra";
               const city = e.city || "Nashik";

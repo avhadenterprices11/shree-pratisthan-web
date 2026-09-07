@@ -1,0 +1,77 @@
+[
+  {
+    "id": "content_1788411377578_u8b0i",
+    "type": "announcement",
+    "title": {
+      "en": "Shiv Jayanti Utsav 2026",
+      "mr": "शिवजयंती उत्सव २०२६ भव्य मिरवणूक",
+      "hi": "शिव जयंती उत्सव २०२६ भव्य शोभायात्रा"
+    },
+    "content": {
+      "en": "Join us for morning Rajyabhishek and evening cultural procession.",
+      "mr": "सकाळी राज्याभिषेक सोहळा आणि संध्याकाळी भव्य सांस्कृतिक मिरवणुकीत सहभागी व्हा.",
+      "hi": "प्रातः राज्याभिषेक समारोह एवं सायं भव्य सांस्कृतिक शोभायात्रा में शामिल हों।"
+    },
+    "category": {
+      "en": "Festival",
+      "mr": "सण आणि उत्सव",
+      "hi": "त्योहार"
+    },
+    "date": "2026-09-03",
+    "author": "Admin",
+    "priority": "normal",
+    "status": "published",
+    "createdAt": "2026-09-03T04:56:17.578Z",
+    "updatedAt": "2026-09-03T04:56:17.578Z"
+  },
+  {
+    "id": "seed-ganeshotsav-announcement",
+    "type": "announcement",
+    "title": {
+      "en": "Grand Ganeshotsav 2026 Preparations Commencing Soon",
+      "mr": "भव्य गणेशोत्सव २०२६ ची पूर्वतयारी लवकरच सुरू होत आहे",
+      "hi": "भव्य गणेशोत्सव २०२६ की पूर्व तैयारी जल्द शुरू हो रही है"
+    },
+    "content": {
+      "en": "Shree Pratishtan invites all youth and citizens to join the volunteer orientation and stage planning meetings in Indira Nagar, Nashik.",
+      "mr": "श्री प्रतिष्ठान सर्व तरुण आणि नागरिकांना इंदिरा नगर, नाशिक येथे होणाऱ्या स्वयंसेवक मार्गदर्शन आणि नियोजन बैठकीस उपस्थित राहण्याचे आवाहन करते.",
+      "hi": "श्री प्रतिष्ठान सभी युवाओं और नागरिकों को इंदिरा नगर, नाशिक में आयोजित स्वयंसेवक मार्गदर्शन एवं योजना बैठक में शामिल होने का निमंत्रण देता है।"
+    },
+    "category": {
+      "en": "Cultural Festival",
+      "mr": "सांस्कृतिक उत्सव",
+      "hi": "सांस्कृतिक उत्सव"
+    },
+    "date": "2026-09-03",
+    "author": "Administrative Office",
+    "priority": "high",
+    "status": "published",
+    "createdAt": "2026-09-03T04:53:47.275Z",
+    "updatedAt": "2026-09-03T04:53:47.275Z"
+  },
+  {
+    "id": "seed-blood-donation-drive",
+    "type": "notice",
+    "title": {
+      "en": "Mega Blood Donation & Free Health Camp on Sunday",
+      "mr": "रविवारी भव्य रक्तदान शिबिर व मोफत आरोग्य तपासणी शिबिर",
+      "hi": "रविवार को भव्य रक्तदान शिविर और निःशुल्क स्वास्थ्य जांच शिविर"
+    },
+    "content": {
+      "en": "Join hands with our medical seva cell to donate blood and save lives. Specialist doctors will provide complimentary health consultations.",
+      "mr": "रक्तदान करून जीवन वाचवण्यासाठी आमच्या आरोग्य सेवा कक्षासोबत सहभागी व्हा. तज्ज्ञ डॉक्टरांकडून मोफत आरोग्य सल्ला दिला जाईल.",
+      "hi": "रक्तदान कर जीवन बचाने के लिए हमारे स्वास्थ्य सेवा दल से जुड़ें। विशेषज्ञ डॉक्टरों द्वारा निःशुल्क स्वास्थ्य परामर्श प्रदान किया जाएगा।"
+    },
+    "category": {
+      "en": "Healthcare Seva",
+      "mr": "आरोग्य सेवा",
+      "hi": "स्वास्थ्य सेवा"
+    },
+    "date": "2026-09-08",
+    "author": "Healthcare Cell",
+    "priority": "urgent",
+    "status": "published",
+    "createdAt": "2026-09-03T04:53:47.275Z",
+    "updatedAt": "2026-09-03T04:53:47.275Z"
+  }
+]

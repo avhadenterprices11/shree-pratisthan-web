@@ -3,6 +3,7 @@
 import React, { useEffect, useRef, useState, useCallback } from "react";
 import Image from "next/image";
 import gsap from "gsap";
+import { useLanguage } from "@/context/LanguageContext";
 
 interface SlideItem {
   id: number;
@@ -13,22 +14,23 @@ interface SlideItem {
 const slidesData: SlideItem[] = [
   {
     id: 1,
-    title: "Ganeshotsav & Swagat Yatra",
-    image: "/gallery_ganeshotsav_aarthi.png",
+    title: "Ganeshotsav — Prem Mandir Vrindavan Dekhava",
+    image: "/events_ganeshotsav_2023.jpg",
   },
   {
     id: 2,
-    title: "50+ Blood Camps & Healthcare",
-    image: "/volunteer_medical.png",
+    title: "Chhatrapati Shivaji Maharaj Jayanti Celebrations",
+    image: "/events_shiv_jayanti_2022.jpg",
   },
   {
     id: 3,
-    title: "Annual Sports & Youth Leagues",
-    image: "/hero_dahihandi.png",
+    title: "51-Foot Shiv Chhatrapati Rajmudra",
+    image: "/events_rajmudra_51ft.jpg",
   }
 ];
 
 export default function EventsHero() {
+  const { t } = useLanguage();
   const containerRef = useRef<HTMLDivElement>(null);
   const [currentIndex, setCurrentIndex] = useState(0);
   const isAnimating = useRef(false);
@@ -95,10 +97,10 @@ export default function EventsHero() {
   return (
     <section
       ref={containerRef}
-      className="relative min-h-[60vh] flex flex-col justify-center items-start pt-28 pb-12 px-6 overflow-hidden md:px-12 bg-[#FBFBFA]"
+      className="relative min-h-[75vh] sm:min-h-[82vh] lg:min-h-[88vh] flex flex-col justify-end items-start pt-24 sm:pt-36 pb-10 sm:pb-20 px-4 sm:px-6 md:px-12 overflow-hidden bg-neutral-950"
     >
-      {/* Fullscreen Slider Backdrop Container - 100% Sharp & Vivid */}
-      <div className="absolute inset-0 z-0 overflow-hidden bg-[#FBFBFA]">
+      {/* Fullscreen Slider Backdrop Container */}
+      <div className="absolute inset-0 z-0 overflow-hidden bg-neutral-950">
         <div className="relative w-full h-full">
           {slidesData.map((slide, index) => {
             const isActive = index === currentIndex;
@@ -109,7 +111,7 @@ export default function EventsHero() {
                   isActive ? "opacity-100 z-10" : "opacity-0 z-0"
                 }`}
               >
-                {/* Campaign Visual backdrop (Fully Visible & Clear) */}
+                {/* Campaign Visual backdrop - 100% crisp without white fog */}
                 <Image
                   src={slide.image}
                   alt={slide.title}
@@ -123,24 +125,23 @@ export default function EventsHero() {
           })}
         </div>
 
-        {/* Soft edge gradient for crisp visibility */}
-        <div className="absolute inset-x-0 bottom-0 h-32 bg-gradient-to-t from-[#FBFBFA] to-transparent z-10 pointer-events-none" />
-        <div className="absolute inset-x-0 top-0 h-24 bg-gradient-to-b from-[#FBFBFA]/60 to-transparent z-10 pointer-events-none" />
+        {/* Clean, crystal-clear gradient for text legibility without white blurriness */}
+        <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/35 to-black/20 z-10 pointer-events-none" />
       </div>
 
       {/* Overlaid Page Header */}
       <div className="max-w-[1600px] w-full mx-auto relative z-20 flex flex-col justify-start text-left pointer-events-none">
-        <h1 className="text-4xl sm:text-6xl lg:text-7xl font-extrabold text-neutral-950 leading-[1.05] tracking-tight mb-6 font-heading pointer-events-auto drop-shadow-[0_2px_10px_rgba(255,255,255,0.9)]">
-          <div className="overflow-hidden px-4 -mx-4 py-2 -my-2">
-            <span className="block reveal-line">Festivals &</span>
+        <h1 className="text-[32px] sm:text-5xl md:text-6xl lg:text-7xl font-normal text-white leading-[1.3] sm:leading-[1.32] tracking-tight mb-4 sm:mb-6 font-heading pointer-events-auto drop-shadow-md">
+          <div className="overflow-hidden px-2 sm:px-4 -mx-2 sm:-mx-4 py-3 sm:py-4 -my-2 sm:-my-3">
+            <span className="block reveal-line py-1">{t("eventsPage.hero.titleLine1")}</span>
           </div>
-          <div className="overflow-hidden px-4 -mx-4 py-2 -my-2">
-            <span className="block reveal-line text-saffron text-outline-festive">Social Campaigns.</span>
+          <div className="overflow-hidden px-2 sm:px-4 -mx-2 sm:-mx-4 py-3 sm:py-4 -my-2 sm:-my-3">
+            <span className="block reveal-line py-1 text-saffron font-heading">{t("eventsPage.hero.titleLine2")}</span>
           </div>
         </h1>
 
-        <p className="hero-subtitle text-base sm:text-lg text-neutral-950 max-w-2xl leading-relaxed font-bold bg-white/85 backdrop-blur-md px-6 py-3 rounded-2xl border border-white/90 shadow-lg pointer-events-auto">
-          "वारसा संस्कृतीचा, ध्यास समाजसेवेचा" — Discover upcoming grand festivals, 50+ blood camps, and sports leagues organized by Shree Pratishtan in Indira Nagar, Nashik.
+        <p className="hero-subtitle text-base sm:text-base md:text-lg text-slate-100 max-w-2xl leading-[1.7] sm:leading-[1.75] font-normal pointer-events-auto font-sans drop-shadow-sm">
+          {t("eventsPage.hero.subtitle")}
         </p>
       </div>
     </section>

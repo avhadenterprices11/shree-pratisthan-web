@@ -2,8 +2,11 @@
 
 import React, { useState, useEffect, useRef } from "react";
 import { getCDNUrl } from "@/lib/cdn";
+import { cn } from "@/lib/utils";
+import { ChevronDown } from "lucide-react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { useLanguage } from "@/context/LanguageContext";
 
 interface HighlightItem {
   num: string;
@@ -14,79 +17,81 @@ interface HighlightItem {
   isVideo: boolean;
 }
 
-const HIGHLIGHTS: HighlightItem[] = [
-  {
-    num: "01",
-    title: "Gudipadwa Swagat Yatra",
-    category: "Lezim & Dhol Tasha Processions",
-    video: "/festival_drums.mp4",
-    image: "/gallery_dhol_tasha_camps.png",
-    isVideo: true,
-  },
-  {
-    num: "02",
-    title: "Shree Ganeshotsav Maha Aarti",
-    category: "108-Lamp Aarti & Eco Clay Idol",
-    video: "",
-    image: "/gallery_ganeshotsav_aarthi.png",
-    isVideo: false,
-  },
-  {
-    num: "03",
-    title: "50+ Blood Donation Camps",
-    category: "Nashik Civil Hospital Partner",
-    video: "",
-    image: "/volunteer_medical.png",
-    isVideo: false,
-  },
-  {
-    num: "04",
-    title: "Shiv Jayanti Mardani Khel",
-    category: "Martial Arts & Swarajya Tributes",
-    video: "/festival_drums.mp4",
-    image: "/community_assembly.png",
-    isVideo: true,
-  },
-  {
-    num: "05",
-    title: "Navratri Raas & Dandiya Nights",
-    category: "Traditional Folk Dance Arenas",
-    video: "",
-    image: "/gallery_navratri_garba.png",
-    isVideo: false,
-  },
-  {
-    num: "06",
-    title: "Annual Sports & Cricket League",
-    category: "32-Team Youth Championship",
-    video: "/about_showcase_video.mp4",
-    image: "/hero_dahihandi.png",
-    isVideo: true,
-  },
-  {
-    num: "07",
-    title: "International Yoga Day Clinics",
-    category: "Holistic Wellness & Screenings",
-    video: "",
-    image: "/portrait_volunteer.png",
-    isVideo: false,
-  },
-  {
-    num: "08",
-    title: "Dr. Ambedkar Jayanti Book Drive",
-    category: "Student Kits & Academic Honors",
-    video: "",
-    image: "/volunteer_coordinator.png",
-    isVideo: false,
-  },
-];
-
 export default function EventsHighlights() {
+  const { t } = useLanguage();
   const [activeIdx, setActiveIdx] = useState<number | null>(null);
+  const [tappedIdx, setTappedIdx] = useState<number | null>(null);
   const containerRef = useRef<HTMLDivElement>(null);
   const portalRef = useRef<HTMLDivElement>(null);
   const videoRefs = useRef<(HTMLVideoElement | null)[]>([]);
   const isHovered = useRef(false);
+
+  const HIGHLIGHTS: HighlightItem[] = [
+    {
+      num: "01",
+      title: t("eventsPage.highlights.h1Title"),
+      category: t("eventsPage.highlights.h1Category"),
+      video: "",
+      image: "/events_swagat_yatra_2022.jpg",
+      isVideo: false,
+    },
+    {
+      num: "02",
+      title: t("eventsPage.highlights.h2Title"),
+      category: t("eventsPage.highlights.h2Category"),
+      video: "",
+      image: "/events_ganeshotsav_2024_jejuri.jpg",
+      isVideo: false,
+    },
+    {
+      num: "03",
+      title: t("eventsPage.highlights.h3Title"),
+      category: t("eventsPage.highlights.h3Category"),
+      video: "",
+      image: "/volunteer_medical.png",
+      isVideo: false,
+    },
+    {
+      num: "04",
+      title: t("eventsPage.highlights.h4Title"),
+      category: t("eventsPage.highlights.h4Category"),
+      video: "",
+      image: "/events_shiv_jayanti_2022.jpg",
+      isVideo: false,
+    },
+    {
+      num: "05",
+      title: t("eventsPage.highlights.h5Title"),
+      category: t("eventsPage.highlights.h5Category"),
+      video: "",
+      image: "/navratri_2022.jpg",
+      isVideo: false,
+    },
+    {
+      num: "06",
+      title: t("eventsPage.highlights.h6Title"),
+      category: t("eventsPage.highlights.h6Category"),
+      video: "/about_showcase_video.mp4",
+      image: "/hero_dahihandi.png",
+      isVideo: true,
+    },
+    {
+      num: "07",
+      title: t("eventsPage.highlights.h7Title"),
+      category: t("eventsPage.highlights.h7Category"),
+      video: "",
+      image: "/portrait_volunteer.png",
+      isVideo: false,
+    },
+    {
+      num: "08",
+      title: t("eventsPage.highlights.h8Title"),
+      category: t("eventsPage.highlights.h8Category"),
+      video: "",
+      image: "/events_ambedkar_jayanti.jpg",
+      isVideo: false,
+    },
+  ];
 
   useEffect(() => {
     gsap.registerPlugin(ScrollTrigger);
@@ -191,10 +196,14 @@ export default function EventsHighlights() {
     }
   };
 
+  const handleRowClick = (idx: number) => {
+    setTappedIdx((prev) => (prev === idx ? null : idx));
+  };
+
   return (
     <section
       ref={containerRef}
-      className="py-24 px-6 md:px-12 relative overflow-hidden bg-background border-t border-black/5"
+      className="py-12 sm:py-16 md:py-24 px-4 sm:px-6 md:px-12 relative overflow-hidden bg-background border-t border-black/5 select-none"
     >
       <div className="absolute inset-0 ambient-gold-glow pointer-events-none opacity-40 z-0 animate-pulse" />
       
@@ -205,7 +214,11 @@ export default function EventsHighlights() {
           color: transparent;
           transition: all 0.4s cubic-bezier(0.25, 1, 0.5, 1);
         }
-        .group:hover .text-outline-highlight {
+        .dark .text-outline-highlight {
+          -webkit-text-stroke: 1.5px rgba(244, 244, 244, 0.35);
+        }
+        .group:hover .text-outline-highlight,
+        .text-outline-highlight.is-active {
           -webkit-text-stroke: 1.5px transparent;
           color: #E25822;
         }
@@ -214,77 +227,109 @@ export default function EventsHighlights() {
       <div className="max-w-7xl mx-auto relative z-10 highlights-reveal">
         
         {/* Section Header */}
-        <div className="text-center max-w-2xl mx-auto mb-20 px-6">
-          <h2 className="text-3xl sm:text-5xl font-extrabold text-neutral-900 tracking-tight font-heading leading-tight">
-            Celebration Snapshots
+        <div className="text-center max-w-2xl mx-auto mb-6 sm:mb-12 md:mb-16 px-4 sm:px-6">
+          <h2 className="text-2xl sm:text-4xl md:text-5xl font-normal text-neutral-900 dark:text-neutral-100 tracking-tight font-heading leading-tight uppercase">
+            {t("eventsPage.highlights.heading")}
           </h2>
-          <div className="w-16 h-1 bg-saffron mx-auto mt-4 rounded-full" />
+          <div className="w-12 sm:w-16 h-1 bg-saffron mx-auto mt-2 sm:mt-4 rounded-full" />
+          <p className="text-xs sm:text-sm text-slate-grey dark:text-neutral-300 mt-3 font-sans">
+            {t("eventsPage.highlights.subtitle")}
+          </p>
         </div>
 
-        {/* 1. Desktop Layout (Typographic list with cursor follow portal) */}
-        <div className="hidden lg:block max-w-6xl mx-auto border-t border-black/10">
-          {HIGHLIGHTS.map((item, index) => (
-            <div
-              key={index}
-              onMouseEnter={(e) => handleMouseEnter(index, e)}
-              onMouseLeave={() => handleMouseLeave(index)}
-              className="group relative flex items-center justify-between py-12 border-b border-black/10 cursor-pointer select-none transition-all duration-300 px-4"
-            >
-              {/* Suffix Number & Title */}
-              <div className="flex items-center gap-8">
-                <span className="text-sm font-black text-slate-grey font-heading tracking-widest uppercase block select-none">
-                  {item.num}
-                </span>
-                <h3 className="text-3xl xl:text-5xl font-extrabold text-outline-highlight font-heading tracking-tight select-none">
-                  {item.title}
-                </h3>
+        {/* Unified Typographic List (Desktop Cursor Hover + Mobile/Tablet Finger Tap) */}
+        <div className="max-w-6xl mx-auto border-t border-black/10 dark:border-white/10">
+          {HIGHLIGHTS.map((item, index) => {
+            const isTapped = tappedIdx === index;
+            const isHoverActive = activeIdx === index;
+            const isActive = isTapped || isHoverActive;
+
+            return (
+              <div
+                key={index}
+                onClick={() => handleRowClick(index)}
+                onMouseEnter={(e) => handleMouseEnter(index, e)}
+                onMouseLeave={() => handleMouseLeave(index)}
+                className={cn(
+                  "group relative flex flex-col py-5 sm:py-8 lg:py-10 border-b border-black/10 dark:border-white/10 cursor-pointer select-none transition-all duration-300 px-2 sm:px-4",
+                  isTapped ? "bg-saffron/[0.03]" : ""
+                )}
+              >
+                {/* Row Header Block */}
+                <div className="flex items-center justify-between w-full">
+                  <div className="flex items-center gap-3 sm:gap-6 lg:gap-8 min-w-0">
+                    <span className={cn(
+                      "text-xs sm:text-sm font-normal font-heading tracking-[0.2em] uppercase shrink-0 select-none transition-colors",
+                      isActive ? "text-saffron" : "text-slate-grey"
+                    )}>
+                      {item.num}
+                    </span>
+                    <h3 className={cn(
+                      "text-lg sm:text-2xl md:text-3xl xl:text-5xl font-normal font-heading tracking-tight select-none uppercase transition-colors duration-300",
+                      isActive ? "text-saffron is-active" : "text-outline-highlight"
+                    )}>
+                      {item.title}
+                    </h3>
+                  </div>
+
+                  <div className="flex items-center gap-3 shrink-0 ml-2">
+                    {/* Desktop Category Tag (Appears on Hover) */}
+                    <span className="text-xs font-bold uppercase tracking-[0.2em] text-slate-grey opacity-0 translate-x-4 group-hover:opacity-100 group-hover:translate-x-0 hidden lg:inline-block transition-all duration-300 pr-4 select-none font-sans">
+                      {item.category}
+                    </span>
+
+                    {/* Mobile/Tablet Category Pill & Animated Chevron */}
+                    <div className="flex lg:hidden items-center gap-2">
+                      <span className="text-[9px] uppercase font-bold tracking-wider text-saffron bg-saffron/10 border border-saffron/20 px-2 py-0.5 rounded-full font-sans hidden sm:inline-block">
+                        {item.category}
+                      </span>
+                      <div className={cn(
+                        "w-6 h-6 rounded-full flex items-center justify-center transition-transform duration-300 shrink-0",
+                        isTapped ? "rotate-180 bg-saffron text-white shadow-sm" : "bg-black/5 text-slate-grey"
+                      )}>
+                        <ChevronDown size={13} />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Inline Visual Preview: Unfolds smoothly on Mobile / Tablet finger tap */}
+                <div className={cn(
+                  "overflow-hidden transition-all duration-500 ease-out lg:hidden w-full",
+                  isTapped ? "max-h-[340px] opacity-100 mt-3.5 pb-1" : "max-h-0 opacity-0 mt-0"
+                )}>
+                  <div className="relative w-full h-[190px] sm:h-[260px] rounded-xl sm:rounded-2xl overflow-hidden border border-saffron/20 shadow-lg bg-neutral-900">
+                    {item.isVideo ? (
+                      <video
+                        src={getCDNUrl(item.video)}
+                        autoPlay
+                        loop
+                        muted
+                        playsInline
+                        className="w-full h-full object-cover"
+                      />
+                    ) : (
+                      <div
+                        className="w-full h-full bg-cover bg-center"
+                        style={{ backgroundImage: `url('${item.image}')` }}
+                      />
+                    )}
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent pointer-events-none" />
+                    
+                    <div className="absolute bottom-2.5 left-3 right-3 flex items-center justify-between z-10">
+                      <span className="text-[9px] sm:text-[10px] font-bold uppercase tracking-[0.2em] px-2.5 py-1 rounded bg-white/15 text-white backdrop-blur-sm border border-white/20 font-sans">
+                        {item.category}
+                      </span>
+                      <span className="text-[10px] font-bold text-saffron uppercase tracking-widest font-heading">
+                        {item.num}
+                      </span>
+                    </div>
+                  </div>
+                </div>
+
               </div>
-
-              {/* Category Tag */}
-              <span className="text-xs font-bold uppercase tracking-widest text-slate-grey opacity-0 translate-x-4 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-300 pr-4 select-none font-sans">
-                {item.category}
-              </span>
-            </div>
-          ))}
-        </div>
-
-        {/* 2. Mobile & Tablet Fallback Interface (Stacked visual cards) */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:hidden gap-8 max-w-4xl mx-auto">
-          {HIGHLIGHTS.map((item, index) => (
-            <div
-              key={index}
-              className="relative rounded-block overflow-hidden min-h-[300px] flex flex-col justify-between p-8 border border-black/5 shadow-md bg-cover bg-center"
-              style={!item.isVideo ? { backgroundImage: `url('${item.image}')` } : {}}
-            >
-              {item.isVideo && (
-                <video
-                  src={getCDNUrl(item.video)}
-                  autoPlay
-                  loop
-                  muted
-                  playsInline
-                  preload="metadata"
-                  className="absolute inset-0 w-full h-full object-cover z-0 pointer-events-none"
-                />
-              )}
-              <div className="absolute inset-0 bg-neutral-900/45 z-0 pointer-events-none" />
-
-              {/* Category tag */}
-              <div className="relative z-10 flex justify-between items-center mb-6">
-                <span className="text-[10px] font-extrabold uppercase tracking-widest px-2.5 py-1 rounded bg-white/10 text-white backdrop-blur-sm border border-white/20">
-                  {item.category}
-                </span>
-                <span className="text-xs text-saffron font-bold tracking-widest uppercase font-heading select-none">
-                  {item.num}
-                </span>
-              </div>
-
-              {/* Title */}
-              <h3 className="relative z-10 text-xl sm:text-2xl font-black text-white font-heading select-none leading-snug">
-                {item.title}
-              </h3>
-            </div>
-          ))}
+            );
+          })}
         </div>
 
       </div>

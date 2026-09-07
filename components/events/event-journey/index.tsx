@@ -3,6 +3,7 @@
 import React, { useEffect, useRef } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { useLanguage } from "@/context/LanguageContext";
 
 interface SlideItem {
   stage: string;
@@ -11,35 +12,36 @@ interface SlideItem {
   image: string;
 }
 
-const SLIDES: SlideItem[] = [
-  {
-    stage: "Operations",
-    title: "19+ Years Event & Seva Legacy",
-    desc: "Tracing our journey from a 2006 cricket spark to grand cultural festivals and 50+ blood donation camps across Indira Nagar, Nashik.",
-    image: "/about_showcase.png",
-  },
-  {
-    stage: "Stage 01",
-    title: "The 2006 Cricket Spark",
-    desc: "20 childhood friends playing cricket daily in Indira Nagar channel sports bonding and teamwork into community welfare and youth leadership.",
-    image: "/volunteer_coordinator.png",
-  },
-  {
-    stage: "Stage 02",
-    title: "Cultural Processions & Grand Festivals",
-    desc: "Establishing iconic community traditions: Gudipadwa Swagat Yatra, 10-day Shree Ganeshotsav, Navratri Garba, and Shivaji Jayanti rallies.",
-    image: "/hero_dahihandi.png",
-  },
-  {
-    stage: "Stage 03",
-    title: "Registered Trust & 50+ Blood Drives",
-    desc: "Formal registration under 'कै.धर्मराज बडोदे बहुउद्देशिय सेवाभावी संस्था' (Reg: nashik/0000153/2018), 50+ blood donation camps, and active welfare.",
-    image: "/community_assembly.png",
-  },
-];
-
 export default function EventJourney() {
+  const { t } = useLanguage();
   const containerRef = useRef<HTMLDivElement>(null);
+
+  const SLIDES: SlideItem[] = [
+    {
+      stage: "Legacy",
+      title: t("eventsPage.journey.heading"),
+      desc: t("eventsPage.journey.subtitle"),
+      image: "/about_showcase.png",
+    },
+    {
+      stage: t("eventsPage.journey.s1Stage"),
+      title: t("eventsPage.journey.s1Title"),
+      desc: t("eventsPage.journey.s1Desc"),
+      image: "/volunteer_coordinator.png",
+    },
+    {
+      stage: t("eventsPage.journey.s2Stage"),
+      title: t("eventsPage.journey.s2Title"),
+      desc: t("eventsPage.journey.s2Desc"),
+      image: "/hero_dahihandi.png",
+    },
+    {
+      stage: t("eventsPage.journey.s3Stage"),
+      title: t("eventsPage.journey.s3Title"),
+      desc: t("eventsPage.journey.s3Desc"),
+      image: "/community_assembly.png",
+    },
+  ];
 
   useEffect(() => {
     // Register ScrollTrigger plugin
@@ -82,7 +84,7 @@ export default function EventJourney() {
         return (
           <section
             key={index}
-            className="parallax-slide relative w-full h-[85vh] md:h-screen overflow-hidden flex items-center justify-center border-b border-black/5"
+            className="parallax-slide relative w-full h-[75vh] sm:h-[85vh] md:h-screen overflow-hidden flex items-center justify-center border-b border-black/5"
           >
             {/* Background visual parallax layer */}
             <div
@@ -90,25 +92,31 @@ export default function EventJourney() {
               style={{ backgroundImage: `url('${slide.image}')` }}
             />
             {/* Dark Overlay vignette for readability */}
-            <div className={`absolute inset-0 z-0 pointer-events-none ${isHeader ? "bg-black/50" : "bg-neutral-900/35"}`} />
+            <div className={`absolute inset-0 z-0 pointer-events-none ${isHeader ? "bg-black/55" : "bg-neutral-900/40"}`} />
 
             {isHeader ? (
               /* Title Header Slide - Giant Typographic Overlay */
-              <div className="relative z-10 text-center text-white px-6 max-w-3xl space-y-4">
-                <h2 className="text-4xl sm:text-6xl md:text-7xl font-black font-heading leading-none tracking-tight drop-shadow-lg text-white">
+              <div className="relative z-10 text-center text-white px-4 sm:px-6 max-w-3xl space-y-3 sm:space-y-4">
+                <span className="text-[10px] sm:text-xs font-bold uppercase tracking-[0.25em] text-saffron block font-sans">
+                  {slide.stage}
+                </span>
+                <h2 className="text-3xl sm:text-5xl md:text-6xl lg:text-7xl font-normal font-heading leading-tight tracking-tight drop-shadow-lg text-white uppercase">
                   {slide.title}
                 </h2>
-                <p className="text-sm sm:text-base md:text-lg text-neutral-200 leading-relaxed font-sans max-w-xl mx-auto drop-shadow-md font-medium">
+                <p className="text-xs sm:text-base md:text-lg text-neutral-200 leading-relaxed font-sans max-w-xl mx-auto drop-shadow-md font-normal">
                   {slide.desc}
                 </p>
               </div>
             ) : (
               /* Floating Glass Card content for stages */
-              <div className="relative z-10 glass-panel p-8 sm:p-12 bg-white/95 border border-white/50 backdrop-blur-md shadow-2xl max-w-xl w-full text-center space-y-4 rounded-block mx-6">
-                <h3 className="text-2xl sm:text-4xl font-extrabold text-neutral-900 font-heading leading-tight">
+              <div className="relative z-10 glass-panel p-5 sm:p-8 md:p-12 bg-white/95 border border-white/50 backdrop-blur-md shadow-2xl max-w-xl w-full text-center space-y-3 sm:space-y-4 rounded-2xl sm:rounded-block mx-4 sm:mx-6">
+                <span className="text-[9px] sm:text-[10px] font-bold uppercase tracking-[0.2em] text-saffron block font-sans">
+                  {slide.stage}
+                </span>
+                <h3 className="text-xl sm:text-3xl md:text-4xl font-normal text-neutral-900 font-heading leading-tight uppercase">
                   {slide.title}
                 </h3>
-                <p className="text-xs sm:text-sm text-neutral-700 leading-relaxed font-sans font-medium">
+                <p className="text-xs sm:text-sm text-neutral-700 leading-relaxed font-sans font-normal">
                   {slide.desc}
                 </p>
               </div>
