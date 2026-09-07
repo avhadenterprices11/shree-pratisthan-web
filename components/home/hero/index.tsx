@@ -192,6 +192,7 @@ export default function Hero() {
                 alt={slide.label}
                 fill
                 priority={idx === 0}
+                loading={idx === 0 ? "eager" : undefined}
                 className="object-cover object-center animate-pulse-slow opacity-90"
                 sizes="100vw"
               />

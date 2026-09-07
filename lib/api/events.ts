@@ -1,7 +1,44 @@
 import { EventItem, ALL_EVENTS } from "@/lib/events-data";
 
-const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || "http://127.0.0.1:8001/api";
-const BACKEND_BASE_URL = process.env.NEXT_PUBLIC_BACKEND_BASE_URL || "http://127.0.0.1:8001";
+/**
+ * Dynamic API Base URL resolver:
+ * 1. Uses explicit NEXT_PUBLIC_API_URL if configured.
+ * 2. If in browser:
+ *    - On localhost / 127.0.0.1 -> http://localhost:8001/api
+ *    - On local network IP (192.168.x.x, 10.x.x.x, 172.x.x.x) -> http://${hostname}:8001/api
+ *    - Otherwise -> https://ems.test-zone.xyz/api
+ * 3. On SSR server -> http://127.0.0.1:8001/api or NEXT_PUBLIC_API_URL fallback
+ */
+export function getApiBaseUrl(): string {
+  const envUrl = process.env.NEXT_PUBLIC_API_URL;
+  if (envUrl && envUrl.trim() !== "") {
+    return envUrl.replace(/\/+$/, "");
+  }
+
+  if (typeof window !== "undefined") {
+    const hostname = window.location.hostname;
+    if (hostname === "localhost" || hostname === "127.0.0.1") {
+      return "http://localhost:8001/api";
+    }
+    if (/^(192\.168\.|10\.|172\.(1[6-9]|2[0-9]|3[0-1])\.)/.test(hostname)) {
+      return `http://${hostname}:8001/api`;
+    }
+    if (window.location.origin) {
+      return `${window.location.origin}/api`;
+    }
+  }
+
+  return "http://127.0.0.1:8001/api";
+}
+
+export function getBackendBaseUrl(): string {
+  const envUrl = process.env.NEXT_PUBLIC_BACKEND_BASE_URL;
+  if (envUrl && envUrl.trim() !== "") {
+    return envUrl.replace(/\/+$/, "");
+  }
+  const apiBase = getApiBaseUrl();
+  return apiBase.replace(/\/api$/, "");
+}
 
 export interface BackendEvent {
   id: number;
@@ -175,11 +212,12 @@ export function resolveImageUrl(url?: string): string {
   if (url.startsWith("http://") || url.startsWith("https://")) {
     return url;
   }
+  const backendBase = getBackendBaseUrl();
   if (url.startsWith("/api/uploads/")) {
-    return `${BACKEND_BASE_URL}${url}`;
+    return `${backendBase}${url}`;
   }
   if (url.startsWith("uploads/")) {
-    return `${BACKEND_BASE_URL}/api/${url}`;
+    return `${backendBase}/api/${url}`;
   }
   if (url.startsWith("/")) {
     return url;
@@ -205,21 +243,21 @@ export function transformBackendEventToEventItem(backend: BackendEvent): EventIt
   const agenda =
     Array.isArray(backend.agenda) && backend.agenda.length > 0
       ? backend.agenda.map((item: any) => ({
-          time:
-            item.time ||
-            (item.start_time
-              ? item.end_time
-                ? `${item.start_time} – ${item.end_time}`
-                : item.start_time
-              : "06:00 PM"),
-          title: item.title || "Program Session",
-          description: item.description || "",
-        }))
+        time:
+          item.time ||
+          (item.start_time
+            ? item.end_time
+              ? `${item.start_time} – ${item.end_time}`
+              : item.start_time
+            : "06:00 PM"),
+        title: item.title || "Program Session",
+        description: item.description || "",
+      }))
       : [
-          { time: "06:00 AM", title: "Morning Aarti & Prayers", description: "Commencing the sacred festivities." },
-          { time: "11:00 AM", title: "Community Program", description: "Interactive cultural and welfare session." },
-          { time: "07:30 PM", title: "Maha Aarti & Gathering", description: "Grand celebration with community members." },
-        ];
+        { time: "06:00 AM", title: "Morning Aarti & Prayers", description: "Commencing the sacred festivities." },
+        { time: "11:00 AM", title: "Community Program", description: "Interactive cultural and welfare session." },
+        { time: "07:30 PM", title: "Maha Aarti & Gathering", description: "Grand celebration with community members." },
+      ];
 
   const totalRegs = backend.total_registrations || 0;
   const capacity = backend.capacity ? `${backend.capacity.toLocaleString()}+` : "Open to All";
@@ -227,20 +265,20 @@ export function transformBackendEventToEventItem(backend: BackendEvent): EventIt
   const partners =
     Array.isArray(backend.partners) && backend.partners.length > 0
       ? backend.partners.map((p) => ({
-          name: p.name || "",
-          logo: p.logo ? resolveImageUrl(p.logo) : "",
-          link: p.link || "",
-        }))
+        name: p.name || "",
+        logo: p.logo ? resolveImageUrl(p.logo) : "",
+        link: p.link || "",
+      }))
       : [];
 
   const sponsors =
     Array.isArray(backend.sponsors) && backend.sponsors.length > 0
       ? backend.sponsors.map((s) => ({
-          name: s.name || "",
-          logo: s.logo ? resolveImageUrl(s.logo) : "",
-          link: s.link || "",
-          tier: s.tier || "",
-        }))
+        name: s.name || "",
+        logo: s.logo ? resolveImageUrl(s.logo) : "",
+        link: s.link || "",
+        tier: s.tier || "",
+      }))
       : [];
 
   const promoVideoUrl = backend.promo_video_url ? resolveImageUrl(backend.promo_video_url) : undefined;
@@ -338,7 +376,7 @@ export async function fetchEvents(
     const queryParams = new URLSearchParams();
     queryParams.set("pageSize", (options.pageSize || 50).toString());
     queryParams.set("page", (options.page || 1).toString());
-    
+
     // Set status filter if provided or default to Published
     if (options.status && options.status !== "all") {
       queryParams.set("status", options.status);
@@ -356,7 +394,8 @@ export async function fetchEvents(
       queryParams.set("tab", options.tab);
     }
 
-    const url = `${API_BASE_URL}/events?${queryParams.toString()}`;
+    const baseUrl = getApiBaseUrl();
+    const url = `${baseUrl}/events?${queryParams.toString()}`;
     const res = await fetch(url, {
       method: "GET",
       headers: {
@@ -391,7 +430,7 @@ export async function fetchEvents(
       isFallback: true,
     };
   } catch (err) {
-    console.warn("fetchEvents fallback triggered:", err);
+    console.warn(`fetchEvents fallback triggered (using seed events):`, err);
     return {
       events: ALL_EVENTS,
       total: ALL_EVENTS.length,
@@ -408,7 +447,8 @@ export async function fetchEventByIdOrSlug(idOrSlug: string): Promise<EventItem 
     // 1. If numeric ID, try direct endpoint
     const numericId = parseInt(cleanSlug, 10);
     if (!isNaN(numericId) && numericId.toString() === cleanSlug) {
-      const res = await fetch(`${API_BASE_URL}/events/${numericId}`, {
+      const baseUrl = getApiBaseUrl();
+      const res = await fetch(`${baseUrl}/events/${numericId}`, {
         next: { revalidate: 15 },
       });
       if (res.ok) {

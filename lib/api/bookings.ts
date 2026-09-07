@@ -91,15 +91,8 @@ export interface ConfirmBookingResponse {
   message: string;
 }
 
-export function getApiBaseUrl(): string {
-  if (typeof window !== "undefined") {
-    if (window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1") {
-      return "http://localhost:8001/api";
-    }
-    return `http://${window.location.hostname}:8001/api`;
-  }
-  return process.env.NEXT_PUBLIC_API_URL || "http://127.0.0.1:8001/api";
-}
+import { getApiBaseUrl, getBackendBaseUrl } from "./events";
+export { getApiBaseUrl, getBackendBaseUrl };
 
 /**
  * Fetch available tickets for an event
