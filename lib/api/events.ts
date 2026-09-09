@@ -467,7 +467,7 @@ export function transformBackendEventToEventItem(backend: BackendEvent): EventIt
     metrics: [
       { label: "Expected Devotees", value: capacity },
       { label: "Total Registered", value: `${totalRegs.toLocaleString()} Attendees` },
-      { label: "Event Type", value: backend.type || "Community Festival" },
+      { label: "Event Type", value: backend.type ? (backend.type.charAt(0).toUpperCase() + backend.type.slice(1)) : "Community Festival" },
       { label: "City / Region", value: [backend.city, backend.country].filter(Boolean).join(", ") || "Nashik, MH" },
     ],
     organizedDetails: [

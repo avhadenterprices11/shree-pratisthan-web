@@ -58,7 +58,7 @@ export const metadata: Metadata = {
   },
   openGraph: {
     type: "website",
-    locale: "en_IN",
+    locale: "mr_IN",
     url: BASE_URL,
     siteName: "Shree Prathishthan",
     title: "Shree Prathishthan | Cultural Heritage & Social Welfare Trust",
@@ -94,7 +94,7 @@ export default function RootLayout({
 }>) {
   return (
     <html
-      lang="en"
+      lang="mr"
       suppressHydrationWarning
       className={`h-full antialiased ${sansFont.variable} ${headingFont.variable} ${eyebrowFont.variable}`}
     >

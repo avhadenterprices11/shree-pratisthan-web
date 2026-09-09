@@ -31,13 +31,6 @@ function EventCard({ rawEvent }: { rawEvent: EventItem }) {
         />
         <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
 
-        {/* Category Badge */}
-        <div className="absolute top-3 sm:top-4 left-3 sm:left-4 flex gap-2">
-          <span className="px-2.5 sm:px-3 py-1 bg-saffron text-white font-bold text-[9px] sm:text-[10px] uppercase tracking-wider rounded-full shadow-md">
-            {event.categoryLabel}
-          </span>
-        </div>
-
         {/* Status Badge */}
         <div className="absolute top-3 sm:top-4 right-3 sm:right-4">
           <span
@@ -68,12 +61,17 @@ function EventCard({ rawEvent }: { rawEvent: EventItem }) {
       {/* Content Body */}
       <div className="p-4 sm:p-6 space-y-4 flex-grow flex flex-col justify-between">
         <div className="space-y-2">
+          {/* Category Display Below Banner Image */}
+          <div className="flex items-center gap-2">
+            <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[10px] sm:text-xs font-bold uppercase tracking-wider bg-saffron/10 text-saffron border border-saffron/20 font-sans">
+              <Sparkles className="w-3 h-3" />
+              {event.categoryLabel}
+            </span>
+          </div>
+
           <h3 className="text-base sm:text-lg font-bold font-heading text-neutral-900 dark:text-neutral-100 leading-snug group-hover:text-saffron transition-colors line-clamp-2">
             {event.title}
           </h3>
-          <p className="text-xs text-neutral-600 dark:text-neutral-400 font-medium line-clamp-2 leading-relaxed">
-            {event.description}
-          </p>
         </div>
 
         {/* Venue & Capacity Info */}

@@ -271,11 +271,11 @@ export default function EventDetailContent({ event: rawEvent }: { event: EventIt
                 
                 {/* Main Written Story: Title, Tagline, Editorial Quote */}
                 <div className="lg:col-span-7 xl:col-span-8 space-y-4 sm:space-y-5">
-                  {/* Eyebrow Pill */}
+                  {/* Category Eyebrow Pill Above Title */}
                   <div className="flex items-center gap-2">
-                    <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold tracking-[0.2em] uppercase bg-gradient-to-r from-saffron/12 via-gold/15 to-saffron/5 border border-saffron/25 text-saffron font-sans shadow-xs">
-                      <span className="w-1.5 h-1.5 rounded-full bg-saffron animate-pulse" />
-                      {event.tagline}
+                    <span className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full text-xs font-bold tracking-[0.2em] uppercase bg-gradient-to-r from-saffron/12 via-gold/15 to-saffron/5 border border-saffron/25 text-saffron font-sans shadow-xs">
+                      <Sparkles className="w-3.5 h-3.5 text-saffron shrink-0" />
+                      {event.categoryLabel || event.category}
                     </span>
                   </div>
 
@@ -500,7 +500,7 @@ export default function EventDetailContent({ event: rawEvent }: { event: EventIt
               className="glass-panel relative p-4 sm:p-6 rounded-2xl sm:rounded-interactive border border-saffron/20 dark:border-white/10 text-center space-y-1 bg-gradient-to-b from-white/95 to-amber-50/30 dark:from-[#18181b] dark:to-[#141416] shadow-sm hover:shadow-md hover:border-saffron/40 hover:-translate-y-0.5 transition-all duration-300 overflow-hidden group"
             >
               <div className="absolute top-0 inset-x-0 h-[2px] bg-gradient-to-r from-transparent via-saffron/40 to-transparent group-hover:via-saffron transition-all" />
-              <span className="text-2xl sm:text-3xl md:text-4xl font-normal text-saffron font-heading block tracking-tight group-hover:scale-105 transition-transform duration-300">
+              <span className="text-2xl sm:text-3xl md:text-4xl font-normal text-saffron font-heading block tracking-tight group-hover:scale-105 transition-transform duration-300 capitalize">
                 {m.value}
               </span>
               <span className="text-[10px] sm:text-[11px] text-slate-grey dark:text-neutral-300 font-bold uppercase tracking-[0.16em] font-sans block">

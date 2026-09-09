@@ -45,13 +45,13 @@ export default function PastEventsArchive() {
             </div>
 
             <div className="p-4 sm:p-6 space-y-3 sm:space-y-4 flex-grow flex flex-col justify-between">
-              <div className="space-y-1.5 sm:space-y-2">
+              <div className="space-y-2">
+                <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider bg-saffron/10 text-saffron border border-saffron/20 font-sans w-fit">
+                  {event.categoryLabel}
+                </span>
                 <h4 className="text-base sm:text-lg font-normal font-heading text-neutral-900 dark:text-neutral-100 group-hover:text-saffron transition-colors uppercase">
                   {event.title}
                 </h4>
-                <p className="text-xs text-neutral-600 dark:text-neutral-300 font-normal line-clamp-2 leading-[1.6] font-sans">
-                  {event.description}
-                </p>
               </div>
 
               {/* Metrics Pills */}
