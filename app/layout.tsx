@@ -80,6 +80,17 @@ export const metadata: Metadata = {
       "Experience the legacy of Maharashtra. Grand festivals, medical camps, and rural support drives.",
     images: ["/hero_ganesh.png"],
   },
+  icons: {
+    icon: [
+      { url: "/shree-favicon.png", type: "image/png" },
+      { url: "/icon.png", type: "image/png" },
+    ],
+    shortcut: "/shree-favicon.png",
+    apple: [
+      { url: "/shree-favicon.png", type: "image/png" },
+      { url: "/apple-icon.png", type: "image/png" },
+    ],
+  },
   alternates: {
     canonical: BASE_URL,
   },

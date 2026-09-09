@@ -117,18 +117,18 @@ export default function EventDetailContent({ event: rawEvent }: { event: EventIt
 
         {/* Top Breadcrumb & Metadata Bar */}
         <div className="flex flex-wrap items-center justify-between gap-4 border-b border-saffron/15 dark:border-white/10 pb-4">
-          <div className="flex items-center gap-2 text-xs sm:text-sm font-medium text-slate-grey dark:text-neutral-300 font-sans">
-            <Link href="/events" className="hover:text-saffron transition-colors">
+          <div className="flex items-center gap-2 text-xs sm:text-sm font-medium text-slate-grey dark:text-neutral-300 font-sans flex-wrap">
+            <Link href="/events" className="hover:text-saffron transition-colors whitespace-nowrap">
               {t("eventsPage.detail.breadcrumb")}
             </Link>
-            <ChevronRight className="w-3.5 h-3.5 text-slate-400 dark:text-neutral-500" />
-            <span className="text-saffron font-bold truncate max-w-[200px] sm:max-w-[320px]">
+            <ChevronRight className="w-3.5 h-3.5 text-slate-400 dark:text-neutral-500 shrink-0" />
+            <span className="text-saffron font-bold">
               {event.title}
             </span>
           </div>
 
           <div className="flex items-center gap-3">
-            <span className="text-[10px] sm:text-xs font-bold uppercase tracking-[0.16em] text-saffron bg-saffron/10 px-3 py-1 rounded-full border border-saffron/20 font-sans">
+            <span className="text-[10px] sm:text-xs font-bold uppercase tracking-[0.16em] text-saffron bg-saffron/10 px-3 py-1 rounded-full border border-saffron/20 font-sans whitespace-nowrap">
               {t("eventsPage.detail.dossierBadge")}
             </span>
           </div>
