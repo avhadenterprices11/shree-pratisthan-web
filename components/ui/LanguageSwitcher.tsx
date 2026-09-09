@@ -10,8 +10,8 @@ interface LanguageSwitcherProps {
 }
 
 const LANGUAGES: { code: Language; shortLabel: string; fullLabel: string }[] = [
-  { code: "en", shortLabel: "EN", fullLabel: "English" },
   { code: "mr", shortLabel: "म", fullLabel: "मराठी" },
+  { code: "en", shortLabel: "EN", fullLabel: "English" },
   { code: "hi", shortLabel: "हिं", fullLabel: "हिंदी" },
 ];
 

@@ -14,16 +14,16 @@ export interface LanguageOption {
 }
 
 export const LANGUAGE_OPTIONS: LanguageOption[] = [
+  { code: "mr", label: "Marathi", nativeLabel: "मराठी" },
   { code: "en", label: "English", nativeLabel: "English" },
   { code: "hi", label: "Hindi", nativeLabel: "हिंदी" },
-  { code: "mr", label: "Marathi", nativeLabel: "मराठी" },
 ];
 
 const STORAGE_KEY = "website-language";
 
 const DICTIONARIES: Record<Language, any> = {
-  en: enTranslations,
   mr: mrTranslations,
+  en: enTranslations,
   hi: hiTranslations,
 };
 
@@ -51,7 +51,7 @@ function getNestedValue(obj: any, path: string): string | undefined {
 }
 
 export function LanguageProvider({ children }: { children: ReactNode }) {
-  const [language, setLanguageState] = useState<Language>("en");
+  const [language, setLanguageState] = useState<Language>("mr");
   const [isMounted, setIsMounted] = useState(false);
 
   // Safely initialize from localStorage after mount to avoid hydration mismatch
@@ -61,6 +61,8 @@ export function LanguageProvider({ children }: { children: ReactNode }) {
       const saved = localStorage.getItem(STORAGE_KEY) as Language | null;
       if (saved && (saved === "en" || saved === "hi" || saved === "mr")) {
         setLanguageState(saved);
+      } else {
+        setLanguageState("mr");
       }
     } catch {
       // localStorage may be disabled or restricted in private browsing
@@ -85,7 +87,15 @@ export function LanguageProvider({ children }: { children: ReactNode }) {
         return val;
       }
 
-      // 2. Fallback to English dictionary
+      // 2. Fallback to Marathi dictionary if active is not Marathi
+      if (language !== "mr") {
+        const mrVal = getNestedValue(DICTIONARIES.mr, path);
+        if (mrVal !== undefined) {
+          return mrVal;
+        }
+      }
+
+      // 3. Fallback to English dictionary
       if (language !== "en") {
         const enVal = getNestedValue(DICTIONARIES.en, path);
         if (enVal !== undefined) {
@@ -93,7 +103,7 @@ export function LanguageProvider({ children }: { children: ReactNode }) {
         }
       }
 
-      // 3. Fallback to provided fallback argument or the key path itself
+      // 4. Fallback to provided fallback argument or the key path itself
       return fallback !== undefined ? fallback : path;
     },
     [language]
@@ -114,7 +124,12 @@ export function LanguageProvider({ children }: { children: ReactNode }) {
         return Array.isArray(cur) ? cur : undefined;
       };
 
-      return resolve(DICTIONARIES[language]) || resolve(DICTIONARIES.en) || [];
+      return (
+        resolve(DICTIONARIES[language]) ||
+        resolve(DICTIONARIES.mr) ||
+        resolve(DICTIONARIES.en) ||
+        []
+      );
     },
     [language]
   );
