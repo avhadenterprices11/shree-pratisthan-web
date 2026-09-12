@@ -321,32 +321,21 @@ export default function StepEvent({
 
       {/* Form Fields */}
       <div className="space-y-6">
-        {/* 1. Select Event Dropdown */}
+        {/* 1. Festival / Event (Read-only) */}
         <div className="space-y-2">
           <label htmlFor="eventId" className="block text-xs font-bold uppercase tracking-wider text-neutral-700">
-            Select Festival / Event <span className="text-saffron">*</span>
+            Festival / Event <span className="text-saffron">*</span>
           </label>
-          <CustomSelect
-            id="eventId"
-            options={
-              eventsList.length > 0
-                ? eventsList
-                : [{ value: "ganesh-utsav-2026", label: "Shree Ganeshotsav 2026 (श्री गणेशोत्सव)" }]
-            }
-            value={formData.eventId || (eventsList[0]?.value ?? "ganesh-utsav-2026")}
-            onChange={(val) => {
-              const matched = eventsList.find((e) => e.value === val);
-              updateFields({
-                eventId: val,
-                dateOfBirth: matched?.startDate || "2026-08-27",
-                ticketId: undefined,
-                ticketName: undefined,
-                ticketPrice: undefined,
-                selectedAddons: {},
-              });
-            }}
-            icon={<Calendar className="w-4 h-4" />}
-          />
+          <div className="relative">
+            <Calendar className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-saffron" />
+            <input
+              id="eventId"
+              type="text"
+              readOnly
+              value={selectedEventInfo?.label || "Event"}
+              className="w-full pl-10 pr-4 py-3 bg-neutral-50 border border-neutral-300 rounded-xl text-neutral-900 text-sm font-semibold cursor-default select-none shadow-xs"
+            />
+          </div>
           {errors.eventId && <p className="text-xs text-red-600 font-medium">{errors.eventId}</p>}
         </div>
 
@@ -461,32 +450,20 @@ export default function StepEvent({
 
         {/* 3. Date & Time Slot Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-          {/* Smart Event Date Selector */}
+          {/* Event Date (Read-only) */}
           <div className="space-y-2">
             <label htmlFor="dateOfBirth" className="block text-xs font-bold uppercase tracking-wider text-neutral-700">
-              Attendance Date <span className="text-saffron">*</span>
+              Event Date <span className="text-saffron">*</span>
             </label>
             <div className="relative">
               <Calendar className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-neutral-400" />
-              {selectedEventInfo?.isSingleDay ? (
-                <div className="w-full pl-10 pr-4 py-3 bg-neutral-50 border border-neutral-300 rounded-xl text-neutral-800 text-sm font-semibold flex items-center justify-between">
-                  <span>{selectedEventInfo.formattedDate}</span>
-                  <span className="text-[10px] uppercase font-bold text-orange-700 bg-orange-100 px-2 py-0.5 rounded-md">
-                    Confirmed Date
-                  </span>
-                </div>
-              ) : (
-                <input
-                  id="dateOfBirth"
-                  type="date"
-                  required
-                  min={selectedEventInfo?.startDate}
-                  max={selectedEventInfo?.endDate}
-                  value={formData.dateOfBirth || selectedEventInfo?.startDate || "2026-08-27"}
-                  onChange={(e) => updateFields({ dateOfBirth: e.target.value })}
-                  className="w-full pl-10 pr-4 py-3 bg-white border border-neutral-300 rounded-xl text-neutral-900 focus:outline-none focus:ring-2 focus:ring-saffron/40 focus:border-saffron transition-all text-sm font-medium"
-                />
-              )}
+              <input
+                id="dateOfBirth"
+                type="text"
+                readOnly
+                value={selectedEventInfo?.formattedDate || formData.dateOfBirth || ""}
+                className="w-full pl-10 pr-4 py-3 bg-neutral-50 border border-neutral-300 rounded-xl text-neutral-900 text-sm font-semibold cursor-default select-none shadow-xs"
+              />
             </div>
             {errors.dateOfBirth && (
               <p className="text-xs text-red-600 font-medium">{errors.dateOfBirth}</p>

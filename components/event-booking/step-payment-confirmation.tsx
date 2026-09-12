@@ -70,6 +70,17 @@ export default function StepPaymentConfirmation({
   const qrData = primaryTicket?.qr_payload || `EMS-EVENT-${bookingCode}-${ticketNumber}-${uniqueCode}`;
   const qrImageUrl = primaryTicket?.qr_image_url || `https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=${encodeURIComponent(qrData)}&color=000000&bgcolor=ffffff`;
 
+  // Resolved Booking Date and Time
+  const bookingDateRaw = bookingResult?.booking?.booked_at || bookingResult?.booking?.created_at || primaryTicket?.issued_at || primaryTicket?.created_at || new Date().toISOString();
+  const formattedBookingDateTime = new Intl.DateTimeFormat('en-IN', {
+    day: '2-digit',
+    month: 'short',
+    year: 'numeric',
+    hour: '2-digit',
+    minute: '2-digit',
+    hour12: true
+  }).format(new Date(bookingDateRaw));
+
   const handleCopyBookingId = () => {
     navigator.clipboard.writeText(bookingCode);
     setCopied(true);
@@ -104,7 +115,7 @@ export default function StepPaymentConfirmation({
           <div className="p-4 bg-emerald-50/80 border border-emerald-200/80 rounded-2xl text-xs sm:text-sm text-emerald-950 font-medium flex items-center justify-center gap-2">
             <Mail className="w-4 h-4 text-emerald-700 flex-shrink-0" />
             <span>
-              A confirmation email with your digital entry pass and scannable QR code has been dispatched to <strong>{email}</strong>.
+              A confirmation email with your digital entry pass and scannable QR code has been dispatched to <strong>{email}</strong>. (Booked on: <strong>{formattedBookingDateTime}</strong>)
             </span>
           </div>
         </div>
@@ -159,6 +170,16 @@ export default function StepPaymentConfirmation({
                   </div>
                 </div>
 
+                {/* Booking Date & Time */}
+                <div className="p-2.5 rounded-xl bg-orange-50/60 border border-orange-200/60 text-xs">
+                  <span className="text-[10px] uppercase font-bold text-orange-600 block">
+                    Booked On (Date &amp; Time)
+                  </span>
+                  <span className="font-bold text-neutral-900 flex items-center gap-1.5 mt-0.5">
+                    <Clock className="w-3.5 h-3.5 text-saffron" /> {formattedBookingDateTime}
+                  </span>
+                </div>
+
                 <div>
                   <span className="text-[10px] uppercase font-bold text-neutral-400 block">Primary Pass Holder</span>
                   <span className="font-bold text-neutral-900 text-sm">{participantName} ({participantCount} Pass{participantCount > 1 ? "es" : ""})</span>
@@ -198,6 +219,7 @@ export default function StepPaymentConfirmation({
               <span className="flex items-center gap-1">
                 <ShieldCheck className="w-4 h-4 text-emerald-600" /> Verified Digital Pass
               </span>
+              <span>Booked: <strong className="text-neutral-700">{formattedBookingDateTime}</strong></span>
               <span>Ticket No: <strong className="font-mono text-neutral-800">{ticketNumber}</strong></span>
             </div>
           </div>

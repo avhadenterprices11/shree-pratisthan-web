@@ -59,6 +59,8 @@ export interface BookingResponse {
   total_amount: number;
   currency: string;
   promo_code?: string | null;
+  booked_at?: string;
+  created_at?: string;
   items?: Array<{
     id: number;
     booking_id: number;
@@ -83,6 +85,8 @@ export interface IssuedTicketData {
   status: string;
   unit_price?: number | null;
   total_price?: number | null;
+  issued_at?: string;
+  created_at?: string;
 }
 
 export interface ConfirmBookingResponse {

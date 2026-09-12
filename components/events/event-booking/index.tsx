@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import React, { useState, useEffect, Suspense } from "react";
 import { useSearchParams } from "next/navigation";
@@ -122,9 +122,6 @@ function EventBookingContent() {
       if (!formData.email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
         newErrors.email = "Please enter a valid email address.";
       }
-      if (!formData.streetArea || formData.streetArea.trim().length < 3) {
-        newErrors.streetArea = "Please enter your residential address in Nashik.";
-      }
 
       // Validate required custom questions if configured
       const activeEvent = getEventById(formData.eventId || "ganesh-utsav-2026");
@@ -140,7 +137,7 @@ function EventBookingContent() {
         newErrors.eventId = "Please select an event.";
       }
       if (!formData.dateOfBirth) {
-        newErrors.dateOfBirth = "Please select an attendance date.";
+        newErrors.dateOfBirth = "Event date is required.";
       }
       if (!formData.preferredTimeSlot) {
         newErrors.preferredTimeSlot = "Please choose a time slot.";

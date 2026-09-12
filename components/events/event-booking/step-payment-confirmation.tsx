@@ -11,7 +11,8 @@ import {
   MapPin,
   Sparkles,
   Check,
-  ShieldCheck
+  ShieldCheck,
+  Clock
 } from "lucide-react";
 import { EventBookingInput } from "@/lib/validations";
 import { useLanguage } from "@/context/LanguageContext";
@@ -38,6 +39,22 @@ export default function StepPaymentConfirmation({
     bookingResult?.booking?.booking_code ||
     bookingResult?.tickets?.[0]?.ticket_number ||
     "SP-2026-" + Math.floor(1000 + Math.random() * 9000);
+
+  // Resolved Booking Date and Time
+  const bookingDateRaw =
+    bookingResult?.booking?.booked_at ||
+    bookingResult?.booking?.created_at ||
+    bookingResult?.tickets?.[0]?.issued_at ||
+    bookingResult?.tickets?.[0]?.created_at ||
+    new Date().toISOString();
+  const formattedBookingDateTime = new Intl.DateTimeFormat("en-IN", {
+    day: "2-digit",
+    month: "short",
+    year: "numeric",
+    hour: "2-digit",
+    minute: "2-digit",
+    hour12: true
+  }).format(new Date(bookingDateRaw));
 
   const rawEvent = getEventById(formData.eventId || "ballerina-movie-premiere");
   const event = rawEvent ? getLocalizedEvent(rawEvent, language) : undefined;
@@ -185,6 +202,15 @@ export default function StepPaymentConfirmation({
               </span>
               <span className="font-semibold text-neutral-900 dark:text-neutral-100 mt-0.5 block">
                 {participantCount} {t("eventsPage.booking.passes")}
+              </span>
+            </div>
+
+            <div className="sm:col-span-2 pt-2 border-t border-neutral-200/60 dark:border-white/5">
+              <span className="text-slate-500 dark:text-neutral-400 block text-[10px] sm:text-[11px] uppercase font-semibold flex items-center gap-1">
+                <Clock className="w-3.5 h-3.5 text-saffron" /> Booking Date &amp; Time
+              </span>
+              <span className="font-bold text-neutral-900 dark:text-neutral-100 mt-0.5 block">
+                {formattedBookingDateTime}
               </span>
             </div>
           </div>
