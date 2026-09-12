@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import React, { useState } from "react";
 import StepProgress from "./step-progress";
@@ -104,15 +104,12 @@ export default function EventBookingContainer() {
       if (!formData.email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
         newErrors.email = "Please enter a valid email address.";
       }
-      if (!formData.streetArea || formData.streetArea.trim().length < 3) {
-        newErrors.streetArea = "Please enter your residential area / address in Nashik.";
-      }
     } else if (step === 2) {
       if (!formData.eventId) {
         newErrors.eventId = "Please select a festival or event.";
       }
       if (!formData.dateOfBirth) {
-        newErrors.dateOfBirth = "Please select a date on the calendar.";
+        newErrors.dateOfBirth = "Event date is required.";
       }
       if (!formData.preferredTimeSlot) {
         newErrors.preferredTimeSlot = "Please choose a time slot.";
