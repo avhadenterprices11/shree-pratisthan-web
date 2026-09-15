@@ -86,6 +86,7 @@ export const metadata: Metadata = {
 };
 
 import { ThemeProvider } from "@/context/ThemeContext";
+import { DomGuard } from "@/components/providers/DomGuard";
 
 export default function RootLayout({
   children,
@@ -94,11 +95,12 @@ export default function RootLayout({
 }>) {
   return (
     <html
-      lang="en"
+      lang="mr"
       suppressHydrationWarning
       className={`h-full antialiased ${sansFont.variable} ${headingFont.variable} ${eyebrowFont.variable}`}
     >
       <body className="min-h-full flex flex-col relative bg-background text-foreground transition-colors duration-300">
+        <DomGuard />
         <ThemeProvider>
           <LanguageProvider>
             <ScrollProvider>

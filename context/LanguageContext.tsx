@@ -61,8 +61,14 @@ export function LanguageProvider({ children }: { children: ReactNode }) {
       const saved = localStorage.getItem(STORAGE_KEY) as Language | null;
       if (saved && (saved === "en" || saved === "hi" || saved === "mr")) {
         setLanguageState(saved);
+        if (typeof document !== "undefined") {
+          document.documentElement.lang = saved;
+        }
       } else {
         setLanguageState("mr");
+        if (typeof document !== "undefined") {
+          document.documentElement.lang = "mr";
+        }
       }
     } catch {
       // localStorage may be disabled or restricted in private browsing
@@ -71,6 +77,9 @@ export function LanguageProvider({ children }: { children: ReactNode }) {
 
   const setLanguage = useCallback((lang: Language) => {
     setLanguageState(lang);
+    if (typeof document !== "undefined") {
+      document.documentElement.lang = lang;
+    }
     try {
       localStorage.setItem(STORAGE_KEY, lang);
     } catch {
