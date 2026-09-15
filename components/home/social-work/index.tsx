@@ -12,15 +12,16 @@ import { useLanguage } from "@/context/LanguageContext";
 const impactCards = [
   {
     id: 0,
-    metric: "50+ Drives",
-    title: "Blood Donation Camps",
+    metric: "50+ Camps",
+    title: "Blood Donation Camp",
     description:
-      "Regular mass blood donation drives organized in collaboration with top Nashik hospitals to save critical lives in times of emergency.",
-    image: "/volunteer_musician.png",
+      "Organized with immense devotion every year during Ganesh Mahotsav in collaboration with leading Nashik blood banks and civil hospitals. Our youth volunteers and citizens unite to collect hundreds of blood units, ensuring emergency life-saving supply for accident victims, surgeries, and thalassemia patients.",
+    image: "/images/blood-donation-camp.jpg",
     bg: "bg-orange-50/70 border-saffron/15 dark:bg-[#1a1412] dark:border-saffron/30",
     text: "text-charcoal dark:text-neutral-100",
     isFeature: true,
-    featureLabel: "Life-Saving Seva",
+    featureLabel: "Ganesh Mahotsav Seva",
+    actionBtn: "Donate Blood / Register",
   },
   {
     id: 1,
@@ -31,16 +32,20 @@ const impactCards = [
     image: "/volunteer_safety.png",
     bg: "bg-amber-50/70 border-gold/15 dark:bg-[#1a1710] dark:border-gold/30",
     text: "text-charcoal dark:text-neutral-100",
+    featureLabel: "Health & Vitality",
+    actionBtn: "Participate",
   },
   {
     id: 2,
-    metric: "5,000+",
-    title: "Health Diagnostic Camps",
+    metric: "2,500+ Pledges",
+    title: "Organ Donation Camp",
     description:
-      "Free medical examinations, eye checkup drives, and essential healthcare assistance for senior citizens and local families.",
-    image: "/volunteer_coordinator.png",
+      "Organized during Ganesh Utsav in collaboration with specialized medical panels and NGOs to spread life-saving awareness on organ donation (eyes, kidney, liver, heart). Dispelling myths, educating devotees, and facilitating noble voluntary organ pledge registrations.",
+    image: "/images/organ-donation-camp.jpg",
     bg: "bg-[#121214] border-coal dark:bg-[#121214] dark:border-white/10",
     text: "text-alabaster",
+    featureLabel: "Ganesh Utsav Jeevandan",
+    actionBtn: "Pledge Organ Donation",
   },
   {
     id: 3,
@@ -51,6 +56,8 @@ const impactCards = [
     image: "/volunteer_eco.png",
     bg: "bg-rose-50/70 border-red-200/15 dark:bg-[#1a1214] dark:border-rose-500/30",
     text: "text-charcoal dark:text-neutral-100",
+    featureLabel: "Youth Aid",
+    actionBtn: "Participate",
   },
 ];
 
@@ -65,11 +72,12 @@ export default function CulturalInitiatives() {
       metric: t("socialWork.card1Metric"),
       title: t("socialWork.card1Title"),
       description: t("socialWork.card1Desc"),
-      image: "/volunteer_musician.png",
+      image: "/images/blood-donation-camp.jpg",
       bg: "bg-orange-50/70 border-saffron/15 dark:bg-[#1a1412] dark:border-saffron/30",
       text: "text-charcoal dark:text-neutral-100",
       isFeature: true,
       featureLabel: t("socialWork.card1Sub"),
+      actionBtn: t("socialWork.donateBloodBtn"),
     },
     {
       id: 1,
@@ -79,15 +87,19 @@ export default function CulturalInitiatives() {
       image: "/volunteer_safety.png",
       bg: "bg-amber-50/70 border-gold/15 dark:bg-[#1a1710] dark:border-gold/30",
       text: "text-charcoal dark:text-neutral-100",
+      featureLabel: t("socialWork.card2Sub"),
+      actionBtn: t("socialWork.participate"),
     },
     {
       id: 2,
       metric: t("socialWork.card3Metric"),
       title: t("socialWork.card3Title"),
       description: t("socialWork.card3Desc"),
-      image: "/volunteer_coordinator.png",
+      image: "/images/organ-donation-camp.jpg",
       bg: "bg-[#121214] border-coal dark:bg-[#121214] dark:border-white/10",
       text: "text-alabaster",
+      featureLabel: t("socialWork.card3Sub"),
+      actionBtn: t("socialWork.organPledgeBtn"),
     },
     {
       id: 3,
@@ -97,6 +109,8 @@ export default function CulturalInitiatives() {
       image: "/volunteer_eco.png",
       bg: "bg-rose-50/70 border-red-200/15 dark:bg-[#1a1214] dark:border-rose-500/30",
       text: "text-charcoal dark:text-neutral-100",
+      featureLabel: t("socialWork.card4Sub"),
+      actionBtn: t("socialWork.participate"),
     },
   ];
 
@@ -168,42 +182,32 @@ export default function CulturalInitiatives() {
                   >
                     {isOpen ? (
                       <div className="h-full p-4 sm:p-6 md:p-7 flex flex-col justify-between text-left">
-                        {card.isFeature ? (
-                          <div className="max-w-[280px]">
-                            <h3 className="text-xl sm:text-[28px] md:text-[32px] leading-[1.1] font-normal font-heading mb-2 sm:mb-3 text-charcoal dark:text-white uppercase">
-                              {t("socialWork.shreeNaadTitle")}
-                            </h3>
-                            <Link
-                              href="/volunteer"
-                              className="inline-flex items-center gap-2 text-[10px] sm:text-[11px] tracking-[0.2em] uppercase font-bold text-saffron hover:text-gold transition-colors cursor-pointer font-sans"
-                              data-hover="pointer"
-                            >
-                              {t("socialWork.joinTroupe")} <ArrowRight size={14} />
-                            </Link>
-                          </div>
-                        ) : (
-                          <div className="max-w-[300px]">
-                            <h3 className={`text-lg sm:text-[24px] md:text-[26px] leading-[1.15] font-normal font-heading ${
-                              card.id === 2 ? "text-white" : "text-charcoal dark:text-white"
-                            }`}>
-                              {card.title}
-                            </h3>
-                            <p className={`mt-1.5 sm:mt-2 text-xs sm:text-[13px] leading-[1.65] font-sans ${
-                              card.id === 2 ? "text-slate-300" : "text-slate-grey dark:text-neutral-300"
-                            }`}>
-                              {card.description}
-                            </p>
-                            <Link
-                              href="/volunteer"
-                              className={`mt-2 sm:mt-3 inline-flex items-center gap-2 text-[10px] sm:text-[11px] tracking-[0.2em] uppercase font-bold transition-colors cursor-pointer font-sans ${
-                                card.id === 2 ? "text-gold hover:text-saffron" : "text-saffron hover:text-gold"
-                              }`}
-                              data-hover="pointer"
-                            >
-                              {t("socialWork.participate")} <ArrowRight size={14} />
-                            </Link>
-                          </div>
-                        )}
+                        <div className="max-w-[320px]">
+                          {card.featureLabel && (
+                            <span className="inline-block px-2.5 py-0.5 mb-2 rounded-full text-[10px] font-bold tracking-wider uppercase bg-saffron/15 text-saffron border border-saffron/20 font-sans">
+                              {card.featureLabel}
+                            </span>
+                          )}
+                          <h3 className={`text-xl sm:text-[24px] md:text-[28px] leading-[1.15] font-normal font-heading mb-2 ${
+                            card.id === 2 ? "text-white" : "text-charcoal dark:text-white"
+                          }`}>
+                            {card.title}
+                          </h3>
+                          <p className={`mt-1.5 text-xs sm:text-[13px] leading-[1.65] font-sans ${
+                            card.id === 2 ? "text-slate-300" : "text-slate-grey dark:text-neutral-300"
+                          }`}>
+                            {card.description}
+                          </p>
+                          <Link
+                            href="/volunteer"
+                            className={`mt-3 inline-flex items-center gap-2 text-[10px] sm:text-[11px] tracking-[0.2em] uppercase font-bold transition-colors cursor-pointer font-sans ${
+                              card.id === 2 ? "text-gold hover:text-saffron" : "text-saffron hover:text-gold"
+                            }`}
+                            data-hover="pointer"
+                          >
+                            {card.actionBtn || t("socialWork.participate")} <ArrowRight size={14} />
+                          </Link>
+                        </div>
 
                         <div className="mt-3 sm:mt-4 grid grid-cols-2 sm:grid-cols-[1.05fr_1fr] gap-3 sm:gap-4 flex-1 items-end">
                           <div className="self-end">
@@ -218,11 +222,7 @@ export default function CulturalInitiatives() {
                           </div>
 
                           <div
-                            className={`relative w-full rounded-xl sm:rounded-block overflow-hidden border border-saffron/10 ${
-                              card.isFeature
-                                ? "h-[110px] sm:h-[180px] md:h-[200px]"
-                                : "h-[100px] sm:h-[140px] md:h-[155px]"
-                            }`}
+                            className="relative w-full rounded-xl sm:rounded-block overflow-hidden border border-saffron/10 h-[110px] sm:h-[160px] md:h-[180px]"
                           >
                             <Image
                               src={card.image}
@@ -314,7 +314,7 @@ export default function CulturalInitiatives() {
                                   : "bg-saffron text-white hover:bg-saffron/90"
                               }`}
                             >
-                              {card.isFeature ? t("socialWork.joinTroupe") : t("socialWork.participateVolunteer")} <ArrowRight size={14} />
+                              {card.actionBtn || t("socialWork.participateVolunteer")} <ArrowRight size={14} />
                             </Link>
                           </div>
                         </motion.div>
@@ -337,7 +337,7 @@ export default function CulturalInitiatives() {
             {t("socialWork.bannerText")}
           </p>
           <span className="text-xs font-extrabold uppercase tracking-widest text-saffron flex items-center gap-1.5 whitespace-nowrap bg-white/95 dark:bg-[#27272a] px-4 py-2 rounded-full shadow-sm group-hover:text-gold transition-colors">
-            {t("common.becomeVolunteer")} <ArrowRight size={12} className="transform group-hover:translate-x-1 transition-transform duration-300" />
+            {t("socialWork.becomeDonor")} <ArrowRight size={12} className="transform group-hover:translate-x-1 transition-transform duration-300" />
           </span>
         </Link>
 

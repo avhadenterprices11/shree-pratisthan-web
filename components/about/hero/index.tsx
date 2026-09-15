@@ -150,15 +150,15 @@ export default function AboutHero() {
         />
 
         {/* 3. Left Editorial Text Panel */}
-        <div className="left-text-wrapper absolute top-16 sm:top-auto left-4 sm:left-6 lg:left-8 z-20 flex flex-col items-start gap-1.5 sm:gap-5 max-w-[155px] sm:max-w-xs md:max-w-sm pointer-events-none will-change-transform">
+        <div className="left-text-wrapper absolute top-16 sm:top-auto left-4 sm:left-6 lg:left-8 z-20 flex flex-col items-start gap-1.5 sm:gap-5 max-w-[170px] sm:max-w-xs md:max-w-sm pointer-events-none will-change-transform">
           <div className="hero-badge inline-flex items-center gap-1.5 sm:gap-2 bg-white/15 text-white font-bold text-xs sm:text-sm uppercase tracking-[0.2em] px-2.5 sm:px-4.5 py-1 sm:py-2 rounded-full border border-white/25 shadow-sm backdrop-blur-md font-sans">
             <span className="w-1.5 h-1.5 rounded-full bg-white animate-pulse" />
             <span>{t("aboutPage.hero.badge")}</span>
           </div>
 
-          <h2 className="text-2xl sm:text-4xl md:text-[48px] font-normal text-white leading-[1.25] tracking-tight font-heading uppercase flex gap-0.5 sm:gap-1 py-1">
+          <h1 className="text-[48px] md:text-[56px] lg:text-[64px] font-normal text-white leading-[1.15] tracking-tight font-heading uppercase flex gap-0.5 sm:gap-1 py-1 sm:py-2">
             {TITLE_WORD_1}
-          </h2>
+          </h1>
 
           <p className="left-desc text-white/90 text-sm sm:text-base md:text-lg font-sans font-normal leading-[1.6] sm:leading-[1.75]">
             {t("aboutPage.hero.leftDesc")}
@@ -166,11 +166,11 @@ export default function AboutHero() {
         </div>
 
         {/* 4. Right Editorial Text Panel */}
-        <div className="right-text-wrapper absolute bottom-10 sm:bottom-auto right-4 sm:right-6 lg:right-8 z-20 flex flex-col items-end text-right gap-1.5 sm:gap-5 max-w-[155px] sm:max-w-xs md:max-w-sm pointer-events-none will-change-transform">
+        <div className="right-text-wrapper absolute bottom-10 sm:bottom-auto right-4 sm:right-6 lg:right-8 z-20 flex flex-col items-end text-right gap-1.5 sm:gap-5 max-w-[170px] sm:max-w-xs md:max-w-sm pointer-events-none will-change-transform">
           
-          <h2 className="text-2xl sm:text-4xl md:text-[48px] font-normal text-white leading-[1.25] tracking-tight font-heading uppercase flex gap-0.5 sm:gap-1 py-1">
+          <h1 className="text-[48px] md:text-[56px] lg:text-[64px] font-normal text-white leading-[1.15] tracking-tight font-heading uppercase flex gap-0.5 sm:gap-1 py-1 sm:py-2">
             {TITLE_WORD_2}
-          </h2>
+          </h1>
 
           <div className="right-desc text-white/80 text-xs sm:text-sm uppercase font-bold tracking-[0.16em] sm:tracking-[0.18em] leading-relaxed border-t border-white/20 pt-2 sm:pt-4 flex flex-col gap-0.5 sm:gap-1 font-sans">
             <span>{t("aboutPage.hero.bullet1")}</span>

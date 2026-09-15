@@ -36,7 +36,7 @@ export default function CustomSelect({
   const optionsListRef = useRef<HTMLDivElement>(null);
 
   const selectedIndex = options.findIndex((opt) => opt.value === value);
-  const selectedOption = selectedIndex >= 0 ? options[selectedIndex] : (value && options.length > 0 ? options[0] : undefined);
+  const selectedOption = options[selectedIndex];
 
   // Close on outside click
   useEffect(() => {

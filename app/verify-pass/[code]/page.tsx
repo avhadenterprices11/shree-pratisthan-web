@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useEffect, useState, use } from 'react';
+import React, { useEffect, useState, useCallback, use } from 'react';
 import Link from 'next/link';
 import { 
   CheckCircle2, 
@@ -54,7 +54,6 @@ interface BookingDetails {
   status: string;
   payment_status: string;
   created_at: string;
-  booked_at?: string;
   items?: BookingItem[];
 }
 
@@ -71,11 +70,7 @@ export default function VerifyPassPage({ params }: { params: Promise<{ code: str
   const [checkingIn, setCheckingIn] = useState(false);
   const [feedbackMessage, setFeedbackMessage] = useState<string | null>(null);
 
-  useEffect(() => {
-    fetchBookingData();
-  }, [bookingCode]);
-
-  async function fetchBookingData() {
+  const fetchBookingData = useCallback(async () => {
     setLoading(true);
     setError(null);
     try {
@@ -112,7 +107,11 @@ export default function VerifyPassPage({ params }: { params: Promise<{ code: str
     } finally {
       setLoading(false);
     }
-  }
+  }, [bookingCode]);
+
+  useEffect(() => {
+    fetchBookingData();
+  }, [fetchBookingData]);
 
   function handleToggleTicket(id: number) {
     setSelectedTicketIds(prev => 
@@ -341,22 +340,6 @@ export default function VerifyPassPage({ params }: { params: Promise<{ code: str
                   <span className="text-neutral-300 truncate max-w-[200px]">{booking.customer_email}</span>
                 </div>
               )}
-              <div className="flex items-center justify-between pt-1 border-t border-white/5">
-                <span className="text-neutral-400 flex items-center gap-1.5">
-                  <Clock className="w-3.5 h-3.5 text-orange-400" />
-                  Booked On:
-                </span>
-                <span className="font-semibold text-orange-300">
-                  {new Date(booking.booked_at || booking.created_at).toLocaleString('en-IN', {
-                    day: '2-digit',
-                    month: 'short',
-                    year: 'numeric',
-                    hour: '2-digit',
-                    minute: '2-digit',
-                    hour12: true
-                  })}
-                </span>
-              </div>
             </div>
 
             {/* Interactive Passes List (Selective Check-In) */}

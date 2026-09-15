@@ -153,12 +153,12 @@ export function HeroCarousel({
     ? 10
     : Math.max(11, Math.round(stageH * LABEL))
 
-  // Headline font size scaling: mobile 24-28px, tablet 36px, desktop standard 48px
+  // Headline font size scaling: PC 64px, Tablet 56px, Mobile 48px
   const titleSize = isMobile
-    ? clamp(Math.round(stageW * 0.07), 24, 28)
+    ? 48
     : isTablet
-      ? 36
-      : 48
+      ? 56
+      : 64
 
   // Dynamic strip top edge moved right down into the bottom portion
   const stripTop = isMobile ? 0.73 : 0.70
@@ -299,16 +299,16 @@ export function HeroCarousel({
       <div
         className="absolute left-0 z-10 pointer-events-none flex flex-col justify-start"
         style={{
-          top: isMobile ? "24%" : "32%",
+          top: isMobile ? "22%" : "28%",
           paddingLeft: pad,
-          maxWidth: isMobile ? "92%" : "55%",
+          maxWidth: isMobile ? "94%" : "65%",
         }}
       >
         <div className="relative flex flex-col items-start gap-y-2 sm:gap-y-3">
           <AnimatePresence mode="wait" initial={false}>
             <motion.h1
               key={index}
-              className="font-heading font-normal uppercase leading-[1.28] sm:leading-[1.3] tracking-tight text-white drop-shadow-[0_4px_16px_rgba(0,0,0,0.85)] pt-1"
+              className="font-heading font-normal uppercase leading-[1.18] sm:leading-[1.22] tracking-tight text-white drop-shadow-[0_4px_16px_rgba(0,0,0,0.85)] pt-1"
               style={{ fontSize: titleSize }}
               initial={{ opacity: 0, y: 15 }}
               animate={{ opacity: 1, y: 0 }}
@@ -316,10 +316,10 @@ export function HeroCarousel({
               transition={{ duration: 0.25, ease: "easeOut" }}
             >
               {lines.map((line, i) => (
-                <span key={i} className="block overflow-hidden py-2 sm:py-3.5">
+                <span key={i} className="block overflow-hidden py-3 sm:py-4 -my-1.5 sm:-my-2">
                   <motion.span
-                    className="block py-1 sm:py-1.5"
-                    initial={{ y: "110%" }}
+                    className="block py-1.5 sm:py-2"
+                    initial={{ y: "115%" }}
                     animate={{ y: 0 }}
                     transition={
                       reduced

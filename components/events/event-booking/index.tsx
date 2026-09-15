@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import React, { useState, useEffect, Suspense } from "react";
 import { useSearchParams } from "next/navigation";
@@ -15,6 +15,7 @@ import {
   IssuedTicketData,
   CreateBookingPayload
 } from "@/lib/api/bookings";
+import { ALL_EVENTS } from "@/lib/events-data";
 import { getEventById } from "@/lib/events-data";
 import { useLanguage } from "@/context/LanguageContext";
 
@@ -77,7 +78,7 @@ function EventBookingContent() {
   } | null>(null);
 
   // Pre-select event from URL query param if present
-  useEffect(() => {
+  React.useEffect(() => {
     if (typeof window !== "undefined") {
       const params = new URLSearchParams(window.location.search);
       const eventParam = params.get("event");
@@ -91,11 +92,13 @@ function EventBookingContent() {
   useEffect(() => {
     if (eventParam) {
       const matched = getEventById(eventParam);
-      setFormData((prev) => ({
-        ...prev,
-        eventId: matched?.id || eventParam,
-        dateOfBirth: matched?.startDate || prev.dateOfBirth || "2026-09-22",
-      }));
+      if (matched) {
+        setFormData((prev) => ({
+          ...prev,
+          eventId: matched.id,
+          dateOfBirth: matched.startDate || prev.dateOfBirth,
+        }));
+      }
     }
   }, [eventParam]);
 
@@ -122,6 +125,10 @@ function EventBookingContent() {
       if (!formData.email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
         newErrors.email = "Please enter a valid email address.";
       }
+      if (!formData.streetArea || formData.streetArea.trim().length < 3) {
+        newErrors.streetArea = "Please enter your residential area / address in Nashik.";
+        newErrors.streetArea = "Please enter your residential address.";
+      }
 
       // Validate required custom questions if configured
       const activeEvent = getEventById(formData.eventId || "ganesh-utsav-2026");
@@ -137,7 +144,7 @@ function EventBookingContent() {
         newErrors.eventId = "Please select an event.";
       }
       if (!formData.dateOfBirth) {
-        newErrors.dateOfBirth = "Event date is required.";
+        newErrors.dateOfBirth = "Please select an attendance date.";
       }
       if (!formData.preferredTimeSlot) {
         newErrors.preferredTimeSlot = "Please choose a time slot.";
@@ -219,7 +226,7 @@ function EventBookingContent() {
       }
 
       const payload: CreateBookingPayload = {
-        customer_name: formData.fullName || "Devotee",
+        customer_name: formData.fullName || "Adv. Rahul Sharma",
         customer_email: formData.email || "devotee@shreepratishthan.com",
         customer_phone: formData.mobileNumber || "+91 9922786608",
         promo_code: formData.promoCode || undefined,

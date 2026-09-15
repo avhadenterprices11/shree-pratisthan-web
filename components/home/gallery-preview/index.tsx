@@ -2,6 +2,7 @@
 
 import React, { useEffect, useRef } from "react";
 import Image from "next/image";
+import Link from "next/link";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
@@ -184,14 +185,14 @@ export default function GalleryPreview() {
               {t("galleryPreview.title")}
             </h2>
           </div>
-          <a
+          <Link
             href="/gallery"
             className="gallery-reveal-header group inline-flex items-center gap-2 text-saffron font-bold uppercase text-xs sm:text-sm tracking-widest hover:text-gold transition-colors font-sans cursor-pointer"
             data-hover="pointer"
           >
             {t("galleryPreview.viewAll")}
             <span className="group-hover:translate-x-1.5 transition-transform duration-300 inline-block">→</span>
-          </a>
+          </Link>
         </div>
 
         {/* Bento/Masonry-inspired dynamic grid */}

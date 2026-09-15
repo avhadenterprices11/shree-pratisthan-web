@@ -26,6 +26,7 @@ import FestivalJourney from "@/components/home/festival-journey";
 import FeaturedEvents from "@/components/home/featured-events";
 import CommunityImpact from "@/components/home/community-impact";
 import CulturalInitiatives from "@/components/home/social-work";
+import CommunityContests from "@/components/home/community-contests";
 import GalleryPreview from "@/components/home/gallery-preview";
 import Testimonials from "@/components/home/testimonials";
 import VolunteerCTA from "@/components/ui/volunteer-cta";
@@ -50,10 +51,13 @@ export default function Home() {
       {/* 5. Live Metrics & Counter-ups */}
       <CommunityImpact />
 
-      {/* 6. Horizontal Scroller of Cultural Initiatives */}
+      {/* 6. Horizontal Scroller of Cultural Initiatives (Blood & Organ Donation Camps) */}
       <CulturalInitiatives />
 
-      {/* 7. Media Masonry Grid */}
+      {/* 7. Dedicated Ganeshotsav Community Contests (Home Ganpati & Rangoli Exhibition) */}
+      <CommunityContests />
+
+      {/* 8. Media Masonry Grid */}
       <GalleryPreview />
 
       {/* 8. Patron & Volunteer Testimonial */}

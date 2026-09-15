@@ -5,7 +5,7 @@ import Image from "next/image";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useLanguage } from "@/context/LanguageContext";
-import { getLocalizedVideos } from "@/app/gallery/gallery-data";
+import { getLocalizedVideos } from "@/lib/gallery-i18n";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -64,7 +64,7 @@ export default function VideoGallery() {
               {/* Visual wrapper */}
               <div className="h-[180px] sm:h-[200px] relative overflow-hidden flex items-center justify-center select-none bg-neutral-900">
                 <Image 
-                  src={item.poster || item.thumbnail || "/events_ganeshotsav_2024_jejuri.jpg"} 
+                  src={item.poster || "/hero_ganesh.png"} 
                   alt={item.title} 
                   fill
                   sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 25vw"
@@ -90,7 +90,7 @@ export default function VideoGallery() {
                   {item.title}
                 </h3>
                 <div className="flex justify-between items-center text-xs text-slate-grey dark:text-neutral-400 font-bold tracking-[0.16em] sm:tracking-[0.18em] uppercase pt-2 border-t border-neutral-100 dark:border-white/10 font-sans">
-                  <span>{item.location || "Nashik"}</span>
+                  <span>{item.location}</span>
                   <span className="text-saffron">{item.duration}</span>
                 </div>
               </div>

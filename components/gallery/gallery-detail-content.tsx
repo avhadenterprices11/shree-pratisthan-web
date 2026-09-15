@@ -5,7 +5,8 @@ import Link from "next/link";
 import Image from "next/image";
 import { ArrowLeft, Calendar, Tag, Info, Award } from "lucide-react";
 import { useLanguage } from "@/context/LanguageContext";
-import { GalleryItem, getLocalizedGalleryItem } from "@/app/gallery/gallery-data";
+import { GalleryItem } from "@/app/gallery/gallery-data";
+import { getLocalizedGalleryItem } from "@/lib/gallery-i18n";
 
 export default function GalleryDetailContent({ item }: { item: GalleryItem }) {
   const { t, language } = useLanguage();
