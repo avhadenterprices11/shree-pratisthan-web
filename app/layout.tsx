@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Plus_Jakarta_Sans, Outfit } from "next/font/google";
 import "./globals.css";
 import { ScrollProvider } from "@/components/providers/ScrollProvider";
+import { LanguageProvider } from "@/context/LanguageContext";
 import { CustomCursor } from "@/components/ui/CustomCursor";
 import { Navbar } from "@/components/ui/Navbar";
 import Footer from "@/components/home/footer";
@@ -9,16 +10,25 @@ import Footer from "@/components/home/footer";
 const sansFont = Plus_Jakarta_Sans({
   subsets: ["latin"],
   variable: "--font-sans",
+  weight: ["400", "500", "600", "700"],
   display: "swap",
 });
 
 const headingFont = Outfit({
   subsets: ["latin"],
   variable: "--font-heading",
+  weight: ["400", "500", "600", "700", "800", "900"],
   display: "swap",
 });
 
-const BASE_URL = "https://www.shreepratishthan.org";
+const eyebrowFont = Outfit({
+  subsets: ["latin"],
+  variable: "--font-eyebrow",
+  weight: ["500", "600", "700", "800"],
+  display: "swap",
+});
+
+const BASE_URL = "https://www.shreepratishthan.com";
 
 export const metadata: Metadata = {
   metadataBase: new URL(BASE_URL),
@@ -48,7 +58,7 @@ export const metadata: Metadata = {
   },
   openGraph: {
     type: "website",
-    locale: "en_IN",
+    locale: "mr_IN",
     url: BASE_URL,
     siteName: "Shree Prathishthan",
     title: "Shree Prathishthan | Cultural Heritage & Social Welfare Trust",
@@ -70,10 +80,23 @@ export const metadata: Metadata = {
       "Experience the legacy of Maharashtra. Grand festivals, medical camps, and rural support drives.",
     images: ["/hero_ganesh.png"],
   },
+  icons: {
+    icon: [
+      { url: "/shree-favicon.png", type: "image/png" },
+      { url: "/icon.png", type: "image/png" },
+    ],
+    shortcut: "/shree-favicon.png",
+    apple: [
+      { url: "/shree-favicon.png", type: "image/png" },
+      { url: "/apple-icon.png", type: "image/png" },
+    ],
+  },
   alternates: {
     canonical: BASE_URL,
   },
 };
+
+import { ThemeProvider } from "@/context/ThemeContext";
 
 export default function RootLayout({
   children,
@@ -82,16 +105,21 @@ export default function RootLayout({
 }>) {
   return (
     <html
-      lang="en"
-      className={`h-full antialiased ${sansFont.variable} ${headingFont.variable}`}
+      lang="mr"
+      suppressHydrationWarning
+      className={`h-full antialiased ${sansFont.variable} ${headingFont.variable} ${eyebrowFont.variable}`}
     >
-      <body className="min-h-full flex flex-col relative">
-        <ScrollProvider>
-          <CustomCursor />
-          <Navbar />
-          {children}
-          <Footer />
-        </ScrollProvider>
+      <body className="min-h-full flex flex-col relative bg-background text-foreground transition-colors duration-300">
+        <ThemeProvider>
+          <LanguageProvider>
+            <ScrollProvider>
+              <CustomCursor />
+              <Navbar />
+              {children}
+              <Footer />
+            </ScrollProvider>
+          </LanguageProvider>
+        </ThemeProvider>
       </body>
     </html>
   );

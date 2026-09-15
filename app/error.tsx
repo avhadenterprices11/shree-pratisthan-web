@@ -19,7 +19,7 @@ export default function GlobalErrorPage({
         <h2 className="text-2xl font-extrabold text-saffron font-heading mb-3">
           Something went wrong
         </h2>
-        <p className="text-sm text-slate-grey mb-6">
+        <p className="text-sm text-slate-grey dark:text-neutral-300 mb-6">
           We encountered an unexpected error while loading this page. Our technical team has been notified.
         </p>
         <button

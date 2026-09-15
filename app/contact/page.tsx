@@ -20,7 +20,6 @@ export const metadata: Metadata = {
   alternates: { canonical: "https://www.shreepratishthan.com/contact" },
 };
 
-import ContactHero from "@/components/contact/hero";
 import ContactInformation from "@/components/contact/contact-information";
 import CommitteeDirectory from "@/components/contact/committee-directory";
 import ContactForm from "@/components/contact/contact-form";
@@ -31,9 +30,6 @@ import ContactSupportCTA from "@/components/contact/support-cta";
 export default function ContactPage() {
   return (
     <main className="flex flex-col w-full min-h-screen">
-      {/* 0. Hero Section */}
-      <ContactHero />
-
       {/* 1. Addresses & Registration Codes Info */}
       <ContactInformation />
 

@@ -2,36 +2,52 @@
 
 import React, { useState, useEffect, useRef } from "react";
 import Image from "next/image";
+import { cn } from "@/lib/utils";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { useLanguage } from "@/context/LanguageContext";
 
 gsap.registerPlugin(ScrollTrigger);
 
-const STORY_STEPS = [
-  {
-    year: "2006",
-    title: "Indira Nagar Cricket Spark",
-    description: "Shree Pratishtan originated in 2006 from a close-knit group of 20 friends meeting daily in Indira Nagar to play cricket. Their sports camaraderie and mutual trust soon transformed into a committed force for community upliftment and youth empowerment.",
-    image: "/images/ganesh.jpg",
-    badge: "The Spark",
-  },
-  {
-    year: "2018",
-    title: "Registered Charitable Trust",
-    description: "To institutionalize their expanding social initiatives, the organization registered as 'कै.धर्मराज बडोदे बहुउद्देशिय सेवाभावी संस्था इंदिरानगर नाशिक' (Reg: nashik/0000153/2018) under the leadership of Adv. Shyam Dharmaraj Badode.",
-    image: "/images/dahi-handi.jpg",
-    badge: "Formal Trust",
-  },
-  {
-    year: "Present",
-    title: "19+ Years of Active Service",
-    description: "Today, with 100+ active members and 20 founding pillars, Shree Pratishtan conducts 50+ blood donation & health drives, organizes grand cultural festivals (Swagat Yatra, Ganeshotsav, Shiv Jayanti), and leads annual cricket leagues in Nashik.",
-    image: "/images/social-work.jpg",
-    badge: "Continuous Impact",
-  },
-];
-
 export default function AboutStory() {
+  const { t } = useLanguage();
+
+  const STORY_STEPS = [
+    {
+      id: "2006",
+      year: t("aboutPage.story.s1Year"),
+      title: t("aboutPage.story.s1Title"),
+      description: t("aboutPage.story.s1Desc"),
+      image: "/ganeshotsav_award_group.jpg",
+      position: "object-top",
+    },
+    {
+      id: "2012",
+      year: t("aboutPage.story.s2Year"),
+      title: t("aboutPage.story.s2Title"),
+      description: t("aboutPage.story.s2Desc"),
+      image: "/dahihandi_2018.jpg",
+      position: "object-center",
+    },
+    {
+      id: "2018",
+      year: t("aboutPage.story.s3Year"),
+      title: t("aboutPage.story.s3Title"),
+      description: t("aboutPage.story.s3Desc"),
+      image: "/trust_seal.png",
+      fit: "contain",
+      position: "object-center",
+    },
+    {
+      id: "present",
+      year: t("aboutPage.story.s4Year"),
+      title: t("aboutPage.story.s4Title"),
+      description: t("aboutPage.story.s4Desc"),
+      image: "/ganeshotsav_2017_jaipur.jpg",
+      position: "object-center",
+    },
+  ];
+
   const [activeYear, setActiveYear] = useState(STORY_STEPS[0].year);
   const containerRef = useRef<HTMLDivElement>(null);
   const activeYearRef = useRef(activeYear);
@@ -58,17 +74,18 @@ export default function AboutStory() {
 
         ScrollTrigger.create({
           trigger: card,
-          start: "top 50%",
-          end: "bottom 50%",
-          onEnter: () => {
-            if (activeYearRef.current !== year) {
+          start: "top 65%",
+          end: "bottom 35%",
+          onToggle: (self) => {
+            if (self.isActive && activeYearRef.current !== year) {
               setActiveYear(year);
             }
           },
+          onEnter: () => {
+            setActiveYear(year);
+          },
           onEnterBack: () => {
-            if (activeYearRef.current !== year) {
-              setActiveYear(year);
-            }
+            setActiveYear(year);
           },
         });
       });
@@ -76,7 +93,7 @@ export default function AboutStory() {
 
     const timer = setTimeout(() => {
       ScrollTrigger.refresh();
-    }, 300);
+    }, 200);
 
     return () => {
       ctx.revert();
@@ -87,7 +104,7 @@ export default function AboutStory() {
   return (
     <section 
       ref={containerRef}
-      className="relative w-full bg-[#FFFDF9] py-20 px-6 md:px-12 xl:px-24 border-t border-saffron/10 z-10 select-none"
+      className="relative w-full bg-[#FFFDF9] dark:bg-background py-12 sm:py-16 md:py-20 px-4 sm:px-6 md:px-12 xl:px-24 border-t border-saffron/10 dark:border-white/10 z-10 select-none"
     >
       {/* Background Grid Accent */}
       <div 
@@ -97,32 +114,32 @@ export default function AboutStory() {
             linear-gradient(to right, rgba(226, 106, 54, 0.05) 1px, transparent 1px),
             linear-gradient(to bottom, rgba(226, 106, 54, 0.05) 1px, transparent 1px)
           `,
-          backgroundSize: "80px 80px"
+          backgroundSize: "60px 60px"
         }}
       />
 
-      <div className="max-w-6xl mx-auto flex flex-col lg:flex-row gap-16 items-start relative z-10">
+      <div className="max-w-6xl mx-auto flex flex-col lg:flex-row gap-8 sm:gap-12 lg:gap-16 items-start relative z-10">
         
         {/* Left Column: Sticky Sidebar Info & Giant Year */}
-        <div className="w-full lg:w-5/12 lg:sticky lg:top-[16vh] flex flex-col items-start gap-6 z-20 will-change-transform">
+        <div className="w-full lg:w-5/12 lg:sticky lg:top-[16vh] flex flex-col items-start gap-4 sm:gap-6 z-20 will-change-transform">
 
-          <h2 className="text-3xl sm:text-5xl font-black text-slate-800 tracking-tighter uppercase font-heading">
-            Our Roots & Evolution
+          <h2 className="text-2xl sm:text-3xl md:text-[36px] font-normal text-slate-800 dark:text-neutral-100 tracking-tight uppercase font-heading leading-snug py-1">
+            {t("aboutPage.story.heading")}
           </h2>
           
-          <p className="text-xs sm:text-sm text-slate-grey max-w-md leading-relaxed font-sans font-light">
-            Born from daily cricket matches in Indira Nagar in 2006, our energy grew into a dedicated organization serving Maharashtra through culture, health camps, and social service.
+          <p className="text-base md:text-lg text-slate-grey dark:text-neutral-300 max-w-md leading-[1.75] font-sans font-normal">
+            {t("aboutPage.story.subtitle")}
           </p>
 
           {/* Giant Active Year Indicator display */}
-          <div className="relative overflow-hidden h-[100px] sm:h-[130px] w-full mt-4 flex items-center justify-start border-t border-saffron/15 pt-6">
+          <div className="relative overflow-hidden h-[70px] sm:h-[100px] md:h-[130px] w-full mt-2 sm:mt-4 flex items-center justify-start border-t border-saffron/15 dark:border-white/10 pt-3 sm:pt-6">
             {/* Outline Shadow Text */}
-            <div className="absolute left-0 text-7xl sm:text-8xl font-black text-saffron/10 font-heading select-none uppercase tracking-tighter leading-none">
+            <div className="absolute left-0 text-5xl sm:text-7xl md:text-8xl font-normal text-saffron/10 font-heading select-none uppercase tracking-tight leading-none">
               {activeYear}
             </div>
             {/* Animated Solid Text */}
             <div 
-              className="text-6xl sm:text-7xl font-black text-saffron font-heading uppercase tracking-tighter leading-none story-year-text relative z-10"
+              className="text-4xl sm:text-6xl md:text-7xl font-normal text-saffron font-heading uppercase tracking-tight leading-none story-year-text relative z-10"
             >
               {activeYear}
             </div>
@@ -131,40 +148,44 @@ export default function AboutStory() {
         </div>
 
         {/* Right Column: Editorial Cards Feed (Natural Y scroll) */}
-        <div className="w-full lg:w-7/12 flex flex-col gap-16 relative z-10">
-          {STORY_STEPS.map((step, index) => {
+        <div className="w-full lg:w-7/12 flex flex-col gap-6 sm:gap-10 md:gap-16 relative z-10">
+          {STORY_STEPS.map((step) => {
             return (
               <div
-                key={index}
-                className="story-card-item w-full bg-white border border-saffron/15 rounded-[2.5rem] p-8 sm:p-10 shadow-xl shadow-saffron/5 flex flex-col gap-6 transition-all duration-300 hover:border-saffron/30 hover:shadow-2xl will-change-transform"
+                key={step.year}
+                className="story-card-item w-full bg-white dark:bg-[#121214] border border-saffron/15 dark:border-white/10 rounded-2xl sm:rounded-[2.5rem] p-5 sm:p-8 md:p-10 shadow-xl shadow-saffron/5 flex flex-col gap-4 sm:gap-6 transition-all duration-300 hover:border-saffron/30 hover:shadow-2xl will-change-transform"
                 data-year={step.year}
               >
                 {/* Card Image Frame */}
-                <div className="w-full aspect-[16/10] relative overflow-hidden rounded-[1.8rem] border border-saffron/10 shadow-md bg-slate-100">
+                <div className="w-full aspect-[16/10] relative overflow-hidden rounded-xl sm:rounded-[1.8rem] border border-saffron/10 dark:border-white/10 shadow-md bg-slate-950">
                   <Image
                     src={step.image}
                     alt={step.title}
                     fill
-                    className="object-cover transition-transform duration-700 hover:scale-103"
+                    className={cn(
+                      "transition-transform duration-700 hover:scale-103",
+                      step.fit === "contain" ? "object-contain p-4 sm:p-8" : "object-cover",
+                      step.position || "object-center"
+                    )}
                     sizes="(max-width: 768px) 100vw, 600px"
                   />
                   {/* Subtle vignette overlay */}
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/25 via-transparent to-transparent" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/25 via-transparent to-transparent pointer-events-none" />
                 </div>
 
                 {/* Card Text Content */}
-                <div className="flex flex-col items-start gap-3">
+                <div className="flex flex-col items-start gap-2 sm:gap-3">
                   <div className="flex items-center gap-3">
-                    <span className="text-xl font-bold text-saffron font-heading leading-none">
+                    <span className="text-lg sm:text-xl font-normal text-saffron font-heading leading-none">
                       {step.year}
                     </span>
                   </div>
 
-                  <h3 className="text-xl font-black text-slate-800 uppercase tracking-tight font-heading">
+                  <h3 className="text-lg sm:text-xl font-normal text-slate-800 dark:text-neutral-100 uppercase tracking-tight font-heading leading-snug">
                     {step.title}
                   </h3>
 
-                  <p className="text-xs sm:text-sm text-slate-grey leading-relaxed font-sans font-light">
+                  <p className="text-base text-slate-grey dark:text-neutral-300 leading-[1.7] font-sans font-normal">
                     {step.description}
                   </p>
                 </div>

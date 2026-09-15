@@ -5,8 +5,10 @@ import AllEventsFilter from "./all-events-filter";
 import EventsGrid from "./events-grid";
 import { EventItem, ALL_EVENTS } from "@/lib/events-data";
 import { fetchEvents } from "@/lib/api/events";
+import { useLanguage } from "@/context/LanguageContext";
 
 export default function AllEventsSection() {
+  const { t } = useLanguage();
   const [selectedCategory, setSelectedCategory] = useState("all");
   const [events, setEvents] = useState<EventItem[]>(ALL_EVENTS);
   const [isLoading, setIsLoading] = useState<boolean>(true);
@@ -53,15 +55,15 @@ export default function AllEventsSection() {
   });
 
   return (
-    <section id="all-events-grid" className="w-full py-16 bg-neutral-50/50 border-t border-neutral-200/60">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8 mb-8 text-center">
-        <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-neutral-900 tracking-tight font-heading">
-          Explore All Events
+    <section id="all-events-grid" className="w-full pt-10 sm:pt-14 pb-6 sm:pb-8 bg-neutral-50/50 dark:bg-background border-t border-neutral-200/60 dark:border-white/10">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8 mb-4 sm:mb-6 text-center">
+        <h2 className="text-2xl sm:text-4xl md:text-5xl font-normal text-neutral-900 dark:text-neutral-100 tracking-tight font-heading leading-tight uppercase">
+          {t("eventsPage.allEvents.heading")}
         </h2>
-        <p className="text-sm sm:text-base text-neutral-600 max-w-2xl mx-auto mt-3 font-medium">
-          Filter our ongoing celebrations, upcoming health camps, cultural festivals, and community initiatives.
+        <p className="text-xs sm:text-base text-neutral-600 dark:text-neutral-300 max-w-2xl mx-auto mt-2 sm:mt-3 font-normal font-sans leading-relaxed">
+          {t("eventsPage.allEvents.subtitle")}
         </p>
-        <div className="w-16 h-1 bg-saffron mx-auto mt-4 rounded-full" />
+        <div className="w-12 sm:w-16 h-1 bg-saffron mx-auto mt-3 sm:mt-4 rounded-full" />
       </div>
 
       {/* Interactive Category Filter Bar */}

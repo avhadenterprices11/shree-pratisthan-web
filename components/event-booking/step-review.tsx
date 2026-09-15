@@ -145,7 +145,7 @@ export default function StepReview({
               <span className="font-bold text-saffron">{formData.ticketName || "General Community Pass"}</span>
             </div>
             <div>
-              <span className="text-neutral-500 block text-[11px] uppercase font-semibold">Attendance Date</span>
+              <span className="text-neutral-500 block text-[11px] uppercase font-semibold">Event Date</span>
               <span className="font-semibold text-neutral-900">{formData.dateOfBirth || "2026-08-27"}</span>
             </div>
             <div>

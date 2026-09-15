@@ -54,6 +54,7 @@ interface BookingDetails {
   status: string;
   payment_status: string;
   created_at: string;
+  booked_at?: string;
   items?: BookingItem[];
 }
 
@@ -91,7 +92,7 @@ export default function VerifyPassPage({ params }: { params: Promise<{ code: str
       setTickets(t);
 
       // Auto-select all currently unchecked passes
-      const pendingIds = t.filter(ticket => !ticket.is_checked_in).map(ticket => Number(ticket.id));
+      const pendingIds = t.filter(ticket => !ticket.is_checked_in).map(ticket => ticket.id);
       setSelectedTicketIds(pendingIds);
 
       // Fetch Event Details if available
@@ -113,15 +114,14 @@ export default function VerifyPassPage({ params }: { params: Promise<{ code: str
     }
   }
 
-  function handleToggleTicket(id: number | string) {
-    const numId = Number(id);
+  function handleToggleTicket(id: number) {
     setSelectedTicketIds(prev => 
-      prev.includes(numId) ? prev.filter(item => item !== numId) : [...prev, numId]
+      prev.includes(id) ? prev.filter(item => item !== id) : [...prev, id]
     );
   }
 
   function handleSelectAllPending() {
-    const pendingIds = tickets.filter(t => !t.is_checked_in).map(t => Number(t.id));
+    const pendingIds = tickets.filter(t => !t.is_checked_in).map(t => t.id);
     setSelectedTicketIds(pendingIds);
   }
 
@@ -152,7 +152,7 @@ export default function VerifyPassPage({ params }: { params: Promise<{ code: str
       setTickets(updatedTickets);
 
       // Re-populate selection with remaining unchecked tickets
-      const remainingIds = updatedTickets.filter(t => !t.is_checked_in).map(t => Number(t.id));
+      const remainingIds = updatedTickets.filter(t => !t.is_checked_in).map(t => t.id);
       setSelectedTicketIds(remainingIds);
 
       setFeedbackMessage(result.message || `Successfully checked in ${selectedTicketIds.length} passes!`);
@@ -280,7 +280,7 @@ export default function VerifyPassPage({ params }: { params: Promise<{ code: str
                     <span className="text-neutral-500 block text-[10px] font-semibold">DATE</span>
                     <span className="font-bold text-neutral-200">
                       {eventDetails?.start_date 
-                        ? new Date(eventDetails.start_date).toLocaleDateString('en-IN', { day: '2-digit', month: 'short', year: 'numeric', timeZone: (eventDetails as any)?.timezone || 'Asia/Kolkata' })
+                        ? new Date(eventDetails.start_date).toLocaleDateString('en-IN', { day: '2-digit', month: 'short', year: 'numeric' })
                         : '24 AUG 2026'}
                     </span>
                   </div>
@@ -294,7 +294,7 @@ export default function VerifyPassPage({ params }: { params: Promise<{ code: str
                     <span className="text-neutral-500 block text-[10px] font-semibold">TIME</span>
                     <span className="font-bold text-neutral-200">
                       {eventDetails?.start_date 
-                        ? new Date(eventDetails.start_date).toLocaleTimeString('en-IN', { hour: '2-digit', minute: '2-digit', hour12: true, timeZone: (eventDetails as any)?.timezone || 'Asia/Kolkata' })
+                        ? new Date(eventDetails.start_date).toLocaleTimeString('en-IN', { hour: '2-digit', minute: '2-digit' })
                         : '07:00 PM'}
                     </span>
                   </div>
@@ -341,6 +341,22 @@ export default function VerifyPassPage({ params }: { params: Promise<{ code: str
                   <span className="text-neutral-300 truncate max-w-[200px]">{booking.customer_email}</span>
                 </div>
               )}
+              <div className="flex items-center justify-between pt-1 border-t border-white/5">
+                <span className="text-neutral-400 flex items-center gap-1.5">
+                  <Clock className="w-3.5 h-3.5 text-orange-400" />
+                  Booked On:
+                </span>
+                <span className="font-semibold text-orange-300">
+                  {new Date(booking.booked_at || booking.created_at).toLocaleString('en-IN', {
+                    day: '2-digit',
+                    month: 'short',
+                    year: 'numeric',
+                    hour: '2-digit',
+                    minute: '2-digit',
+                    hour12: true
+                  })}
+                </span>
+              </div>
             </div>
 
             {/* Interactive Passes List (Selective Check-In) */}
@@ -378,14 +394,13 @@ export default function VerifyPassPage({ params }: { params: Promise<{ code: str
 
               <div className="space-y-2.5">
                 {tickets.map((t, idx) => {
-                  const numId = Number(t.id);
-                  const isChecked = selectedTicketIds.includes(numId);
+                  const isChecked = selectedTicketIds.includes(t.id);
                   const isUsed = t.is_checked_in;
 
                   return (
                     <div 
                       key={t.id}
-                      onClick={() => !isUsed && handleToggleTicket(numId)}
+                      onClick={() => !isUsed && handleToggleTicket(t.id)}
                       className={`p-3.5 rounded-xl border flex items-center justify-between text-xs transition-all cursor-pointer ${
                         isUsed
                           ? 'bg-neutral-950/60 border-neutral-800 opacity-60 cursor-not-allowed'

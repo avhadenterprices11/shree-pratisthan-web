@@ -63,8 +63,19 @@ export interface EventItem {
   coHosts?: string[];
   tags?: string[];
   sponsors?: Array<{ name: string; logo?: string; link?: string; tier?: string }>;
-  partners?: Array<{ name: string; logo?: string; link?: string }>;
+  partners?: Array<{ name: string; logo?: string; link?: string; role?: string }>;
   isRegistrationOpen?: boolean;
+  startDate?: string;
+  endDate?: string;
+  registrationStatus?: "open" | "closing_soon" | "free_entry" | "closed" | string;
+  registrationCloseDate?: string;
+  postalCode?: string;
+  emergencyContactName?: string;
+  emergencyContactPhone?: string;
+  customQuestions?: Array<{ id: string; label: string; type?: string; placeholder?: string; required?: boolean; options?: string[] }>;
+  accessibilityInfo?: string[];
+  eventMode?: string;
+  isCapacityFull?: boolean;
 }
 
 export const ALL_EVENTS: EventItem[] = [
@@ -531,3 +542,68 @@ export function getUpcomingEvents(): EventItem[] {
 export function getFeaturedEvents(): EventItem[] {
   return ALL_EVENTS.slice(0, 4);
 }
+
+export function getLocalizedEvent(rawEvent: EventItem, language?: string): EventItem {
+  if (!rawEvent) return rawEvent;
+
+  // Localize standard category labels if matching
+  let categoryLabel = rawEvent.categoryLabel;
+  if (language === "mr") {
+    if (rawEvent.category === "cultural" || categoryLabel === "Cultural Festival") categoryLabel = "सांस्कृतिक महोत्सव";
+    else if (rawEvent.category === "sports" || categoryLabel === "Sports League") categoryLabel = "क्रीडा स्पर्धा";
+    else if (rawEvent.category === "health" || categoryLabel === "Health & Medical Camp") categoryLabel = "आरोग्य शिबिर";
+    else if (rawEvent.category === "eco" || categoryLabel === "Eco & Environment") categoryLabel = "पर्यावरण संवर्धन";
+    else if (rawEvent.category === "charity" || categoryLabel === "Community Welfare" || categoryLabel === "Social Welfare" || categoryLabel === "Community & Relief") categoryLabel = "सामाजिक सेवा";
+    else if (categoryLabel === "Cinema & Premiere") categoryLabel = "चित्रपट प्रीमियर";
+    else if (categoryLabel === "Conference & Summit") categoryLabel = "परिषद आणि संमेलन";
+    else if (categoryLabel === "Workshop") categoryLabel = "कार्यशाळा";
+    else if (categoryLabel === "Special Event") categoryLabel = "विशेष कार्यक्रम";
+  } else if (language === "hi") {
+    if (rawEvent.category === "cultural" || categoryLabel === "Cultural Festival") categoryLabel = "सांस्कृतिक महोत्सव";
+    else if (rawEvent.category === "sports" || categoryLabel === "Sports League") categoryLabel = "खेल प्रतियोगिता";
+    else if (rawEvent.category === "health" || categoryLabel === "Health & Medical Camp") categoryLabel = "स्वास्थ्य शिविर";
+    else if (rawEvent.category === "eco" || categoryLabel === "Eco & Environment") categoryLabel = "पर्यावरण संरक्षण";
+    else if (rawEvent.category === "charity" || categoryLabel === "Community Welfare" || categoryLabel === "Social Welfare" || categoryLabel === "Community & Relief") categoryLabel = "सामाजिक सेवा";
+    else if (categoryLabel === "Cinema & Premiere") categoryLabel = "फिल्म प्रीमियर";
+    else if (categoryLabel === "Conference & Summit") categoryLabel = "सम्मेलन एवं संगोष्ठी";
+    else if (categoryLabel === "Workshop") categoryLabel = "कार्यशाला";
+    else if (categoryLabel === "Special Event") categoryLabel = "विशेष आयोजन";
+  }
+
+  // Localize eventMode
+  let eventMode = rawEvent.eventMode;
+  const m = (rawEvent.mode || rawEvent.eventMode || "in-person").toLowerCase();
+  if (m.includes("online") || m.includes("virtual")) {
+    eventMode = language === "mr" ? "ऑनलाइन" : language === "hi" ? "ऑनलाइन" : "Virtual";
+  } else if (m.includes("hybrid")) {
+    eventMode = language === "mr" ? "हायब्रिड" : language === "hi" ? "हाइब्रिड" : "Hybrid";
+  } else {
+    eventMode = language === "mr" ? "प्रत्यक्ष" : language === "hi" ? "स्थान पर" : "In-Person";
+  }
+
+  // Localize checkInMode
+  let checkInMode = rawEvent.checkInMode;
+  const c = (rawEvent.checkInMode || "qr").toLowerCase();
+  if (c.includes("manual") || c.includes("gate") || c.includes("badge")) {
+    checkInMode = language === "mr" ? "गेट पास" : language === "hi" ? "गेट पास" : "Gate Pass";
+  } else if (c.includes("rfid") || c.includes("wristband")) {
+    checkInMode = "RFID Pass";
+  } else if (c.includes("open") || c.includes("free")) {
+    checkInMode = language === "mr" ? "मुक्त प्रवेश" : language === "hi" ? "खुला प्रवेश" : "Open Entry";
+  } else {
+    checkInMode = language === "mr" ? "क्यूआर डिजिटल पास" : language === "hi" ? "क्यूआर डिजिटल पास" : "QR Digital Pass";
+  }
+
+  return {
+    ...rawEvent,
+    title: rawEvent.title,
+    description: rawEvent.description,
+    categoryLabel: categoryLabel || "Special Event",
+    eventMode,
+    checkInMode,
+    date: rawEvent.date,
+    time: rawEvent.time,
+    location: rawEvent.location,
+  };
+}
+

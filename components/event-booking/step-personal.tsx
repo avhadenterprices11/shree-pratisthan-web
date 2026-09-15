@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import React from "react";
 import { User, Phone, Mail, MapPin } from "lucide-react";
@@ -99,34 +99,6 @@ export default function StepPersonal({
           </div>
           {errors.email && (
             <p className="text-xs text-red-600 font-medium">{errors.email}</p>
-          )}
-        </div>
-
-        {/* Address */}
-        <div className="space-y-2 md:col-span-2">
-          <label htmlFor="streetArea" className="block text-xs font-bold uppercase tracking-wider text-neutral-700">
-            Residential Address <span className="text-saffron">*</span>
-          </label>
-          <div className="relative">
-            <MapPin className="absolute left-3.5 top-3.5 w-4 h-4 text-neutral-400" />
-            <textarea
-              id="streetArea"
-              required
-              rows={3}
-              placeholder="Enter your flat/house no., area, landmark & city (e.g. Flat 402, Indira Nagar, Nashik - 422009)"
-              value={formData.streetArea || ""}
-              onChange={(e) => updateFields({ 
-                streetArea: e.target.value,
-                houseNumber: "N/A",
-                city: "Nashik",
-                district: "Nashik",
-                pinCode: "422009"
-              })}
-              className="w-full pl-10 pr-4 py-3 bg-white border border-neutral-300 rounded-xl text-neutral-900 placeholder:text-neutral-400 focus:outline-none focus:ring-2 focus:ring-saffron/40 focus:border-saffron transition-all text-sm font-medium resize-none"
-            />
-          </div>
-          {errors.streetArea && (
-            <p className="text-xs text-red-600 font-medium">{errors.streetArea}</p>
           )}
         </div>
       </div>

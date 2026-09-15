@@ -4,7 +4,6 @@ import React, { useEffect, useState, useRef } from "react";
 
 export function CustomCursor() {
   const [visible, setVisible] = useState(false);
-  const [hovering, setHovering] = useState(false);
   
   const dotRef = useRef<HTMLDivElement>(null);
   const ringRef = useRef<HTMLDivElement>(null);
@@ -13,9 +12,14 @@ export function CustomCursor() {
   const ringCoords = useRef({ x: 0, y: 0 });
   
   useEffect(() => {
-    // Hide cursor on touch devices
-    const isMobile = window.matchMedia("(max-width: 768px)").matches;
-    if (isMobile) return;
+    // Hide cursor on touch devices and mobile screens
+    const isTouch =
+      window.matchMedia("(max-width: 1023px)").matches ||
+      window.matchMedia("(pointer: coarse)").matches ||
+      "ontouchstart" in window ||
+      navigator.maxTouchPoints > 0;
+
+    if (isTouch) return;
 
     setVisible(true);
 
@@ -24,7 +28,7 @@ export function CustomCursor() {
       mouseCoords.current.y = e.clientY;
     };
 
-    window.addEventListener("mousemove", onMouseMove);
+    window.addEventListener("mousemove", onMouseMove, { passive: true });
 
     // Track frame loop for smooth interpolation (inertia trail)
     let frameId = 0;
@@ -46,21 +50,25 @@ export function CustomCursor() {
 
     frameId = requestAnimationFrame(updatePosition);
 
-    // Detect hovers on interactive nodes
+    // Detect hovers on interactive nodes directly on the DOM ref (zero React re-renders)
     const onMouseOver = (e: MouseEvent) => {
-      const target = e.target as HTMLElement;
-      if (
-        target.closest("button") || 
-        target.closest("a") || 
-        target.closest('[data-hover="pointer"]')
-      ) {
-        setHovering(true);
+      if (!ringRef.current) return;
+      const target = e.target as HTMLElement | null;
+      if (!target) return;
+
+      const isInteractive =
+        target.closest("button") ||
+        target.closest("a") ||
+        target.closest('[data-hover="pointer"]');
+
+      if (isInteractive) {
+        ringRef.current.classList.add("custom-cursor-hovering");
       } else {
-        setHovering(false);
+        ringRef.current.classList.remove("custom-cursor-hovering");
       }
     };
 
-    window.addEventListener("mouseover", onMouseOver);
+    window.addEventListener("mouseover", onMouseOver, { passive: true });
 
     return () => {
       window.removeEventListener("mousemove", onMouseMove);
@@ -74,10 +82,7 @@ export function CustomCursor() {
   return (
     <>
       <div ref={dotRef} className="custom-cursor-dot" />
-      <div 
-        ref={ringRef} 
-        className={`custom-cursor-ring ${hovering ? "custom-cursor-hovering" : ""}`} 
-      />
+      <div ref={ringRef} className="custom-cursor-ring" />
     </>
   );
 }

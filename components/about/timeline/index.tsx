@@ -3,39 +3,46 @@
 import React, { useEffect, useRef } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { useLanguage } from "@/context/LanguageContext";
 
 gsap.registerPlugin(ScrollTrigger);
 
-const HISTORY = [
-  {
-    year: "2006",
-    title: "Indira Nagar Cricket Spark",
-    desc: "Started as a close circle of 20 friends playing cricket daily in Indira Nagar, deciding to channel their bond and energy into community service.",
-  },
-  {
-    year: "2012",
-    title: "Festival & Youth Expansion",
-    desc: "Expanded into organizing grand cultural celebrations, including the iconic Gudipadwa Swagat Yatra, Ganeshotsav, and youth sports events in Nashik.",
-  },
-  {
-    year: "2018",
-    title: "Official Trust Registration",
-    desc: "Formally registered as 'कै.धर्मराज बडोदे बहुउद्देशिय सेवाभावी संस्था इंदिरानगर नाशिक' (Reg: nashik/0000153/2018) under Adv. Shyam Dharmaraj Badode.",
-  },
-  {
-    year: "2021",
-    title: "Pandemic Relief & Health Drives",
-    desc: "Organized urgent food grain distribution, medical support during lockdowns, and accelerated regular blood donation drives across Nashik.",
-  },
-  {
-    year: "Present",
-    title: "19+ Years Legacy & Leadership",
-    desc: "Leading 100+ active members and 20 founding pillars, conducting 50+ health drives, major cultural yatras, and annual sports tournaments.",
-  },
-];
-
 export default function AboutTimeline() {
+  const { t } = useLanguage();
   const containerRef = useRef<HTMLDivElement>(null);
+
+  const HISTORY = [
+    {
+      id: "2006",
+      year: t("aboutPage.timeline.t1Year"),
+      title: t("aboutPage.timeline.t1Title"),
+      desc: t("aboutPage.timeline.t1Desc"),
+    },
+    {
+      id: "2012",
+      year: t("aboutPage.timeline.t2Year"),
+      title: t("aboutPage.timeline.t2Title"),
+      desc: t("aboutPage.timeline.t2Desc"),
+    },
+    {
+      id: "2018",
+      year: t("aboutPage.timeline.t3Year"),
+      title: t("aboutPage.timeline.t3Title"),
+      desc: t("aboutPage.timeline.t3Desc"),
+    },
+    {
+      id: "2021",
+      year: t("aboutPage.timeline.t4Year"),
+      title: t("aboutPage.timeline.t4Title"),
+      desc: t("aboutPage.timeline.t4Desc"),
+    },
+    {
+      id: "present",
+      year: t("aboutPage.timeline.t5Year"),
+      title: t("aboutPage.timeline.t5Title"),
+      desc: t("aboutPage.timeline.t5Desc"),
+    },
+  ];
 
   useEffect(() => {
     if (!containerRef.current) return;
@@ -44,22 +51,23 @@ export default function AboutTimeline() {
       const rows = gsap.utils.toArray<HTMLElement>(".timeline-row");
       
       rows.forEach((row) => {
-        const fillYear = row.querySelector(".timeline-fill-year");
+        const fillMask = row.querySelector(".timeline-fill-mask");
         const detail = row.querySelector(".timeline-detail-content");
         
-        // 1. Scrub Clip-Path Liquid Fill on scroll
-        if (fillYear) {
+        // 1. Scrub Liquid Height Fill on scroll (bottom-to-top flood)
+        if (fillMask) {
           gsap.fromTo(
-            fillYear,
-            { clipPath: "polygon(0 100%, 100% 100%, 100% 100%, 0 100%)" },
+            fillMask,
+            { height: "0%" },
             {
-              clipPath: "polygon(0 0%, 100% 0%, 100% 100%, 0% 100%)",
+              height: "100%",
               ease: "none",
               scrollTrigger: {
                 trigger: row,
-                start: "top 80%", // Starts filling as row moves up from bottom
-                end: "bottom 35%", // Completes fill near top
-                scrub: true,
+                start: "top 88%", // Starts filling as row enters from bottom
+                end: "center 48%", // 100% filled when centered in view
+                scrub: 0.3,
+                invalidateOnRefresh: true,
               }
             }
           );
@@ -77,7 +85,7 @@ export default function AboutTimeline() {
               ease: "power2.out",
               scrollTrigger: {
                 trigger: row,
-                start: "top 78%",
+                start: "top 80%",
                 toggleActions: "play none none reverse",
               }
             }
@@ -86,13 +94,20 @@ export default function AboutTimeline() {
       });
     }, containerRef);
 
-    return () => ctx.revert();
+    const timer = setTimeout(() => {
+      ScrollTrigger.refresh();
+    }, 250);
+
+    return () => {
+      ctx.revert();
+      clearTimeout(timer);
+    };
   }, []);
 
   return (
     <section 
       ref={containerRef} 
-      className="py-24 px-6 md:px-12 relative overflow-hidden bg-[#FFFDF9] border-t border-saffron/10 z-10 select-none"
+      className="py-12 sm:py-16 md:py-24 px-4 sm:px-6 md:px-12 relative overflow-hidden bg-[#FFFDF9] dark:bg-background border-t border-saffron/10 dark:border-white/10 z-10 select-none"
     >
       {/* Background Grid Accent */}
       <div 
@@ -102,65 +117,70 @@ export default function AboutTimeline() {
             linear-gradient(to right, rgba(226, 106, 54, 0.05) 1px, transparent 1px),
             linear-gradient(to bottom, rgba(226, 106, 54, 0.05) 1px, transparent 1px)
           `,
-          backgroundSize: "80px 80px"
+          backgroundSize: "60px 60px"
         }}
       />
 
       <div className="max-w-7xl mx-auto relative z-10">
         
         {/* Section Header */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 pb-8 border-b border-saffron/15 mb-16 relative z-10">
-          <div className="flex flex-col items-start gap-3">
-            <h2 className="text-3xl sm:text-5xl font-black text-slate-800 font-heading uppercase leading-none">
-              Trust History
+        <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 sm:gap-6 pb-6 sm:pb-8 border-b border-saffron/15 dark:border-white/10 mb-8 sm:mb-16 relative z-10">
+          <div className="flex flex-col items-start gap-2 sm:gap-3">
+            <h2 className="text-2xl sm:text-3xl md:text-[36px] font-normal text-slate-800 dark:text-neutral-100 font-heading uppercase leading-snug tracking-tight py-1">
+              {t("aboutPage.timeline.heading")}
             </h2>
           </div>
-          <p className="text-xs sm:text-sm text-slate-grey max-w-md font-sans font-light leading-relaxed">
-            Our key operational milestones, reflecting direct social welfare impacts and structured organizational expansion.
+          <p className="text-base md:text-lg text-slate-grey dark:text-neutral-300 max-w-md font-sans font-normal leading-[1.75]">
+            {t("aboutPage.timeline.subtitle")}
           </p>
         </div>
 
         {/* Timeline Rows List */}
-        <div className="max-w-5xl mx-auto flex flex-col gap-12 relative z-10">
-          {HISTORY.map((item, index) => {
+        <div className="max-w-5xl mx-auto flex flex-col gap-6 sm:gap-10 md:gap-14 relative z-10">
+          {HISTORY.map((item) => {
+            const isLongLabel = item.year.length > 4;
+            const textSizeClass = isLongLabel
+              ? "text-4xl sm:text-6xl md:text-7xl"
+              : "text-5xl sm:text-7xl md:text-8xl";
+
             return (
               <div 
                 key={item.year}
-                className="timeline-row w-full flex flex-col md:flex-row md:items-center justify-between gap-8 py-8 border-b border-saffron/10 last:border-0 relative"
+                className="timeline-row w-full grid grid-cols-1 md:grid-cols-12 items-center gap-3 sm:gap-6 md:gap-12 py-4 sm:py-8 border-b border-saffron/10 dark:border-white/10 last:border-0 relative"
               >
                 {/* Left Column: Giant Year outlines */}
-                <div className="w-full md:w-5/12 relative select-none leading-none h-[90px] sm:h-[130px] flex items-center justify-start">
+                <div className="md:col-span-5 relative select-none leading-none h-[50px] sm:h-[80px] md:h-[120px] flex items-center justify-start">
                   
                   {/* Outline Year Background */}
                   <div 
-                    className="text-7xl sm:text-[8rem] font-black font-heading tracking-tighter leading-none"
+                    className={`${textSizeClass} font-normal font-heading tracking-tight leading-none whitespace-nowrap select-none`}
                     style={{
-                      WebkitTextStroke: "2px rgba(226, 106, 54, 0.15)",
+                      WebkitTextStroke: "2px rgba(226, 106, 54, 0.28)",
                       color: "transparent",
                     }}
                   >
                     {item.year}
                   </div>
 
-                  {/* Saffron Filled Liquid Text layer */}
+                  {/* Solid Reveal Year (Driven by GSAP Scrub from bottom-to-top) */}
                   <div 
-                    className="timeline-fill-year absolute left-0 text-7xl sm:text-[8rem] font-black text-saffron font-heading tracking-tighter leading-none"
-                    style={{
-                      clipPath: "polygon(0 100%, 100% 100%, 100% 100%, 0 100%)",
-                      willChange: "clip-path",
-                    }}
+                    className="timeline-fill-mask absolute left-0 bottom-0 w-full overflow-hidden h-0 pointer-events-none select-none will-change-[height]"
                   >
-                    {item.year}
+                    <div className="absolute left-0 bottom-0 h-[50px] sm:h-[80px] md:h-[120px] flex items-center">
+                      <span className={`${textSizeClass} font-normal font-heading text-saffron tracking-tight leading-none whitespace-nowrap`}>
+                        {item.year}
+                      </span>
+                    </div>
                   </div>
 
                 </div>
 
                 {/* Right Column: Title and details */}
-                <div className="timeline-detail-content w-full md:w-7/12 flex flex-col items-start gap-3 text-left">
-                  <h3 className="text-xl sm:text-2xl font-black text-slate-800 uppercase tracking-tight font-heading">
+                <div className="timeline-detail-content md:col-span-7 flex flex-col items-start gap-2 sm:gap-3 text-left">
+                  <h3 className="text-lg sm:text-xl md:text-2xl font-normal text-slate-800 dark:text-neutral-100 uppercase tracking-tight font-heading leading-snug">
                     {item.title}
                   </h3>
-                  <p className="text-xs sm:text-sm text-slate-grey leading-relaxed font-sans font-light">
+                  <p className="text-base text-slate-grey dark:text-neutral-300 leading-[1.7] font-sans font-normal">
                     {item.desc}
                   </p>
                 </div>

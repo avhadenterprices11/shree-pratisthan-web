@@ -5,10 +5,11 @@ import Image from "next/image";
 import gsap from "gsap";
 import Link from "next/link";
 import GalleryFilters from "../gallery-filters";
-
-import { PHOTO_ITEMS } from "@/app/gallery/gallery-data";
+import { useLanguage } from "@/context/LanguageContext";
+import { PHOTO_ITEMS, getLocalizedGalleryItem } from "@/app/gallery/gallery-data";
 
 export default function PhotoGallery() {
+  const { t, language } = useLanguage();
   const [activeCategory, setActiveCategory] = useState("all");
   const [visibleCount, setVisibleCount] = useState(6);
   const gridRef = useRef<HTMLDivElement>(null);
@@ -61,20 +62,20 @@ export default function PhotoGallery() {
     <section 
       ref={gridRef}
       id="photo-gallery"
-      className="py-24 px-6 md:px-12 relative overflow-hidden bg-transparent"
+      className="py-12 sm:py-16 md:py-24 px-4 sm:px-6 md:px-12 relative overflow-hidden bg-transparent"
     >
       <div className="max-w-[1600px] w-full mx-auto relative z-10">
         
         {/* Section Heading */}
-        <div className="text-center max-w-2xl mx-auto mb-6">
-          <h2 className="text-3xl sm:text-5xl font-extrabold text-foreground tracking-tight font-heading">
-            Our Photographic Records
+        <div className="text-center max-w-2xl mx-auto mb-4 sm:mb-6">
+          <h2 className="text-2xl sm:text-4xl md:text-5xl font-normal text-neutral-900 dark:text-neutral-100 tracking-tight font-heading leading-tight uppercase">
+            {t("galleryPage.photoGallery.heading")}
           </h2>
-          <div className="w-16 h-1 bg-saffron mx-auto mt-4 rounded-full" />
+          <div className="w-12 sm:w-16 h-1 bg-saffron mx-auto mt-3 sm:mt-4 rounded-full" />
         </div>
 
         {/* Category Filters below heading */}
-        <div className="mb-12">
+        <div className="mb-6 sm:mb-12">
           <GalleryFilters 
             activeCategory={activeCategory} 
             onCategoryChange={handleCategoryChange} 
@@ -82,19 +83,20 @@ export default function PhotoGallery() {
         </div>
 
         {/* Photo Grid (Flex Bento Layout) */}
-        <div className="flex flex-wrap justify-center gap-6 max-w-[1600px] w-full mx-auto">
+        <div className="flex flex-wrap justify-center gap-4 sm:gap-6 max-w-[1600px] w-full mx-auto">
           {displayedPhotos.map((item, index) => {
+            const localized = getLocalizedGalleryItem(item, language);
             const layout = getCardLayout(index, displayedPhotos.length);
             return (
               <Link 
                 href={`/gallery/${item.id}`}
                 key={item.id || index}
-                className={`photo-card-row group relative overflow-hidden rounded-block border border-saffron/10 shadow-md flex flex-col justify-between p-6 transition-all duration-500 hover:shadow-2xl cursor-pointer ${layout.widthClass} ${layout.aspectClass}`}
+                className={`photo-card-row group relative overflow-hidden rounded-2xl sm:rounded-block border border-saffron/10 dark:border-white/10 shadow-md flex flex-col justify-between p-4 sm:p-6 transition-all duration-500 hover:shadow-2xl cursor-pointer ${layout.widthClass} ${layout.aspectClass}`}
               >
                 {/* Background Image */}
                 <Image 
-                  src={item.src} 
-                  alt={item.title} 
+                  src={localized.src} 
+                  alt={localized.title} 
                   fill
                   sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                   className="object-cover group-hover:scale-[1.05] transition-transform duration-700"
@@ -104,14 +106,14 @@ export default function PhotoGallery() {
                 <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/30 to-transparent group-hover:via-black/45 transition-all duration-300 z-10" />
 
                 {/* Tag */}
-                <div className="relative z-20 self-start bg-white/90 text-saffron font-bold text-[10px] uppercase tracking-widest px-3 py-1 rounded-full border border-saffron/20 shadow-sm">
-                  {item.category}
+                <div className="relative z-20 self-start bg-white/90 dark:bg-[#18181b] text-saffron font-bold text-xs uppercase tracking-[0.16em] sm:tracking-[0.2em] px-2.5 sm:px-3 py-0.5 sm:py-1 rounded-full border border-saffron/20 dark:border-white/10 shadow-sm font-sans">
+                  {localized.category}
                 </div>
 
                 {/* Narrative label */}
                 <div className="relative z-20 mt-auto translate-y-1 group-hover:translate-y-0 transition-transform duration-300">
-                  <h3 className="text-lg sm:text-xl font-extrabold text-white leading-tight font-heading">
-                    {item.title}
+                  <h3 className="text-lg sm:text-xl font-normal text-white leading-snug font-heading uppercase">
+                    {localized.title}
                   </h3>
                 </div>
               </Link>
@@ -121,12 +123,12 @@ export default function PhotoGallery() {
 
         {/* Pagination Load More Button */}
         {visibleCount < filteredPhotos.length && (
-          <div className="mt-12 flex justify-center">
+          <div className="mt-8 sm:mt-12 flex justify-center">
             <button
               onClick={() => setVisibleCount((prev) => prev + 6)}
-              className="bg-saffron hover:bg-saffron/90 text-white font-extrabold text-xs uppercase tracking-widest px-8 py-3.5 rounded-full shadow-lg hover:shadow-saffron/25 transition-all duration-300 cursor-pointer"
+              className="bg-saffron hover:bg-saffron/90 text-white font-bold text-xs uppercase tracking-[0.2em] px-6 sm:px-8 py-3 sm:py-3.5 rounded-full shadow-lg hover:shadow-saffron/25 transition-all duration-300 cursor-pointer font-sans"
             >
-              Load More Photos ({filteredPhotos.length - visibleCount} remaining)
+              {t("galleryPage.photoGallery.loadMore")} ({filteredPhotos.length - visibleCount})
             </button>
           </div>
         )}
