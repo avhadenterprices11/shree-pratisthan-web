@@ -17,7 +17,7 @@ const sansFont = Plus_Jakarta_Sans({
 const headingFont = Outfit({
   subsets: ["latin"],
   variable: "--font-heading",
-  weight: ["400", "500", "600", "700", "800", "900"],
+  weight: ["500", "600", "700", "800"],
   display: "swap",
 });
 
@@ -28,7 +28,7 @@ const eyebrowFont = Outfit({
   display: "swap",
 });
 
-const BASE_URL = "https://www.shreepratishthan.com";
+const BASE_URL = "https://www.shreepratishthan.org";
 
 export const metadata: Metadata = {
   metadataBase: new URL(BASE_URL),
@@ -58,7 +58,7 @@ export const metadata: Metadata = {
   },
   openGraph: {
     type: "website",
-    locale: "mr_IN",
+    locale: "en_IN",
     url: BASE_URL,
     siteName: "Shree Prathishthan",
     title: "Shree Prathishthan | Cultural Heritage & Social Welfare Trust",
@@ -80,23 +80,13 @@ export const metadata: Metadata = {
       "Experience the legacy of Maharashtra. Grand festivals, medical camps, and rural support drives.",
     images: ["/hero_ganesh.png"],
   },
-  icons: {
-    icon: [
-      { url: "/shree-favicon.png", type: "image/png" },
-      { url: "/icon.png", type: "image/png" },
-    ],
-    shortcut: "/shree-favicon.png",
-    apple: [
-      { url: "/shree-favicon.png", type: "image/png" },
-      { url: "/apple-icon.png", type: "image/png" },
-    ],
-  },
   alternates: {
     canonical: BASE_URL,
   },
 };
 
 import { ThemeProvider } from "@/context/ThemeContext";
+import { DomGuard } from "@/components/providers/DomGuard";
 
 export default function RootLayout({
   children,
@@ -110,6 +100,7 @@ export default function RootLayout({
       className={`h-full antialiased ${sansFont.variable} ${headingFont.variable} ${eyebrowFont.variable}`}
     >
       <body className="min-h-full flex flex-col relative bg-background text-foreground transition-colors duration-300">
+        <DomGuard />
         <ThemeProvider>
           <LanguageProvider>
             <ScrollProvider>

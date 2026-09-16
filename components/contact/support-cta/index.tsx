@@ -62,7 +62,7 @@ export default function ContactSupportCTA() {
               {t("contactPage.cta.volunteerBtn")}
             </Link>
             <Link
-              href="/all-events"
+              href="/events"
               className="w-full sm:w-auto bg-slate-100 dark:bg-neutral-800 hover:bg-slate-200 dark:hover:bg-neutral-700 text-foreground font-bold text-xs uppercase tracking-[0.2em] px-6 sm:px-8 py-3.5 sm:py-4 rounded-full transition-all duration-300 active:scale-95 text-center border border-slate-200 dark:border-neutral-700 font-sans"
             >
               {t("contactPage.cta.viewEventsBtn")}

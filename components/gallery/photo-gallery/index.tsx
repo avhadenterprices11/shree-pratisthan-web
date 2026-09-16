@@ -6,7 +6,8 @@ import gsap from "gsap";
 import Link from "next/link";
 import GalleryFilters from "../gallery-filters";
 import { useLanguage } from "@/context/LanguageContext";
-import { PHOTO_ITEMS, getLocalizedGalleryItem } from "@/app/gallery/gallery-data";
+import { PHOTO_ITEMS } from "@/app/gallery/gallery-data";
+import { getLocalizedGalleryItem } from "@/lib/gallery-i18n";
 
 export default function PhotoGallery() {
   const { t, language } = useLanguage();

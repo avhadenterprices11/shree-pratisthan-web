@@ -109,14 +109,14 @@ export default function EventJourney() {
               </div>
             ) : (
               /* Floating Glass Card content for stages */
-              <div className="relative z-10 glass-panel p-5 sm:p-8 md:p-12 bg-white/95 border border-white/50 backdrop-blur-md shadow-2xl max-w-xl w-full text-center space-y-3 sm:space-y-4 rounded-2xl sm:rounded-block mx-4 sm:mx-6">
+              <div className="relative z-10 glass-panel p-5 sm:p-8 md:p-12 bg-white/95 dark:bg-[#121214]/90 border border-white/50 dark:border-white/10 backdrop-blur-md shadow-2xl max-w-xl w-full text-center space-y-3 sm:space-y-4 rounded-2xl sm:rounded-block mx-4 sm:mx-6">
                 <span className="text-[9px] sm:text-[10px] font-bold uppercase tracking-[0.2em] text-saffron block font-sans">
                   {slide.stage}
                 </span>
-                <h3 className="text-xl sm:text-3xl md:text-4xl font-normal text-neutral-900 font-heading leading-tight uppercase">
+                <h3 className="text-xl sm:text-3xl md:text-4xl font-normal text-neutral-900 dark:text-neutral-100 font-heading leading-tight uppercase">
                   {slide.title}
                 </h3>
-                <p className="text-xs sm:text-sm text-neutral-700 leading-relaxed font-sans font-normal">
+                <p className="text-xs sm:text-sm text-neutral-700 dark:text-neutral-300 leading-relaxed font-sans font-normal">
                   {slide.desc}
                 </p>
               </div>

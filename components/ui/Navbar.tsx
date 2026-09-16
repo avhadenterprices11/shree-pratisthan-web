@@ -15,7 +15,37 @@ export function Navbar() {
   const router = useRouter();
   const { t } = useLanguage();
   const [isOpen, setIsOpen] = useState(false);
+  const [isVisible, setIsVisible] = useState(true);
   const navRef = useRef<HTMLDivElement>(null);
+  const lastScrollY = useRef(0);
+
+  // Scroll listener: Hide when scrolling down, show when scrolling up
+  useEffect(() => {
+    const handleScroll = () => {
+      const currentScrollY = window.scrollY;
+
+      if (isOpen) {
+        setIsVisible(true);
+        return;
+      }
+
+      if (currentScrollY <= 40) {
+        // At or near top: always show
+        setIsVisible(true);
+      } else if (currentScrollY > lastScrollY.current && currentScrollY > 80) {
+        // Scrolling DOWN: hide navbar
+        setIsVisible(false);
+      } else if (currentScrollY < lastScrollY.current) {
+        // Scrolling UP: reveal navbar immediately
+        setIsVisible(true);
+      }
+
+      lastScrollY.current = currentScrollY;
+    };
+
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, [isOpen]);
 
   // Entrance reveal: detect when the Hero portal intro overlay finishes
   useEffect(() => {
@@ -81,6 +111,7 @@ export function Navbar() {
     { label: t("navbar.volunteer"), href: "/volunteer" },
     { label: t("navbar.events"), href: "/events" },
     { label: t("navbar.gallery"), href: "/gallery" },
+    { label: "Press & Releases", href: "/press-releases" },
     { label: t("navbar.contact"), href: "/contact" },
   ];
 
@@ -88,27 +119,30 @@ export function Navbar() {
     <>
       <header
         ref={navRef}
-        className="absolute top-0 left-0 right-0 z-50 py-4 sm:py-6 px-4 sm:px-6 md:px-12 bg-transparent pointer-events-none transition-opacity opacity-0"
+        className={cn(
+          "fixed top-0 left-0 right-0 z-50 py-3 sm:py-5 px-3.5 sm:px-6 md:px-12 bg-transparent pointer-events-none transition-transform duration-300 ease-out opacity-0 print:hidden",
+          isVisible || isOpen ? "translate-y-0" : "-translate-y-full"
+        )}
       >
         <div className="max-w-[1400px] mx-auto flex justify-between items-start">
           {/* Left: Genuine Official Emblem inside Floating Glass Pill */}
           <Link
             href="/"
-            className="flex items-center gap-2 sm:gap-3 group bg-white/95 dark:bg-neutral-900/95 backdrop-blur-md border border-saffron/10 dark:border-white/10 px-3 sm:px-4 py-1.5 sm:py-2 rounded-full shadow-lg pointer-events-auto hover:border-saffron/30 hover:scale-[1.02] transition-all duration-300 select-none"
+            className="flex items-center gap-3 sm:gap-3.5 group bg-white/95 dark:bg-neutral-900/95 backdrop-blur-md border border-saffron/15 dark:border-white/10 px-4 sm:px-5 md:px-6 py-2 sm:py-2.5 rounded-full shadow-lg pointer-events-auto hover:border-saffron/30 hover:scale-[1.02] transition-all duration-300 select-none"
             onClick={() => setIsOpen(false)}
             data-hover="pointer"
           >
-            <div className="relative w-7 h-7 sm:w-9 sm:h-9 rounded-full overflow-hidden shrink-0 border border-saffron/20 shadow-sm transition-transform duration-500 group-hover:scale-105">
+            <div className="relative w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 rounded-full overflow-hidden shrink-0 border-2 border-saffron/25 shadow-md transition-transform duration-500 group-hover:scale-105">
               <Image
                 src="/logo.png"
                 alt="Shree Pratisthan Official Logo"
                 fill
-                sizes="36px"
+                sizes="(max-width: 640px) 48px, (max-width: 1024px) 56px, 64px"
                 className="object-contain"
                 priority
               />
             </div>
-            <span className="text-[11px] sm:text-sm font-normal tracking-wider text-neutral-900 dark:text-neutral-100 font-heading uppercase">
+            <span className="text-sm sm:text-base md:text-lg lg:text-xl font-bold tracking-wider text-neutral-900 dark:text-neutral-100 font-heading uppercase">
               {t("common.trustName")}
             </span>
           </Link>

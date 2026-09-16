@@ -87,14 +87,14 @@ export default function VolunteerHero() {
       <div className="max-w-[1600px] w-full mx-auto relative z-20 grid grid-cols-1 lg:grid-cols-12 gap-6 sm:gap-12 lg:gap-16 items-center">
         
         {/* Left Column: Heading text content */}
-        <div className="lg:col-span-5 space-y-3 sm:space-y-6 text-left">
+        <div className="lg:col-span-6 space-y-3 sm:space-y-6 text-left">
 
-          <h1 className="text-[24px] sm:text-[36px] md:text-[48px] font-normal text-white leading-[1.25] tracking-tight font-heading uppercase">
-            <div className="overflow-hidden px-2 sm:px-4 -mx-2 sm:-mx-4 py-2 sm:py-3.5">
-              <span className="block reveal-line py-1">{t("volunteerPage.hero.titleLine1")}</span>
+          <h1 className="text-[48px] md:text-[56px] lg:text-[64px] font-normal text-white leading-[1.18] sm:leading-[1.22] lg:leading-[1.24] tracking-tight font-heading uppercase">
+            <div className="overflow-hidden px-2 sm:px-4 -mx-2 sm:-mx-4 py-3 sm:py-4 -my-2 sm:-my-2.5">
+              <span className="block reveal-line py-1.5 sm:py-2">{t("volunteerPage.hero.titleLine1")}</span>
             </div>
-            <div className="overflow-hidden px-2 sm:px-4 -mx-2 sm:-mx-4 py-2 sm:py-3.5">
-              <span className="block reveal-line py-1 text-saffron text-outline-festive font-heading">{t("volunteerPage.hero.titleLine2")}</span>
+            <div className="overflow-hidden px-2 sm:px-4 -mx-2 sm:-mx-4 py-3 sm:py-4 -my-2 sm:-my-2.5">
+              <span className="block reveal-line py-1.5 sm:py-2 text-saffron text-outline-festive font-heading">{t("volunteerPage.hero.titleLine2")}</span>
             </div>
           </h1>
 
@@ -104,7 +104,7 @@ export default function VolunteerHero() {
         </div>
 
         {/* Right Column: Text-Only Impact Stats Stack */}
-        <div className="lg:col-span-7 w-full z-20 flex flex-col justify-center space-y-3.5 sm:space-y-8 text-left sm:text-right items-start sm:items-end">
+        <div className="lg:col-span-6 w-full z-20 flex flex-col justify-center space-y-3.5 sm:space-y-8 text-left sm:text-right items-start sm:items-end">
           {STATS.map((stat, index) => (
             <div
               key={index}

@@ -114,8 +114,8 @@ export default function Hero() {
         ref={portalRef}
         className="fixed inset-0 z-[100] bg-saffron flex flex-col items-center justify-center text-center portal-intro pointer-events-none px-4"
       >
-        <h2 className="portal-text text-[8.5vw] md:text-[7.5vw] font-black text-white select-none uppercase font-heading leading-[0.82] tracking-tighter text-center whitespace-pre-line">
-          {t("hero.portalText", "WE\nCELEBRATE\nTOGETHER")}
+        <h2 className="portal-text text-3xl sm:text-5xl md:text-[6.5vw] font-black text-white select-none uppercase font-heading leading-tight sm:leading-snug tracking-normal text-center whitespace-pre-line py-2">
+          {t("hero.portalText", "SHREE\nPRATHISHTHAN")}
         </h2>
       </div>
 

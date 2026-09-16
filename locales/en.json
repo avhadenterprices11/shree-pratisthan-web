@@ -230,6 +230,50 @@
     "card4Sub": "Youth Aid",
     "card4Desc": "Distributing notebooks, study materials for underprivileged children, cleanliness drives, and prompt emergency community assistance."
   },
+  "communityContests": {
+    "eyebrow": "Ganeshotsav Community Initiatives",
+    "title": "Ganeshotsav Contests & Felicitation",
+    "subtitle": "Strengthening neighborhood bonds through direct home visits for the Best Ganpati Competition and empowering girls through our Grand Rangoli Exhibition.",
+    "ganpatiCard": {
+      "tag": "Home Visits & Felicitation",
+      "title": "Gharghuti Ganpati Spardha",
+      "subtitle": "Home Ganpati Decoration Competition",
+      "description": "Every year during the sacred 10 days of Ganesh Mahotsav, Shree Pratisthan's dedicated volunteer committee and panel of judges personally visit hundreds of households across Indira Nagar and Nashik. Families are evaluated for artistic eco-friendly clay idols (Shadu mati), traditional hand-crafted decorations, and devotional themes, with top households honored with grand prizes, trophies, and certificates.",
+      "badge1": "500+ Homes Visited Annually",
+      "badge2": "Eco-Friendly Shadu Idol Awards",
+      "badge3": "Grand Trophies & Cash Prizes",
+      "highlightTitle": "Door-to-Door Community Seva",
+      "highlightDesc": "Connecting every family to the larger festival fraternity through heartfelt home visits and respectful celebration.",
+      "cta": "Nominate Your Home Ganpati"
+    },
+    "rangoliCard": {
+      "tag": "Art & Women Empowerment",
+      "title": "Bhavya Rangoli Pradarshan & Spardha",
+      "subtitle": "Grand Rangoli Exhibition & Competition",
+      "description": "Shree Pratisthan hosts a grand annual Rangoli Exhibition and Competition specifically designed to encourage and celebrate the artistic brilliance of young girls and women during Ganeshotsav. Featuring mesmerizing Sanskar Bharati patterns, deity portraits, and social messages, artworks are displayed in a public festival pavilion where an expert jury awards prestigious prizes, rolling trophies, and citations to the best artists.",
+      "badge1": "250+ Girls & Artists Participating",
+      "badge2": "Sanskar Bharati & Creative Themes",
+      "badge3": "Public Exhibition & Grand Prizes",
+      "highlightTitle": "Reviving Traditional Folk Art",
+      "highlightDesc": "Providing a high-visibility public stage and honoring the creativity and cultural heritage of our daughters and sisters.",
+      "cta": "Register for Rangoli Contest"
+    },
+    "steps": {
+      "title": "How Our Community Contests Work",
+      "s1Num": "01",
+      "s1Title": "Open Registration",
+      "s1Desc": "Free entry for all Indira Nagar and Nashik households, girls, and women.",
+      "s2Num": "02",
+      "s2Title": "Home Visits & Exhibition",
+      "s2Desc": "Committee visits each home and rangolis are showcased in our central pavilion.",
+      "s3Num": "03",
+      "s3Title": "Jury Evaluation",
+      "s3Desc": "Distinguished artists and cultural elders score based on creativity and traditions.",
+      "s4Num": "04",
+      "s4Title": "Grand Felicitation",
+      "s4Desc": "Top winners are felicitated with trophies, cash prizes, and certificates on stage."
+    }
+  },
   "galleryPreview": {
     "eyebrow": "Visual Archive",
     "title": "Celebrations, Sports & Seva in Motion",
@@ -901,7 +945,7 @@
       "partners": "Civic Partners & Authorities",
       "sponsors": "Event Sponsors & Patrons",
       "organizer": "Official Trust Contact & Helpline",
-      "bookPassBtn": "Book Digital Entry Pass",
+      "bookPassBtn": "Register Now",
       "shareBtn": "Share Event",
       "registrationStatus": "Registration Status",
       "open": "Open for Registration",
@@ -922,7 +966,7 @@
       "promoVideoTitle": "Event Promo & Highlights Teaser",
       "momentsGalleryTitle": "Event Moments Gallery",
       "coordinatorLabel": "Coordinator",
-      "hotlineLabel": "Hotline",
+      "hotlineLabel": "Phone Number",
       "emailLabel": "Email",
       "active247": "● 24/7 Response Active During Event",
       "locationCoordinates": "Location Coordinates",

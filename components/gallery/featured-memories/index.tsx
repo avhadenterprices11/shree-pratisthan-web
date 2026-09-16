@@ -7,7 +7,8 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import { useLanguage } from "@/context/LanguageContext";
-import { FEATURED_MEMORIES, getLocalizedGalleryItem } from "@/app/gallery/gallery-data";
+import { FEATURED_MEMORIES } from "@/app/gallery/gallery-data";
+import { getLocalizedGalleryItem } from "@/lib/gallery-i18n";
 
 gsap.registerPlugin(ScrollTrigger);
 

@@ -111,13 +111,13 @@ export default function CommunityHero() {
 
         {/* Content Overlay (Z-20) */}
         <div className="max-w-[1600px] w-full mx-auto relative z-20 flex flex-col justify-start text-left pointer-events-none">
-          <div className="max-w-3xl pointer-events-auto">
-            <h1 className="text-[28px] sm:text-[36px] md:text-[48px] font-normal leading-[1.25] tracking-tight mb-4 sm:mb-6 font-heading uppercase">
-              <div className="overflow-hidden px-2 sm:px-4 -mx-2 sm:-mx-4 py-2 sm:py-3.5">
-                <span className="block reveal-line py-1 text-white font-heading drop-shadow-sm">{t("communityPage.hero.titleLine1")}</span>
+          <div className="max-w-4xl pointer-events-auto">
+            <h1 className="text-[48px] md:text-[56px] lg:text-[64px] font-normal leading-[1.18] sm:leading-[1.22] lg:leading-[1.24] tracking-tight mb-4 sm:mb-6 font-heading uppercase">
+              <div className="overflow-hidden px-2 sm:px-4 -mx-2 sm:-mx-4 py-3 sm:py-4 -my-2 sm:-my-2.5">
+                <span className="block reveal-line py-1.5 sm:py-2 text-white font-heading drop-shadow-sm">{t("communityPage.hero.titleLine1")}</span>
               </div>
-              <div className="overflow-hidden px-2 sm:px-4 -mx-2 sm:-mx-4 py-2 sm:py-3.5">
-                <span className="block reveal-line py-1 text-saffron font-heading">{t("communityPage.hero.titleLine2")}</span>
+              <div className="overflow-hidden px-2 sm:px-4 -mx-2 sm:-mx-4 py-3 sm:py-4 -my-2 sm:-my-2.5">
+                <span className="block reveal-line py-1.5 sm:py-2 text-saffron font-heading">{t("communityPage.hero.titleLine2")}</span>
               </div>
             </h1>
 
